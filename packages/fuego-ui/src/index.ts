@@ -1,1 +1,2 @@
-export * from './lib/fuego-ui';
+// components
+export * from './lib/components';
