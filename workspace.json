@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "fuego-ui": "packages/fuego-ui"
+    "fuego-ui": "packages/fuego-ui",
+    "fuego-ui-e2e": "packages/fuego-ui-e2e"
   }
 }
