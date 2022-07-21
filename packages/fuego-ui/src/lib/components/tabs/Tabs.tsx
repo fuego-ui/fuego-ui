@@ -2,17 +2,17 @@ import React, {
   cloneElement,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
-} from "react";
-import { useUID, useUIDSeed } from "react-uid";
-import styled, { css } from "styled-components";
-import debounce from "lodash.debounce";
-import { classnames } from "../../utils/component-utils";
-import { Draggable } from "../draggable/Draggble";
+} from 'react';
+import styled, { css } from 'styled-components';
+import debounce from 'lodash.debounce';
+import { classnames } from '../../utils/component-utils';
+import { Draggable } from '../draggable/Draggble';
 
-type Direction = "left" | "right";
-type Alignment = "left" | "center" | "right";
+type Direction = 'left' | 'right';
+type Alignment = 'left' | 'center' | 'right';
 
 export interface ITabs {
   children?: any;
@@ -88,7 +88,7 @@ const TabPanel = styled.div`
 `;
 
 const TabHighlight = styled.span<HighlightProps>`
-  width: ${({ width }) => (width ? `${width}px` : "9rem")};
+  width: ${({ width }) => (width ? `${width}px` : '9rem')};
   height: 2px;
   position: absolute;
   transition: width 0.3s, left 0.3s;
@@ -115,7 +115,7 @@ const ArrowDisabled = css`
   &:hover,
   &:focus {
     background-color: ${({ theme }) =>
-    theme && theme.tabs && theme.tabs.bg} !important;
+      theme && theme.tabs && theme.tabs.bg} !important;
   }
 
   &::before {
@@ -129,7 +129,7 @@ const ScrollArrow = styled.button<IArrowButton>`
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     display: block;
     width: 10px;
     height: 10px;
@@ -141,7 +141,7 @@ const ScrollArrow = styled.button<IArrowButton>`
     top: 20px;
 
     ${({ direction }) =>
-    direction === "right" ? RightScrollArrowStyles : LeftScrollArrowStyles}
+      direction === 'right' ? RightScrollArrowStyles : LeftScrollArrowStyles}
   }
 
   ${({ disabled }) => disabled && ArrowDisabled}
@@ -167,9 +167,9 @@ export const Tabs = ({
   fullWidth = false,
   className,
   scrollable = false,
-  alignment = "center",
+  alignment = 'center',
 }: ITabs) => {
-  const [activeTab, setActiveTab] = useState("");
+  const [activeTab, setActiveTab] = useState('');
   const [ids, setIds] = useState<Array<TabIdProps>>([]);
   const [hightlightWidth, setHighlightWidth] = useState(90);
   const [highlightOffset, sethighlightOffset] = useState(0);
@@ -185,13 +185,12 @@ export const Tabs = ({
   const draggableRef = useRef<HTMLDivElement>();
   const tabRefs = useRef<HTMLElement[]>([]);
 
-  const id = useUID();
-  const seed = useUIDSeed();
+  const seed = useId;
 
   const generateIDS = () => {
     const tabIds = children.map((childTab: any, index: number) => {
-      const tabId = seed(`tab-${index}`);
-      const tabPanelId = seed(`tabPanel-${index}`);
+      const tabId = `tab-${index}-${seed}`;
+      const tabPanelId = `tabPanel-${index}-${seed}`;
       return {
         tabId,
         tabPanelId,
@@ -217,7 +216,7 @@ export const Tabs = ({
       const scrollPosition = tabScrollArea.current.scrollLeft;
       let newScrollPosition;
       switch (direction) {
-        case "right":
+        case 'right':
           if (scrollPosition + scrollWindowWidth > maxScrollLeft) {
             tabScrollArea.current.scrollLeft = maxScrollLeft;
             newScrollPosition = maxScrollLeft;
@@ -229,7 +228,7 @@ export const Tabs = ({
             setScrollPosition(newScrollPosition);
           }
           break;
-        case "left":
+        case 'left':
           if (scrollPosition - scrollWindowWidth > 0) {
             tabScrollArea.current.scrollLeft = 0;
             newScrollPosition = 0;
@@ -250,7 +249,7 @@ export const Tabs = ({
     }
   };
 
-  const handleDrag = useCallback(({ translation }) => {
+  const handleDrag = useCallback(({ translation }: any) => {
     if (tabScrollArea && tabScrollArea.current) {
       tabScrollArea.current.scrollLeft =
         tabScrollArea.current.scrollLeft - translation.x;
@@ -321,12 +320,12 @@ export const Tabs = ({
 
   useEffect(() => {
     // Set Default Tab
-    activeTab === "" && setActiveTab(tabIds[0].tabId);
+    activeTab === '' && setActiveTab(tabIds[0].tabId);
   }, []);
 
   // Listener for on window resize
   useEffect(() => {
-    const onWindowResize = debounce((e) => {
+    const onWindowResize = debounce((e: any) => {
       if (
         draggableRef.current &&
         draggableRef.current.offsetWidth &&
@@ -340,13 +339,12 @@ export const Tabs = ({
       updateScrollArrowState(maxScrollLeft);
     }, 50);
 
-    window.addEventListener("resize", onWindowResize, { passive: true });
-    return window.removeEventListener("resize", onWindowResize);
+    window.addEventListener('resize', onWindowResize, { passive: true });
+    return window.removeEventListener('resize', onWindowResize);
   }, [maxScrollLeft]);
 
   // On Active Tab Change
   useEffect(() => {
-
     const updateTabHighlightPosition = (activeTabRef: HTMLElement) => {
       if (activeTabRef) {
         const offset = activeTabRef.offsetLeft;
@@ -389,27 +387,28 @@ export const Tabs = ({
   }, [draggableRef, tabScrollArea]);
 
   return (
-    <TabsContainer id={id} className={tabClasses}>
+    <TabsContainer id={`${seed} `} className={tabClasses}>
       <div
-        className={`${scrollable ? "scrollable-area" : ""} ${alignment === "center" ? "justify-content-center" : ""
-          }`}
+        className={`${scrollable ? 'scrollable-area' : ''} ${
+          alignment === 'center' ? 'justify-content-center' : ''
+        }`}
       >
-        {scrollable && showArrows && scrollButton("left")}
+        {scrollable && showArrows && scrollButton('left')}
         <TabsList
           ref={tabScrollArea}
           role="tablist"
           onScroll={onTabListScroll}
-          className={`${fullWidth ? "flex-grow-1" : ""}`}
+          className={`${fullWidth ? 'flex-grow-1' : ''}`}
         >
           <Draggable
             draggableRef={draggableRef}
             onDrag={handleDrag}
-            onDragEnd={() => { }}
+            onDragEnd={() => {}}
           >
             {children.map((child: any, index: number) => {
-              const { label, className = "" } = child.props;
+              const { label, className = '' } = child.props;
               const newProps = {
-                className: `${fullWidth ? "flex-grow-1" : ""} ${className}`,
+                className: `${fullWidth ? 'flex-grow-1' : ''} ${className}`,
                 id: tabIds[index].tabId,
                 ref: (ref: any) => pushTabRef(ref, index),
                 activeTab: { activeTab },
@@ -423,7 +422,7 @@ export const Tabs = ({
           </Draggable>
           <TabHighlight leftOffset={highlightOffset} width={hightlightWidth} />
         </TabsList>
-        {scrollable && showArrows && scrollButton("right")}
+        {scrollable && showArrows && scrollButton('right')}
       </div>
       {children.map((child: any, index: number) => {
         return (
@@ -433,7 +432,7 @@ export const Tabs = ({
             key={tabIds[index].tabPanelId}
             id={tabIds[index].tabPanelId}
             aria-labelledby={tabIds[index].tabId}
-            className={`${activeTab !== tabIds[index].tabId ? "hidden" : ""}`}
+            className={`${activeTab !== tabIds[index].tabId ? 'hidden' : ''}`}
           >
             {child.props.children}
           </TabPanel>

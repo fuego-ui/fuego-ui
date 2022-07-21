@@ -1,5 +1,5 @@
-import React, { forwardRef, useEffect } from "react";
-import styled from "styled-components";
+import React, { forwardRef } from 'react';
+import styled from 'styled-components';
 
 export interface ITab {
   children?: any;
@@ -24,13 +24,13 @@ const TabComponent = forwardRef(
   (
     {
       onTabClick,
-      label = "",
+      label = '',
       disabled = false,
-      id = "",
+      id = '',
       activeTab,
       children,
-      tabId = "",
-      tabPanelId = "",
+      tabId = '',
+      tabPanelId = '',
       ...props
     }: ITab,
     ref: any
