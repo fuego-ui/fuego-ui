@@ -1,4 +1,4 @@
-import Card from './Card';
+import { Card, CardCmp } from './card/Card';
 import RangeSlider from './RangeSlider';
 import TextInput, { TextInputCmp } from './TextInput';
 import { Accordion, AccordionItem, AccordionItemCmp } from './accordion';
@@ -11,6 +11,7 @@ export {
   AccordionItem,
   AccordionItemCmp,
   Card,
+  CardCmp,
   RangeSlider,
   TextInput,
   TextInputCmp,

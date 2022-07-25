@@ -1,23 +1,19 @@
-import styled from "styled-components";
-import { ThemeLevel } from "../../models/themeModel";
+import React from 'react';
+import styled from 'styled-components';
 
-const CardWrapper = styled.section`
+export const CardCmp = ({ children, className = '' }: any) => {
+  return (
+    <div className={`min-h-fit shadow-1 p-5 rounded ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+export const Card = styled(CardCmp)`
   padding: 2.5rem;
   min-height: 3.4rem;
   position: relative;
-  box-shadow: ${({ theme }: any) => theme.card && theme.card.border};
   border-radius: 4px;
-  color: ${({ theme, level = "primary" }: any) =>
-    theme && theme.card && theme.card[level].fg};
-  background-color: ${({ theme, level = "primary" }: any) =>
-    theme && theme.card && theme.card[level].bg};
+  background: ${({ theme }) =>
+    theme && theme.colorPrimary ? `${theme.primary}` : ''};
 `;
-
-export interface ICard {
-  level?: ThemeLevel;
-  children: any;
-}
-
-export function Card({ children, ...props }: ICard) {
-  return <CardWrapper {...props}>{children}</CardWrapper>;
-}

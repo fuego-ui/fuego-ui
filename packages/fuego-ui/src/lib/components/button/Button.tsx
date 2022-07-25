@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
-import styled, { css } from "styled-components";
-import { device } from "../../utils/breakpoints";
+import React, { forwardRef } from 'react';
+import styled, { css } from 'styled-components';
+import { device } from '../../utils/breakpoints';
 
 const rounded = css`
   border-radius: 3rem;
@@ -16,7 +16,50 @@ const fullWidthBtn = css`
   }
 `;
 
-const ButtonWrapper = styled.button<ButtonProps>`
+export interface ButtonProps
+  extends React.HTMLProps<HTMLButtonElement | HTMLAnchorElement> {
+  level?: 'primary' | 'secondary' | 'tertiary';
+  corners?: 'squared' | 'rounded';
+  as?: any;
+  linkCmp?: any;
+  loading?: boolean;
+  loader?: any;
+  fullWidth?: boolean;
+}
+
+export const ButtonCmp = forwardRef<ButtonProps, any>(
+  (
+    {
+      level = 'primary',
+      corners,
+      children = '',
+      loading = false,
+      className = '',
+      loader = <div></div>,
+      ...props
+    },
+    ref
+  ) => {
+    const buttonContent = loading ? loader : children;
+
+    return (
+      <button
+        className={className}
+        as={props.href ? 'a' : 'button'}
+        level={level}
+        corners={corners}
+        $loading={loading}
+        loader={loader}
+        ref={ref}
+        {...props}
+      >
+        {buttonContent}
+      </button>
+    );
+  }
+);
+
+export const Button = styled(ButtonCmp)`
   padding: 1.5rem 3rem;
   transition: background-color 0.2s, color 0.2s, border 0.2s;
   font-weight: 600;
@@ -26,7 +69,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
 
   // check for explicit setting, else follow theme
   ${({ corners, theme }) =>
-    theme.buttons?.corners === "rounded" || corners === "rounded"
+    theme.buttons?.corners === 'rounded' || corners === 'rounded'
       ? rounded
       : squared}
 
@@ -40,7 +83,7 @@ const ButtonWrapper = styled.button<ButtonProps>`
     theme.buttons[level] && theme.buttons[level].bg};
 
   border: ${({ level, theme }) =>
-    level === "tertiary" ? `2px solid ${theme.buttons[level].accent}` : "none"};
+    level === 'tertiary' ? `2px solid ${theme.buttons[level].accent}` : 'none'};
 
   &:hover {
     color: ${({ theme, level }: any) =>
@@ -50,49 +93,8 @@ const ButtonWrapper = styled.button<ButtonProps>`
       theme.buttons[level] && theme.buttons[level].hbg};
 
     border: ${({ level, theme }) =>
-      level === "tertiary"
+      level === 'tertiary'
         ? `2px solid ${theme.buttons[level].haccent}`
-        : "none"};
+        : 'none'};
   }
 `;
-
-export interface ButtonProps
-  extends React.HTMLProps<HTMLButtonElement | HTMLAnchorElement> {
-  level?: "primary" | "secondary" | "tertiary";
-  corners?: "squared" | "rounded";
-  as?: any;
-  linkCmp?: any;
-  loading?: boolean;
-  loader?: any;
-  fullWidth?: boolean;
-}
-
-export const Button = forwardRef(
-  (
-    {
-      level = "primary",
-      corners,
-      children = "",
-      loading = false,
-      loader = <div></div>,
-      ...props
-    }: ButtonProps,
-    ref
-  ) => {
-    const buttonContent = loading ? loader : children;
-
-    return (
-      <ButtonWrapper
-        as={props.href ? "a" : "button"}
-        level={level}
-        corners={corners}
-        $loading={loading}
-        loader={loader}
-        ref={ref}
-        {...props}
-      >
-        {buttonContent}
-      </ButtonWrapper>
-    );
-  }
-);

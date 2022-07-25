@@ -2,6 +2,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useId, useState } from 'react';
 import styled from 'styled-components';
 
+// Base Functional Component
+
+// Base Styling
+
+// Final Theme one
+// People can extend either theme or base styled one
+
 export const AccordionItemCmp = ({
   label,
   children,
@@ -66,14 +73,34 @@ export const AccordionItem = styled(AccordionItemCmp)`
     width: 100%;
     text-align: left;
     position: relative;
-    border: 1px solid green;
-    background-color: lavender;
+    border: none;
+    min-height: 2.8rem;
     padding: 0.4rem 0.5rem;
+    color: ${({ theme }) =>
+      theme && theme.colorPrimary ? `${theme.accent}` : ''};
+    background: ${({ theme }) =>
+      theme && theme.colorPrimary ? `${theme.primary}` : ''};
+
+    &:hover,
+    &:focus {
+      background: ${({ theme }) =>
+        theme && theme.colorPrimary ? `${theme.secondary}` : ''};
+    }
+
+    &:focus-visible {
+      outline: 1px dashed
+        ${({ theme }) => (theme && theme.colorPrimary ? `${theme.accent}` : '')};
+      z-index: 1;
+      outline-offset: 1px;
+    }
   }
 
   .accordion-panel {
     overflow: hidden;
-
+    background: ${({ theme }) =>
+      theme && theme.colorPrimary ? `${theme.tertiary}` : ''};
+    color: ${({ theme }) =>
+      theme && theme.colorPrimary ? `${theme.accent}` : ''};
     & > div {
       margin: 0.4rem 0.5rem;
     }

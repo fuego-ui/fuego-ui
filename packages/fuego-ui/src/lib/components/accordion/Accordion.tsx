@@ -1,4 +1,5 @@
 import React, { useId, useState, Children, cloneElement } from 'react';
+import styled from 'styled-components';
 import { AccordionItem } from './Accordion-item';
 
 export const Accordion = ({ children }: any) => {
@@ -24,3 +25,9 @@ export const Accordion = ({ children }: any) => {
     </div>
   );
 };
+
+// export const Accordion = styled(AccordionCmp)`
+//   ${AccordionItem} .accordion-item-trigger[aria-expanded='true'] {
+//     border-bottom: 1px solid #424242;
+//   }
+// `;
