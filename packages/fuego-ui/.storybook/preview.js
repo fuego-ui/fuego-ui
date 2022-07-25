@@ -1,6 +1,7 @@
 import { themes } from '@storybook/theming';
 import { ThemeProvider } from 'styled-components';
 import { useDarkMode } from 'storybook-dark-mode';
+import './global.css';
 
 const defaultTheme = {
   base: 'light',
@@ -56,3 +57,4 @@ export const parameters = {
     light: { ...themes.normal },
   }
 };
+

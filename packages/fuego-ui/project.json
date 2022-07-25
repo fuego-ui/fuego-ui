@@ -11,6 +11,7 @@
         "outputPath": "dist/packages/fuego-ui",
         "tsConfig": "packages/fuego-ui/tsconfig.lib.json",
         "project": "packages/fuego-ui/package.json",
+        "postcssConfig": "packages/fuego-ui/postcss.config.js",
         "entryFile": "packages/fuego-ui/src/index.ts",
         "external": ["react/jsx-runtime"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
