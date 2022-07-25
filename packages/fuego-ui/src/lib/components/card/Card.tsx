@@ -15,5 +15,6 @@ export const Card = styled(CardCmp)`
   position: relative;
   border-radius: 4px;
   background: ${({ theme }) =>
-    theme && theme.colorPrimary ? `${theme.primary}` : ''};
+    theme && theme.primary ? `${theme.primary}` : ''};
+  color: ${({ theme }) => (theme && theme.accent ? `${theme.accent}` : '')};
 `;

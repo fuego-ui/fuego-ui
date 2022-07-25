@@ -16,6 +16,7 @@ const darkTheme = {
   base: 'dark',
   colorPrimary: '#333333',
   colorSecondary: '#121212',
+  background: '#333333',
   primary:'#424242', 
   secondary: '#505050',
   tertiary: '#5f5f5f',
