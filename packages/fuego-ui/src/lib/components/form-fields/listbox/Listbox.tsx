@@ -6,13 +6,13 @@ import React, {
   useEffect,
   useImperativeHandle,
   SyntheticEvent,
-} from "react";
-import { Field } from "../field/Field";
-import styled from "styled-components";
-import { Keys } from "../../../utils/keycodes";
-import { classnames } from "../../../utils/component-utils";
-import { useUIDSeed } from "react-uid";
-import { themeOrDefault } from "../../../utils/theme-utils";
+  useId,
+} from 'react';
+import { Field } from '../field/Field';
+import styled from 'styled-components';
+import { Keys } from '../../../utils/keycodes';
+import { classnames } from '../../../utils/component-utils';
+import { themeOrDefault } from '../../../utils/theme-utils';
 
 interface IListbox {
   id?: string;
@@ -24,7 +24,7 @@ interface IListbox {
   loadingTemplate?: any;
   onSelection?: any;
   onChange?: any;
-  fieldSize?: "small" | "regular";
+  fieldSize?: 'small' | 'regular';
   ref?: any;
 }
 
@@ -35,12 +35,12 @@ const ListboxWrapper = styled.div<IListbox>`
     border-top-right-radius: 0;
     border-top-left-radius: 0;
     position: absolute;
-    top: ${({ fieldSize }) => (fieldSize === "small" ? "2.6rem" : "3rem")};
+    top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')};
     width: 100%;
     border-top: none !important;
     z-index: 1;
     padding-top: ${({ fieldSize }) =>
-      fieldSize === "small" ? "1rem" : "2rem"};
+      fieldSize === 'small' ? '1rem' : '2rem'};
 
     &.hidden {
       display: none;
@@ -65,7 +65,7 @@ const ListboxWrapper = styled.div<IListbox>`
 
       li {
         padding: ${({ fieldSize }) =>
-          fieldSize === "small" ? "0.8rem 1rem" : "1.4rem 1rem"};
+          fieldSize === 'small' ? '0.8rem 1rem' : '1.4rem 1rem'};
 
         ${({ theme }) =>
           theme.formField.bg === theme.backgroundColor &&
@@ -120,7 +120,7 @@ const ListboxWrapper = styled.div<IListbox>`
 export const Listbox = forwardRef(
   (
     {
-      label = "",
+      label = '',
       children = null,
       autocomplete = false,
       options = [],
@@ -128,23 +128,22 @@ export const Listbox = forwardRef(
       loadingTemplate = null,
       onSelection,
       onChange,
-      fieldSize = "regular",
+      fieldSize = 'regular',
       ...props
     }: IListbox,
     ref: any
   ) => {
-    const seed = useUIDSeed();
-    let id = `${seed("Listbox")}`;
+    const id = useId();
 
     const labelId = `${id}-label`;
     const listId = `${id}-list`;
 
-    let suggestionRefs: Array<any> = [];
+    const suggestionRefs: Array<any> = [];
 
     const [activeIndex, setActiveIndex] = useState(-1);
     const [expanded, setExpanded] = useState(false);
     const [suggestions, setSuggestions] = useState(options);
-    const [activedescendant, setActivedescendant] = useState("");
+    const [activedescendant, setActivedescendant] = useState('');
     const [clickedOutside, setClickedOutside] = useState(false);
 
     const fieldRef = useRef<any>();
@@ -192,26 +191,26 @@ export const Listbox = forwardRef(
       if (activeIndex < 0) {
         return;
       }
-      var activeItem = getItemAt(activeIndex);
+      const activeItem = getItemAt(activeIndex);
       selectItem(activeItem);
     };
 
     const getItemAt = (index: number) => suggestions[index];
 
     const setActiveItem = (evt: KeyboardEvent) => {
-      var key = evt.key;
+      const key = evt.key;
 
       if (key === Keys.ESC) {
         hideDropdown();
         setTimeout(() => {
           // On Firefox, input does not get cleared here unless wrapped in
           // a setTimeout
-          fieldRef.current.value = "";
+          fieldRef.current.value = '';
         }, 1);
         return;
       }
 
-      var activeItem;
+      let activeItem;
       switch (key as Keys) {
         case Keys.UP:
           if (activeIndex <= 0) {
@@ -245,15 +244,15 @@ export const Listbox = forwardRef(
       activeItem = getItemAt(activeIndex);
       if (fieldRef && fieldRef.current) {
         if (activeItem) {
-          setActivedescendant("suggestion-" + activeIndex);
+          setActivedescendant('suggestion-' + activeIndex);
         } else {
-          setActivedescendant("");
+          setActivedescendant('');
         }
       }
     };
 
     const checkKey = (evt: KeyboardEvent) => {
-      var key = evt.key;
+      const key = evt.key;
       switch (key as Keys) {
         case Keys.UP:
         case Keys.DOWN:
@@ -269,9 +268,9 @@ export const Listbox = forwardRef(
     useEffect(() => setSuggestions(options), [options]);
 
     useEffect(() => {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener('mousedown', handleClickOutside);
       return () =>
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
     });
 
     useEffect(() => {
@@ -280,7 +279,7 @@ export const Listbox = forwardRef(
       }
       return () => {
         // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
+        document.removeEventListener('mousedown', handleClickOutside);
       };
     }, [clickedOutside]);
 
@@ -299,7 +298,7 @@ export const Listbox = forwardRef(
         {suggestions.map(({ id, label, value }, index) => {
           return (
             <li
-              id={`suggestion-${index}`}
+              id={`suggestion-${id}`}
               key={id}
               ref={(el) => suggestionRefs.push(el)}
               className={classnames({ focused: activeIndex === index })}
@@ -339,7 +338,7 @@ export const Listbox = forwardRef(
         >
           {label}
         </Field>
-        <div className={`combobox-wrapper ${expanded ? "" : "hidden"}`}>
+        <div className={`combobox-wrapper ${expanded ? '' : 'hidden'}`}>
           {listRender}
         </div>
       </ListboxWrapper>

@@ -3,7 +3,7 @@ import { Draggable } from './Draggble';
 
 export default {
   component: Draggable,
-  title: 'Draggable',
+  title: 'Hooks/Draggable',
 } as ComponentMeta<typeof Draggable>;
 
 const Template: ComponentStory<typeof Draggable> = (args) => (

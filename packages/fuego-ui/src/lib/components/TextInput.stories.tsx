@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { TextInputCmp } from './TextInput';
+import TextInput from './TextInput';
 
 export default {
-  component: TextInputCmp,
-  title: 'TextInputCmp',
-} as ComponentMeta<typeof TextInputCmp>;
+  component: TextInput,
+  title: 'Components/Form Fields/TextInput',
+} as ComponentMeta<typeof TextInput>;
 
-const Template: ComponentStory<typeof TextInputCmp> = (args) => (
-  <TextInputCmp {...args} />
+const Template: ComponentStory<typeof TextInput> = (args) => (
+  <TextInput {...args} />
 );
 
 export const Primary = Template.bind({});

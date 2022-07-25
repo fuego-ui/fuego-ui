@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const RangeSliderCmp = ({
   className = '',
   label,
-  defaultValue,
+  defaultValue = 0,
   labelClassNames = '',
   ...rest
 }: any) => {

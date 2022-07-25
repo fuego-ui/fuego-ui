@@ -1,9 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SelectDropdown } from './SelectDropdown';
+import SelectDropdown from './SelectDropdown';
 
 export default {
   component: SelectDropdown,
-  title: 'SelectDropdown',
+  title: 'Components/Form Fields/Select',
 } as ComponentMeta<typeof SelectDropdown>;
 
 const Template: ComponentStory<typeof SelectDropdown> = (args) => (

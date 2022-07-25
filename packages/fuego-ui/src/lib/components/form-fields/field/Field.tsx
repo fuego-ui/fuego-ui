@@ -1,15 +1,14 @@
-import { useState, forwardRef, BaseSyntheticEvent } from "react";
-import { FieldFix } from "./Field-Fix";
-import styled from "styled-components";
+import { useState, forwardRef, BaseSyntheticEvent, useId } from 'react';
+import { FieldFix } from './Field-Fix';
+import styled from 'styled-components';
 import {
   BaseFieldStyles,
   InFieldFloat,
   outFieldFloat,
   outlineFieldFloat,
-} from "./FieldStyles";
-import { themeOrDefault } from "../../../utils/theme-utils";
-import { classnames } from "../../../utils/component-utils";
-import { useUIDSeed } from "react-uid";
+} from './FieldStyles';
+import { themeOrDefault } from '../../../utils/theme-utils';
+import { classnames } from '../../../utils/component-utils';
 
 const TextFieldWrapper = styled.div<FieldProps>`
   position: relative;
@@ -185,9 +184,9 @@ const selectFieldStyle = (theme: any, fieldParam: any) =>
 
 const switchFieldStyle = (fieldStyle: string) => {
   switch (fieldStyle) {
-    case "outlineFloat":
+    case 'outlineFloat':
       return outlineFieldFloat;
-    case "outsideFloat":
+    case 'outsideFloat':
       return outFieldFloat;
     default:
       return InFieldFloat;
@@ -218,14 +217,14 @@ export interface FieldProps {
   autocomplete?: any;
   onKeyDown?: any;
   onKeyUp?: any;
-  size: "small" | "regular";
-  fieldStyle?: "inFieldFloat" | "outlineFloat" | "outsideFloat";
+  size: 'small' | 'regular';
+  fieldStyle?: 'inFieldFloat' | 'outlineFloat' | 'outsideFloat';
 }
 
 export const Field = forwardRef(
   (
     {
-      id = "field",
+      id = 'field',
       name,
       value,
       floatLabel,
@@ -233,7 +232,7 @@ export const Field = forwardRef(
       prefix,
       children,
       placeholder,
-      type = "text",
+      type = 'text',
       suffix,
       className,
       onBlur,
@@ -246,14 +245,13 @@ export const Field = forwardRef(
       fieldErrors,
       required,
       fieldStyle,
-      labelId = "",
-      size = "regular",
+      labelId = '',
+      size = 'regular',
       ...props
     }: FieldProps,
     ref: any
   ) => {
-    const seed = useUIDSeed();
-    let fieldId = seed(id);
+    const fieldId = useId();
 
     const [isFocused, setFocus] = useState(false);
     const [isFilled, setFilled] = useState(false);
@@ -280,11 +278,11 @@ export const Field = forwardRef(
     };
 
     const field =
-      type === "textarea" ? (
+      type === 'textarea' ? (
         <textarea
           name={name}
           ref={ref}
-          id={id}
+          id={`text-field-${fieldId}`}
           cols={30}
           rows={2}
           onChange={onChangeHandler}
@@ -303,8 +301,8 @@ export const Field = forwardRef(
           placeholder={placeholder}
           type={type}
           ref={ref}
-          id={fieldId}
-          autoComplete={props.autocomplete ? "on" : "off"}
+          id={`text-field-${fieldId}`}
+          autoComplete={props.autocomplete ? 'on' : 'off'}
           {...props}
         />
       );
@@ -312,39 +310,37 @@ export const Field = forwardRef(
     const textFieldClasses = classnames(
       {
         focused: isFocused || floatLabelAlways,
-        "float-label": floatLabel,
+        'float-label': floatLabel,
         filled:
           isFilled || (ref && ref.current && ref.current.value.length > 0),
-        "has-placeholder": placeholder,
-        "has-prefix": prefix,
-        "has-error": fieldErrors,
-        "fue-field--sm": size === "small" ? true : false,
+        'has-placeholder': placeholder,
+        'has-prefix': prefix,
+        'has-error': fieldErrors,
+        'fue-field--sm': size === 'small' ? true : false,
       },
       className
     );
 
     return (
-      <>
-        <TextFieldWrapper
-          className={textFieldClasses}
-          fieldStyle={fieldStyle}
-          size={size}
-          {...props}
-        >
-          <FieldFix type="prefix">{prefix}</FieldFix>
-          <div className="field-contents">
-            {field}
-            <label id={labelId} htmlFor={fieldId}>
-              {children}
-              {required && <span className="required">*</span>}
-            </label>
-          </div>
-          <FieldFix type="suffix">{suffix}</FieldFix>
-          <div className="error">
-            <span className="error--msg">{errorLabel}</span>
-          </div>
-        </TextFieldWrapper>
-      </>
+      <TextFieldWrapper
+        className={textFieldClasses}
+        fieldStyle={fieldStyle}
+        size={size}
+        {...props}
+      >
+        <FieldFix type="prefix">{prefix}</FieldFix>
+        <div className="field-contents">
+          {field}
+          <label id={labelId} htmlFor={`text-field-${fieldId}`}>
+            {children}
+            {required && <span className="required">*</span>}
+          </label>
+        </div>
+        <FieldFix type="suffix">{suffix}</FieldFix>
+        <div className="error">
+          <span className="error--msg">{errorLabel}</span>
+        </div>
+      </TextFieldWrapper>
     );
   }
 );

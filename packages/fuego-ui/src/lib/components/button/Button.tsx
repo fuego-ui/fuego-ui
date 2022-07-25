@@ -9,7 +9,7 @@ export interface ButtonProps
   linkCmp?: any;
   loading?: boolean;
   loader?: any;
-  fullWidth?: boolean;
+  fullwidth?: boolean;
 }
 
 export const ButtonCmp = forwardRef<ButtonProps, any>(

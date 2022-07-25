@@ -1,9 +1,9 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Video } from './Video';
+import Video from './Video';
 
 export default {
   component: Video,
-  title: 'Video',
+  title: 'Components/Video',
 } as ComponentMeta<typeof Video>;
 
 const Template: ComponentStory<typeof Video> = (args) => <Video {...args} />;

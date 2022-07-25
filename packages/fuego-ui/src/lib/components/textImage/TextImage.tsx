@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { device } from "../..";
+import React from 'react';
+import styled from 'styled-components';
+import { device } from '../../utils/breakpoints';
 
 const TextImageWrapper = styled.section`
   color: ${({ theme }) => theme.palette && theme.palette.primary.contrastText};
@@ -41,15 +41,15 @@ export interface ITextImage {
 
 export function TextImage({
   children,
-  title = "",
-  img = "",
-  imgAlt = "",
+  title = '',
+  img = '',
+  imgAlt = '',
   orderReverse = false,
-  imgColClassName = "",
-  textColClassName = "",
+  imgColClassName = '',
+  textColClassName = '',
   ...props
 }: ITextImage) {
-  const rowClassName = orderReverse ? "row" : "row flex-md-row-reverse";
+  const rowClassName = orderReverse ? 'row' : 'row flex-md-row-reverse';
   const titleEl = props.titleChild ? (
     props.titleChild
   ) : (

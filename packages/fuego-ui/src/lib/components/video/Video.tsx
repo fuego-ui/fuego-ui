@@ -3,6 +3,7 @@ import React, { forwardRef, useState } from 'react';
 const Video = forwardRef<any, any>(({ children }, ref) => {
   const [hasFocus, setHasFocus] = useState(false);
 
+  // add potential for iframe
   return (
     <video
       ref={ref}

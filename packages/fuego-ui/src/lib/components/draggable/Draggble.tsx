@@ -4,7 +4,7 @@ import React, {
   useMemo,
   useEffect,
   MouseEvent,
-} from "react";
+} from 'react';
 
 interface IDraggable {
   children: any;
@@ -41,7 +41,7 @@ export const Draggable = ({
   );
 
   const handleMouseMove = useCallback(
-    ({ clientX, clientY }) => {
+    ({ clientX, clientY }: any) => {
       const translation = {
         x: clientX - state.origin.x,
         y: clientY - state.origin.y,
@@ -68,11 +68,11 @@ export const Draggable = ({
 
   useEffect(() => {
     if (state.isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
     } else {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
 
       setState((state) => ({ ...state, translation: { x: 0, y: 0 } }));
     }
@@ -80,11 +80,11 @@ export const Draggable = ({
 
   const styles = useMemo(
     () => ({
-      cursor: state.isDragging ? "-webkit-grabbing" : "-webkit-grab",
+      cursor: state.isDragging ? '-webkit-grabbing' : '-webkit-grab',
       transform: `translate(${state.translation.x}px, ${state.translation.y}px)`,
-      transition: state.isDragging ? "none" : "transform 500ms",
+      transition: state.isDragging ? 'none' : 'transform 500ms',
       zIndex: state.isDragging ? 2 : 1,
-      position: state.isDragging ? "absolute" : "relative",
+      position: state.isDragging ? 'absolute' : 'relative',
     }),
     [state.isDragging, state.translation]
   );
@@ -92,7 +92,7 @@ export const Draggable = ({
   return (
     <div
       ref={draggableRef}
-      style={{ width: "fit-content" }}
+      style={{ width: 'fit-content' }}
       onMouseDown={handleMouseDown}
     >
       {children}

@@ -20,7 +20,7 @@ Primary.args = {
   level: 'primary',
   label: 'Primary',
   corners: 'squared',
-  fullWidth: false,
+  fullwidth: false,
   children: 'Primary',
 };
 
@@ -29,7 +29,7 @@ Secondary.args = {
   label: 'Secondary',
   level: 'secondary',
   corners: 'squared',
-  fullWidth: false,
+  fullwidth: false,
   children: 'Secondary',
 };
 
@@ -38,6 +38,6 @@ Tertiary.args = {
   label: 'Tertiary',
   level: 'tertiary',
   corners: 'squared',
-  fullWidth: false,
+  fullwidth: false,
   children: 'Tertiary',
 };

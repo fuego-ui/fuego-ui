@@ -1,10 +1,4 @@
-import React, {
-  forwardRef,
-  KeyboardEvent,
-  useMemo,
-  useState,
-  createRef,
-} from "react";
+import React, { useState } from 'react';
 
 function useAutocomplete() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -16,7 +10,6 @@ function useAutocomplete() {
   const hideDropdown = () => setExpanded(false);
   const selectItem = (item: any) => {
     if (item) {
-      //   ref.value = item.innerText;
       hideDropdown();
     }
   };
@@ -25,11 +18,7 @@ function useAutocomplete() {
     if (activeIndex < 0) {
       return;
     }
-    // var activeItem = getItemAt(activeIndex);
-    // selectItem(activeItem);
   };
-
-  //   const getItemAt = (index: number) => suggestionRefs[index];
 
   return {
     activeIndex,
