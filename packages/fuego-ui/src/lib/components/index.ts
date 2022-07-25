@@ -5,8 +5,8 @@ import Checkbox from './form-fields/checkbox/Checkbox';
 import { Listbox } from './form-fields/listbox/Listbox';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
 import Spinner from './loaders/Spinner';
-import SelectDropdown from './SelectDropdown';
-import TextInput, { TextInputCmp } from './TextInput';
+import SelectDropdown from './form-fields/select-dropdown/SelectDropdown';
+import TextInput, { TextInputCmp } from './form-fields/TextInput';
 import Video from './video/Video';
 export {
   Accordion,
