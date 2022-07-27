@@ -84,6 +84,7 @@ const tertiaryBtn = css`
 `;
 
 export const Button = styled(ButtonCmp)`
+  display: inline-block;
   padding: 1.5rem 3rem;
   transition: background-color 0.2s, color 0.2s, border 0.2s;
   font-weight: 600;
