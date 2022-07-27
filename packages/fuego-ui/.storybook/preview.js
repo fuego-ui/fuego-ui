@@ -21,7 +21,10 @@ const darkTheme = {
   primary:'#424242', 
   secondary: '#505050',
   tertiary: '#5f5f5f',
-  accent:'#fff'
+  accent:'#fff',
+  // shape: {
+  //   roundness: .75
+  // }
 };
 
 // linear-gradient(145deg, #5f5f5f, #505050)

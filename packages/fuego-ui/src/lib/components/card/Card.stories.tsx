@@ -12,3 +12,5 @@ export const Primary = Template.bind({});
 Primary.args = {
   children: <span>Hrel</span>,
 };
+
+Primary.storyName = 'Card';

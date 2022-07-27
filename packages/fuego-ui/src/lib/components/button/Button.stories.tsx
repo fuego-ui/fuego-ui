@@ -10,6 +10,25 @@ export default {
     label: {
       control: { type: 'text' },
     },
+    level: {
+      options: ['primary', 'secondary', 'tertiary'],
+      control: { type: 'select' },
+    },
+    theme: {
+      table: {
+        disable: true,
+      },
+    },
+    as: {
+      table: {
+        disable: true,
+      },
+    },
+    forwardedAs: {
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof Button>;
 
@@ -19,17 +38,14 @@ export const Primary = Template.bind({});
 Primary.args = {
   level: 'primary',
   label: 'Primary',
-  corners: 'squared',
-  fullwidth: false,
   children: 'Primary',
+  rounded: true,
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   label: 'Secondary',
   level: 'secondary',
-  corners: 'squared',
-  fullwidth: false,
   children: 'Secondary',
 };
 
@@ -37,7 +53,5 @@ export const Tertiary = Template.bind({});
 Tertiary.args = {
   label: 'Tertiary',
   level: 'tertiary',
-  corners: 'squared',
-  fullwidth: false,
   children: 'Tertiary',
 };

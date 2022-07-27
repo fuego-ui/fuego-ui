@@ -1,22 +1,18 @@
 import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import { device } from '../../utils/breakpoints';
+
 export interface ButtonProps
   extends React.HTMLProps<HTMLButtonElement | HTMLAnchorElement> {
   level?: 'primary' | 'secondary' | 'tertiary';
-  corners?: 'squared' | 'rounded';
-  as?: any;
-  linkCmp?: any;
   loading?: boolean;
   loader?: any;
-  fullwidth?: boolean;
 }
 
 export const ButtonCmp = forwardRef<ButtonProps, any>(
   (
     {
       level = 'primary',
-      corners,
       children = '',
       loading = false,
       className = '',
@@ -29,12 +25,8 @@ export const ButtonCmp = forwardRef<ButtonProps, any>(
 
     return (
       <button
-        className={className}
+        className={`${className}`}
         as={props.href ? 'a' : 'button'}
-        level={level}
-        corners={corners}
-        $loading={loading}
-        loader={loader}
         ref={ref}
         {...props}
       >
@@ -92,12 +84,6 @@ const tertiaryBtn = css`
   }
 `;
 
-const fullWidthBtn = css`
-  @media ${device.tabletAndbelow} {
-    width: 100%;
-  }
-`;
-
 export const Button = styled(ButtonCmp)`
   padding: 1.5rem 3rem;
   transition: background-color 0.2s, color 0.2s, border 0.2s;
@@ -107,8 +93,8 @@ export const Button = styled(ButtonCmp)`
   line-height: 12px;
   border: none;
 
-  // check for explicit setting, else follow theme
-  ${({ fullWidth }) => fullWidth && fullWidthBtn}
+  border-radius: ${({ theme }: any) =>
+    theme.shape && theme.shape.roundness ? theme.shape.roundness : 0}rem;
 
   ${({ level }) => (level === 'primary' ? primaryBtn : '')}
   ${({ level }) => (level === 'secondary' ? secondaryBtn : '')}
