@@ -3,9 +3,7 @@ import styled from 'styled-components';
 
 export const CardCmp = ({ children, className = '' }: any) => {
   return (
-    <div className={`min-h-fit shadow-1 p-5 rounded ${className}`}>
-      {children}
-    </div>
+    <div className={`min-h-fit p-5 shadow-lg ${className}`}>{children}</div>
   );
 };
 

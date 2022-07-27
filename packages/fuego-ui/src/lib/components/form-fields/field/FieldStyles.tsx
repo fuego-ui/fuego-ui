@@ -1,7 +1,7 @@
-import { css } from "styled-components";
-import { themeOrDefault } from "../../../utils/theme-utils";
+import { css } from 'styled-components';
+import { themeOrDefault } from '../../../utils/theme-utils';
 
-export type FieldStyle = "default" | "outline" | "invisible";
+export type FieldStyle = 'default' | 'outline' | 'invisible';
 export const outFieldFloat = css`
   &.float-label {
     .field-contents {
@@ -57,8 +57,8 @@ export const InFieldFloat = css`
 
     // Non Float Label
     .field-contents {
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
     }
   }
 
@@ -77,7 +77,7 @@ export const InFieldFloat = css`
     &.fue-field--sm {
       .field-contents {
         padding-top: 1.4rem;
-        padding-bottom: 0;
+        padding-bottom: 0.3rem;
       }
     }
   }
@@ -87,7 +87,7 @@ export const InFieldFloat = css`
   &.has-placeholder label {
     &.fue-field--sm {
       .label {
-        transform: translate(0, -0.8rem) scale(0.65);
+        transform: translate(0, -0.9rem) scale(0.65);
       }
     }
   }
@@ -105,8 +105,8 @@ export const BaseFieldStyles = css`
 
     // Non Float Label
     .field-contents {
-      padding-top: 0.6rem;
-      padding-bottom: 0.6rem;
+      padding-top: 0.8rem;
+      padding-bottom: 0.8rem;
     }
   }
 
@@ -125,7 +125,7 @@ export const BaseFieldStyles = css`
     &.fue-field--sm {
       .field-contents {
         padding-top: 1.4rem;
-        padding-bottom: 0;
+        padding-bottom: 0.3rem;
       }
     }
   }
@@ -152,7 +152,7 @@ export const BaseFieldStyles = css`
   // Ensures if background of formfiled is same as main background to include an outline
   .field-contents {
     ${({ theme }) =>
-      theme.formField.bg === theme.backgroundColor &&
+      theme.formField.bg === theme.primary &&
       `
     outline: 2px solid ${theme.formField.outline};
   `}
@@ -162,9 +162,6 @@ export const BaseFieldStyles = css`
     outline: 2px solid
       ${({ theme }) =>
         (theme && theme.formField.focusOutline) ||
-        themeOrDefault(
-          theme.formField.outline,
-          theme.palette.primary.contrastText
-        )};
+        themeOrDefault(theme.formField.outline, theme.accent)};
   }
 `;

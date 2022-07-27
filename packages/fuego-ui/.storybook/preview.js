@@ -10,7 +10,27 @@ const defaultTheme = {
   primary:'#fff', 
   secondary: '#505050',
   tertiary: '#5f5f5f',
-  accent:'#000'
+  accent:'#000',
+  error: {
+    main: "#ff6b6b",
+  },
+  formField: {
+    style: "",
+    bg: "#fff",
+    fg: "#556cd6",
+    hbg: "#fff",
+    hfg: "#556cd6",
+    labelfg: "#556cd6",
+    labelbg: "#fff",
+    inputbg: "#fff",
+    outline: "#556cd6",
+    focusOutline: "",
+    errorfg: "",
+  },
+  listbox: {
+    hbg: "#556cd6",
+    hfg: "#fff",
+  },
 };
 
 const darkTheme = {
@@ -22,9 +42,26 @@ const darkTheme = {
   secondary: '#505050',
   tertiary: '#5f5f5f',
   accent:'#fff',
-  // shape: {
-  //   roundness: .75
-  // }
+  error: {
+    main: "#ff6b6b",
+  },
+  formField: {
+    style: "",
+    bg: "#fff",
+    fg: "#556cd6",
+    hbg: "#fff",
+    hfg: "#556cd6",
+    labelfg: "#556cd6",
+    labelbg: "#fff",
+    inputbg: "#fff",
+    outline: "#556cd6",
+    focusOutline: "",
+    errorfg: "",
+  },
+  listbox: {
+    hbg: "#556cd6",
+    hfg: "#fff",
+  },
 };
 
 // linear-gradient(145deg, #5f5f5f, #505050)

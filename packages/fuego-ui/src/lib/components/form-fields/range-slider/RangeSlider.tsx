@@ -44,7 +44,7 @@ const RangeSliderCmp = ({
       </label>
       <div ref={sliderParentRef} className={`range-slider my-3 ${className}`}>
         <input
-          className="w-full pb-3"
+          className="w-full"
           type="range"
           name=""
           id={`range-slider-${idprefix}`}

@@ -6,6 +6,7 @@ import { Listbox } from './form-fields/listbox/Listbox';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
 import Spinner from './loaders/Spinner';
 import SelectDropdown from './form-fields/select-dropdown/SelectDropdown';
+import { TextImage } from './textImage/TextImage';
 import TextInput, { TextInputCmp } from './form-fields/TextInput';
 import Video from './video/Video';
 export {
@@ -21,5 +22,6 @@ export {
   Spinner,
   TextInput,
   TextInputCmp,
+  TextImage,
   Video,
 };

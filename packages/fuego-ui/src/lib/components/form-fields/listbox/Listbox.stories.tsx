@@ -52,7 +52,9 @@ Default.args = {
     { id: 3, label: 'Bro', value: 'bro' },
   ],
   onSelection: (e: any) => console.log(e),
-  onChange: () => console.log('woo'),
+  onChange: () => {
+    console.log('woo');
+  },
 };
 
 // export const Small = Template.bind({});

@@ -18,6 +18,7 @@ interface IListbox {
   id?: string;
   label?: string;
   children?: any;
+  className: string;
   autocomplete?: any;
   options?: Array<any>;
   loading?: boolean;
@@ -28,96 +29,7 @@ interface IListbox {
   ref?: any;
 }
 
-const ListboxWrapper = styled.div<IListbox>`
-  position: relative;
-  .combobox-wrapper {
-    border-radius: 7px;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    position: absolute;
-    top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')};
-    width: 100%;
-    border-top: none !important;
-    z-index: 1;
-    padding-top: ${({ fieldSize }) =>
-      fieldSize === 'small' ? '1rem' : '2rem'};
-
-    &.hidden {
-      display: none;
-    }
-
-    & > ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      &.loader li {
-        color: ${({ theme }) =>
-          theme &&
-          themeOrDefault(
-            theme.listbox.hfg,
-            theme.palette.primary.contrastText
-          )};
-        background-color: ${({ theme }) =>
-          theme &&
-          themeOrDefault(theme.listbox.hbg, theme.palette.primary.main)};
-      }
-
-      li {
-        padding: ${({ fieldSize }) =>
-          fieldSize === 'small' ? '0.8rem 1rem' : '1.4rem 1rem'};
-
-        ${({ theme }) =>
-          theme.formField.bg === theme.backgroundColor &&
-          `border-bottom: 2px solid ${theme.formField.outline};`}
-
-        &:first-child {
-          padding-top: 1.8rem;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 0.4rem;
-          border-bottom-right-radius: 0.4rem;
-          border-bottom: none;
-        }
-      }
-    }
-  }
-
-  // theme
-  .combobox-wrapper {
-    ${({ theme }) =>
-      theme.formField.bg === theme.backgroundColor &&
-      `
-    outline: 2px solid ${theme.formField.outline};
-  `}
-
-    & > ul {
-      & li {
-        color: ${({ theme }) =>
-          theme &&
-          themeOrDefault(theme.formField.fg, theme.palette.primary.main)};
-        background-color: ${({ theme }) =>
-          theme && themeOrDefault(theme.formField.bg, theme.backgroundColor)};
-
-        &:hover,
-        &.focused {
-          color: ${({ theme }) =>
-            theme &&
-            themeOrDefault(
-              theme.listbox.hfg,
-              theme.palette.primary.contrastText
-            )};
-          background-color: ${({ theme }) =>
-            theme &&
-            themeOrDefault(theme.listbox.hbg, theme.palette.primary.main)};
-        }
-      }
-    }
-  }
-`;
-
-export const Listbox = forwardRef(
+export const ListboxCmp = forwardRef(
   (
     {
       label = '',
@@ -128,7 +40,8 @@ export const Listbox = forwardRef(
       loadingTemplate = null,
       onSelection,
       onChange,
-      fieldSize = 'regular',
+      className = '',
+      fieldSize = 'small',
       ...props
     }: IListbox,
     ref: any
@@ -314,14 +227,14 @@ export const Listbox = forwardRef(
 
     // Have an option for static options and also a function to pass and format suggestions
     return (
-      <ListboxWrapper
+      <div
         ref={listboxRef}
         role="combobox"
         aria-expanded={expanded}
         aria-owns={listId}
         aria-haspopup="listbox"
         id={id}
-        fieldSize={fieldSize}
+        className={className}
       >
         <Field
           ref={fieldRef}
@@ -341,7 +254,85 @@ export const Listbox = forwardRef(
         <div className={`combobox-wrapper ${expanded ? '' : 'hidden'}`}>
           {listRender}
         </div>
-      </ListboxWrapper>
+      </div>
     );
   }
 );
+
+export const Listbox = styled(ListboxCmp)`
+  position: relative;
+  .combobox-wrapper {
+    border-radius: 7px;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    position: absolute;
+    top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')};
+    width: 100%;
+    border-top: none !important;
+    z-index: 1;
+    padding-top: ${({ fieldSize }) =>
+      fieldSize === 'small' ? '.8rem' : '.5rem'};
+
+    &.hidden {
+      display: none;
+    }
+
+    & > ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      &.loader li {
+        color: ${({ theme }) =>
+          theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
+        background-color: ${({ theme }) =>
+          theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
+      }
+
+      li {
+        padding: ${({ fieldSize }) =>
+          fieldSize === 'small' ? '0.8rem 1rem' : '1rem .8rem'};
+
+        ${({ theme }) =>
+          theme.formField.bg === theme.backgroundColor &&
+          `border-bottom: 2px solid ${theme.formField.outline};`}
+
+        &:first-child {
+          padding-top: 1.8rem;
+        }
+
+        &:last-child {
+          border-bottom-left-radius: 0.4rem;
+          border-bottom-right-radius: 0.4rem;
+          border-bottom: none;
+        }
+      }
+    }
+  }
+
+  // theme
+  .combobox-wrapper {
+    ${({ theme }) =>
+      theme.formField.bg === theme.primary &&
+      `
+    outline: 2px solid ${theme.formField.outline};
+  `}
+
+    & > ul {
+      & li {
+        color: ${({ theme }) =>
+          theme && themeOrDefault(theme.formField.fg, theme.primary)};
+        background-color: ${({ theme }) =>
+          theme && themeOrDefault(theme.formField.bg, theme.backgroundColor)};
+
+        &:hover,
+        &.focused {
+          color: ${({ theme }) =>
+            theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
+          background-color: ${({ theme }) =>
+            theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
+        }
+      }
+    }
+  }
+`;
