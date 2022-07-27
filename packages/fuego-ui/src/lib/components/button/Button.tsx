@@ -1,6 +1,5 @@
 import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
-import { device } from '../../utils/breakpoints';
 
 export interface ButtonProps
   extends React.HTMLProps<HTMLButtonElement | HTMLAnchorElement> {
@@ -17,19 +16,19 @@ export const ButtonCmp = forwardRef<ButtonProps, any>(
       loading = false,
       className = '',
       loader = <div></div>,
+      href,
       ...props
     },
     ref
   ) => {
     const buttonContent = loading ? loader : children;
 
-    return (
-      <button
-        className={`${className}`}
-        as={props.href ? 'a' : 'button'}
-        ref={ref}
-        {...props}
-      >
+    return href ? (
+      <a className={`${className}`} ref={ref} {...props}>
+        {buttonContent}
+      </a>
+    ) : (
+      <button className={`${className}`} ref={ref} {...props}>
         {buttonContent}
       </button>
     );

@@ -14,6 +14,9 @@ export default {
       options: ['primary', 'secondary', 'tertiary'],
       control: { type: 'select' },
     },
+    href: {
+      control: { type: 'text' },
+    },
     theme: {
       table: {
         disable: true,
