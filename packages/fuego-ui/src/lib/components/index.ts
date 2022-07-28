@@ -1,7 +1,7 @@
 import { Accordion, AccordionItem, AccordionItemCmp } from './accordion';
+import { Button, ButtonCmp } from './button/Button';
 import { Card, CardCmp } from './card/Card';
 import Checkbox from './form-fields/checkbox/Checkbox';
-
 import { Listbox } from './form-fields/listbox/Listbox';
 import { Modal, useModal } from './modal';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
@@ -15,6 +15,8 @@ export {
   Accordion,
   AccordionItem,
   AccordionItemCmp,
+  Button,
+  ButtonCmp,
   Card,
   CardCmp,
   Checkbox,
