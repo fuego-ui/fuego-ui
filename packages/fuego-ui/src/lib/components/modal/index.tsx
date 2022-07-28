@@ -1,7 +1,4 @@
-import { Modal } from "./Modal";
-import { useModal } from "./useModal";
+import { Modal } from './Modal';
+import { useModal } from './useModal';
 
-export {
-    Modal as Default,
-    useModal
-}
+export { Modal, useModal };

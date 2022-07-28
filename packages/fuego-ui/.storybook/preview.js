@@ -7,10 +7,14 @@ const defaultTheme = {
   base: 'light',
   colorPrimary: 'purple',
   colorSecondary: '#121212',
-  primary:'#fff', 
-  secondary: '#505050',
-  tertiary: '#5f5f5f',
+  background: "#fff",
+  primary:'#556cd6', 
+  secondary: '#4456ab',
+  tertiary: '#7689de',
   accent:'#000',
+  contrastBackground: '#000',
+  contrastText: '#fff',
+  
   error: {
     main: "#ff6b6b",
   },

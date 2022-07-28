@@ -76,15 +76,13 @@ export const AccordionItem = styled(AccordionItemCmp)`
     border: none;
     min-height: 2.8rem;
     padding: 0.4rem 0.5rem;
-    color: ${({ theme }) =>
-      theme && theme.colorPrimary ? `${theme.accent}` : ''};
-    background: ${({ theme }) =>
-      theme && theme.colorPrimary ? `${theme.primary}` : ''};
+    color: ${({ theme }) => theme && theme.contrastText};
+    background: ${({ theme }) => theme && theme.primary};
 
     &:hover,
     &:focus {
-      background: ${({ theme }) =>
-        theme && theme.colorPrimary ? `${theme.secondary}` : ''};
+      background-color: ${({ theme }: any) => theme.secondary};
+      color: ${({ theme }: any) => theme.contrastText};
     }
 
     &:focus-visible {
@@ -97,10 +95,8 @@ export const AccordionItem = styled(AccordionItemCmp)`
 
   .accordion-panel {
     overflow: hidden;
-    background: ${({ theme }) =>
-      theme && theme.colorPrimary ? `${theme.tertiary}` : ''};
-    color: ${({ theme }) =>
-      theme && theme.colorPrimary ? `${theme.accent}` : ''};
+    background: ${({ theme }) => theme && theme.background};
+    color: ${({ theme }) => theme && theme.accent};
     & > div {
       margin: 0.4rem 0.5rem;
     }

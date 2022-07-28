@@ -3,6 +3,7 @@ import { Card, CardCmp } from './card/Card';
 import Checkbox from './form-fields/checkbox/Checkbox';
 
 import { Listbox } from './form-fields/listbox/Listbox';
+import { Modal, useModal } from './modal';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
 import Spinner from './loaders/Spinner';
 import SelectDropdown from './form-fields/select-dropdown/SelectDropdown';
@@ -17,6 +18,7 @@ export {
   CardCmp,
   Checkbox,
   Listbox,
+  Modal,
   RangeSlider,
   SelectDropdown,
   Spinner,
@@ -24,4 +26,5 @@ export {
   TextInputCmp,
   TextImage,
   Video,
+  useModal,
 };

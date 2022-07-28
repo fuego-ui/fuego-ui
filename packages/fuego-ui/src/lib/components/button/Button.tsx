@@ -36,49 +36,50 @@ export const ButtonCmp = forwardRef<ButtonProps, any>(
 );
 
 const primaryBtn = css`
-  background-color: ${({ theme }: any) => theme.accent};
-  color: ${({ theme }: any) => theme.primary};
+  background-color: ${({ theme }: any) => theme.primary};
+  color: ${({ theme }: any) => theme.contrastText};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }: any) => theme.primary};
-    color: ${({ theme }: any) => theme.accent};
+    background-color: ${({ theme }: any) => theme.secondary};
+    color: ${({ theme }: any) => theme.contrastText};
   }
 
   &:focus-visible {
-    outline: 1px dashed ${({ theme }: any) => theme.accent};
+    outline: 1px dashed #000;
     outline-offset: 1px;
   }
 `;
 
 const secondaryBtn = css`
   background-color: ${({ theme }: any) => theme.background};
-  color: ${({ theme }: any) => theme.accent};
-  border: 2px solid ${({ theme }: any) => theme.accent};
+  color: ${({ theme }: any) => theme.secondary};
+  border: 2px solid ${({ theme }: any) => theme.secondary};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }: any) => theme.accent};
-    color: ${({ theme }: any) => theme.background};
+    background-color: ${({ theme }: any) => theme.secondary};
+    color: ${({ theme }: any) => theme.contrastText};
   }
 
   &:focus-visible {
-    outline: 1px dashed ${({ theme }: any) => theme.accent};
+    outline: 1px dashed #000;
     outline-offset: 1px;
   }
 `;
 
 const tertiaryBtn = css`
   background-color: ${({ theme }: any) => theme.background};
-  color: ${({ theme }: any) => theme.accent};
+  color: ${({ theme }: any) => theme.tertiary};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }: any) => theme.secondary};
+    background-color: ${({ theme }: any) => theme.tertiary};
+    color: ${({ theme }: any) => theme.contrastText};
   }
 
   &:focus-visible {
-    outline: 1px dashed ${({ theme }: any) => theme.accent};
+    outline: 1px dashed ${({ theme }: any) => theme.tertiary};
     outline-offset: 1px;
   }
 `;
