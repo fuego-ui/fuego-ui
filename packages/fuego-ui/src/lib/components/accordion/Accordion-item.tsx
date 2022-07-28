@@ -15,6 +15,7 @@ export const AccordionItemCmp = ({
   className,
   expanded,
   onClick,
+  divider = false,
 }: any) => {
   const [_expanded, setExpanded] = useState(expanded);
   const IdToken = useId();
@@ -78,6 +79,13 @@ export const AccordionItem = styled(AccordionItemCmp)`
     padding: 0.4rem 0.5rem;
     color: ${({ theme }) => theme && theme.contrastText};
     background: ${({ theme }) => theme && theme.primary};
+
+    ${({ theme, divider }) => {
+      if (theme && divider && theme.contrastText) {
+        return `border-bottom: 1px solid ${theme.contrastText};`;
+      }
+      return;
+    }};
 
     &:hover,
     &:focus {

@@ -1,6 +1,5 @@
 import React, { useId, useState, Children, cloneElement } from 'react';
 import styled from 'styled-components';
-import { AccordionItem } from './Accordion-item';
 
 export const Accordion = ({ children }: any) => {
   const accordionId = useId();
@@ -20,14 +19,9 @@ export const Accordion = ({ children }: any) => {
           key: `${accordionId}-${index}`,
           onClick: () => accordionOnClick(index),
           expanded: index === activeAccordion ? true : false,
+          divider: index !== childrenEls.length ? true : false,
         });
       })}
     </div>
   );
 };
-
-// export const Accordion = styled(AccordionCmp)`
-//   ${AccordionItem} .accordion-item-trigger[aria-expanded='true'] {
-//     border-bottom: 1px solid #424242;
-//   }
-// `;
