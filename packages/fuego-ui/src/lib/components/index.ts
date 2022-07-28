@@ -7,6 +7,7 @@ import { Modal, useModal } from './modal';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
 import Spinner from './loaders/Spinner';
 import SelectDropdown from './form-fields/select-dropdown/SelectDropdown';
+import { Tab, Tabs } from './tabs';
 import { TextImage } from './textImage/TextImage';
 import TextInput, { TextInputCmp } from './form-fields/TextInput';
 import Video from './video/Video';
@@ -22,6 +23,8 @@ export {
   RangeSlider,
   SelectDropdown,
   Spinner,
+  Tab,
+  Tabs,
   TextInput,
   TextInputCmp,
   TextImage,

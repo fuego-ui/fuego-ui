@@ -22,7 +22,7 @@ const Spinner = styled(SpinnerCmp)`
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: #fff;
+    background: ${({ theme }) => theme && theme.primary};
     animation-timing-function: cubic-bezier(0, 1, 1, 0);
   }
   div:nth-child(1) {

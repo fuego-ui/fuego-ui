@@ -10,7 +10,7 @@ interface IDraggable {
   children: any;
   id?: string;
   onDrag: any;
-  onDragEnd: any;
+  onDragEnd?: any;
   draggableRef: any;
 }
 

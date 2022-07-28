@@ -55,18 +55,18 @@ const TabComponent = forwardRef(
 
 export const Tab = styled(TabComponent)`
   border: none;
-  padding: 1rem 2rem;
-  min-width: 9rem;
-  min-height: 4.8rem;
+  padding: 0.5rem 1rem;
+  min-width: 6rem;
+  min-height: 3rem;
   transition: background-color 0.3s, color 0.3s;
 
   // theme
-  background-color: ${({ theme }) => theme && theme.tabs && theme.tabs.bg};
-  color: ${({ theme }) => theme && theme.tabs && theme.tabs.fg};
+  background-color: ${({ theme }) => theme && theme.background};
+  color: ${({ theme }) => theme && theme.primary};
 
   &:hover {
-    background-color: ${({ theme }) => theme && theme.tabs && theme.tabs.hbg};
-    color: ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
+    background-color: ${({ theme }: any) => theme.primary};
+    color: ${({ theme }: any) => theme.contrastText};
   }
 
   &:focus {

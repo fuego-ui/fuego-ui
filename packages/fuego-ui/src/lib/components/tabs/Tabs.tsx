@@ -95,7 +95,7 @@ const TabHighlight = styled.span<HighlightProps>`
   left: ${({ leftOffset }) => (leftOffset ? `${leftOffset}px` : 0)};
   bottom: 0;
   // theme
-  background-color: ${({ theme }) => theme && theme.tabs && theme.tabs.accent};
+  background-color: ${({ theme }) => theme && theme.primary};
 `;
 
 /**
@@ -114,8 +114,7 @@ const LeftScrollArrowStyles = css`
 const ArrowDisabled = css`
   &:hover,
   &:focus {
-    background-color: ${({ theme }) =>
-      theme && theme.tabs && theme.tabs.bg} !important;
+    background-color: ${({ theme }) => theme && theme.background} !important;
   }
 
   &::before {
@@ -125,7 +124,7 @@ const ArrowDisabled = css`
 
 const ScrollArrow = styled.button<IArrowButton>`
   border: none;
-  min-width: 3rem;
+  min-width: 1.8rem;
   position: relative;
 
   &::before {
@@ -133,7 +132,7 @@ const ScrollArrow = styled.button<IArrowButton>`
     display: block;
     width: 10px;
     height: 10px;
-    border: 1px solid ${({ theme }) => theme && theme.tabs && theme.tabs.fg};
+    border: 1px solid ${({ theme }) => theme && theme.primary};
     border-bottom: none;
     border-left: none;
     position: absolute;
@@ -147,12 +146,12 @@ const ScrollArrow = styled.button<IArrowButton>`
   ${({ disabled }) => disabled && ArrowDisabled}
 
   // theme
-  background-color: ${({ theme }) => theme && theme.tabs && theme.tabs.bg};
+  background-color: ${({ theme }) => theme && theme.background};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) => theme && theme.tabs && theme.tabs.hbg};
-    color: ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
+    background-color: ${({ theme }) => theme && theme.primary};
+    color: ${({ theme }) => theme && theme.contrastText};
 
     &::before {
       border: 1px solid ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
@@ -400,11 +399,7 @@ export const Tabs = ({
           onScroll={onTabListScroll}
           className={`${fullWidth ? 'flex-grow-1' : ''}`}
         >
-          <Draggable
-            draggableRef={draggableRef}
-            onDrag={handleDrag}
-            onDragEnd={() => {}}
-          >
+          <Draggable draggableRef={draggableRef} onDrag={handleDrag}>
             {children.map((child: any, index: number) => {
               const { label, className = '' } = child.props;
               const newProps = {
