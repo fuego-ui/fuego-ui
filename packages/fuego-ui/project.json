@@ -22,7 +22,8 @@
             "input": ".",
             "output": "."
           }
-        ]
+        ],
+        "webpackConfig": "packages/fuego-ui/custom-webpack.config.js"
       }
     },
     "lint": {
