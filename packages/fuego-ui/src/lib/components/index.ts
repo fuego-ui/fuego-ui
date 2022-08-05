@@ -2,6 +2,7 @@ import { Accordion, AccordionItem, AccordionItemCmp } from './accordion';
 import { Button, ButtonCmp } from './button/Button';
 import { Card, CardCmp } from './card/Card';
 import Checkbox from './form-fields/checkbox/Checkbox';
+import { Field, FieldFix } from './form-fields/field';
 import { Listbox } from './form-fields/listbox/Listbox';
 import { Modal, useModal } from './modal';
 import RangeSlider from './form-fields/range-slider/RangeSlider';
@@ -21,6 +22,8 @@ export {
   CardCmp,
   Checkbox,
   Listbox,
+  Field,
+  FieldFix,
   Modal,
   RangeSlider,
   SelectDropdown,

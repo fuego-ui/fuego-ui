@@ -85,14 +85,15 @@ const tertiaryBtn = css`
 `;
 
 export const Button = styled(ButtonCmp)`
-  display: inline-block;
-  padding: 1.5rem 3rem;
+  padding: 0 1.2rem;
   transition: background-color 0.2s, color 0.2s, border 0.2s;
   font-weight: 600;
-  font-size: 1.4rem;
+  font-size: 1rem;
   letter-spacing: 0.3px;
   line-height: 12px;
   border: none;
+  min-width: 4rem;
+  min-height: 2.25rem;
 
   border-radius: ${({ theme }: any) =>
     theme.shape && theme.shape.roundness ? theme.shape.roundness : 0}rem;
