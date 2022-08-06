@@ -1,11 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-export const CardCmp = ({
-  children,
-  className = '',
-  level = 'primary',
-}: any) => {
+export const CardCmp = ({ children, className = '' }: any) => {
   return (
     <div className={`min-h-fit p-5 shadow-lg ${className}`}>{children}</div>
   );

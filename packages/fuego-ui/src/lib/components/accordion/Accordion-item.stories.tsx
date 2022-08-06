@@ -10,10 +10,15 @@ const Template: ComponentStory<typeof AccordionItem> = (args) => (
   <AccordionItem {...args} />
 );
 
-export const Primary = Template.bind({});
-Primary.args = {
+export const Default = Template.bind({});
+Default.args = {
   label: 'Accordion Item',
   children: <span>Accordion Content</span>,
 };
 
-Primary.storyName = 'Accordion Item';
+export const Expanded = Template.bind({});
+Expanded.args = {
+  label: 'Accordion Item',
+  children: <span>Accordion Content</span>,
+  expanded: true,
+};

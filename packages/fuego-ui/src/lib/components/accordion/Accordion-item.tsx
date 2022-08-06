@@ -2,13 +2,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useId, useState } from 'react';
 import styled from 'styled-components';
 
-// Base Functional Component
-
-// Base Styling
-
-// Final Theme one
-// People can extend either theme or base styled one
-
 export const AccordionItemCmp = ({
   label,
   children,
