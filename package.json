@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "fuego-publish": "node ./tools/workflows/build-to-publish.ts"
+    "fuego-publish": "node ./tools/workflows/build-to-publish.js"
   },
   "private": true,
   "dependencies": {
