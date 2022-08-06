@@ -11,14 +11,14 @@ const execPromise = util.promisify(exec);
 const baseCmd = 'npm version';
 
 async function buildLibrary() {
-  console.info('Build Library');
+  console.info('Building Library...');
   const { stdout, stderr } = await execPromise('nx build fuego-ui');
   printOutput({ stdout, stderr });
   console.info('Library Built');
 }
 
 async function publishLibrary() {
-  const { stdout, stderr } = await execPromise('npm publish --dry-run');
+  const { stdout, stderr } = await execPromise('npm publish');
   printOutput({ stdout, stderr });
   console.info('Library Published');
 }
@@ -48,13 +48,17 @@ function printOutput({ stdout = null, stderr = null }) {
 async function buildToPublish() {
   try {
     if (!process.env.npm_config_rev) {
-      throw new Error('No Revision Type provided');
+      throw new Error(
+        'No Revision Type provided, provide --rev parameter with either "major", "minor" or "patch" as value'
+      );
     }
     const versionCmd = getVersionCommand(process.env.npm_config_rev);
 
     // Npm Version
+    console.log('Updating Version...');
     process.chdir('./packages/fuego-ui');
     await execPromise(versionCmd);
+    console.log('Version Updated');
 
     // Library Build
     process.chdir('./../../');
