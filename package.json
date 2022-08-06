@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "build-to-publish": "cd ./packages/fuego-ui && npm version 0.0.7 && cd ../../ && npm run build && cd dist/packages/fuego-ui && npm publish"
+    "sample": "node ./tools/workflows/build-to-publish.ts"
   },
   "private": true,
   "dependencies": {
