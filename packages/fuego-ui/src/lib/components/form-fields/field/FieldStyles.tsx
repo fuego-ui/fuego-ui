@@ -27,6 +27,10 @@ export const outFieldFloat = css`
 `;
 
 export const outlineFieldFloat = css`
+  .field-contents {
+    ${({ theme }) => `outline: 2px solid ${theme.formField.outline};`}
+  }
+
   &.float-label {
     .field-contents {
       padding-top: 1.2rem;
