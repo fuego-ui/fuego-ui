@@ -24,7 +24,7 @@ export const ButtonCmp = forwardRef<ButtonProps, any>(
     const buttonContent = loading ? loader : children;
 
     return href ? (
-      <a className={`${className}`} ref={ref} {...props}>
+      <a className={`${className}`} ref={ref} href={href} {...props}>
         {buttonContent}
       </a>
     ) : (
