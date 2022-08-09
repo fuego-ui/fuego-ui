@@ -7,8 +7,9 @@ export interface IModal {
   isShowing?: boolean;
   hide?: any;
   position?: string;
-  className: string;
-  modalHeader?: any;
+  className?: string;
+  modalHeader?: boolean;
+  modalHeaderContent?: any;
   children?: React.ReactElement;
   fullscreen?: boolean;
   selector?: string;
@@ -17,7 +18,8 @@ export interface IModal {
 export const ModalCmp = ({
   isShowing = false,
   hide,
-  modalHeader,
+  modalHeader = true,
+  modalHeaderContent,
   children,
   className = '',
   position = 'centered',
@@ -57,18 +59,20 @@ export const ModalCmp = ({
               >
                 <div className="modal-dialog" role="document">
                   <div className="modal-content flex flex-col">
-                    <div className="modal-header flex">
-                      <div className="grow">{modalHeader}</div>
+                    {modalHeader && (
+                      <div className="modal-header flex">
+                        <div className="grow">{modalHeaderContent}</div>
 
-                      <button
-                        type="button"
-                        className="close px-2"
-                        aria-label="Close"
-                        onClick={hide}
-                      >
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
+                        <button
+                          type="button"
+                          className="close px-2"
+                          aria-label="Close"
+                          onClick={hide}
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                    )}
                     <div className="modal-body relative p-4">{children}</div>
                   </div>
                 </div>
