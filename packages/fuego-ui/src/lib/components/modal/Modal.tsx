@@ -70,7 +70,7 @@ export const ModalCmp = ({
     </AnimatePresence>
   );
 
-  return createPortal(modalEl, document.body);
+  return document ? createPortal(modalEl, document.body) : null;
 };
 
 const ModalBackdrop = styled.div`
