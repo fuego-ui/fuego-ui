@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import FocusTrap from 'focus-trap-react';
@@ -11,6 +11,7 @@ export interface IModal {
   modalHeader?: any;
   children?: React.ReactElement;
   fullscreen?: boolean;
+  selector?: string;
 }
 
 export const ModalCmp = ({
@@ -21,8 +22,17 @@ export const ModalCmp = ({
   className = '',
   position = 'centered',
   fullscreen,
+  selector = 'body',
   ...props
 }: IModal) => {
+  const ref = useRef<Element | null>();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    ref.current = document.querySelector(selector);
+    setMounted(true);
+  }, [selector]);
+
   const modalEl: any = (
     <AnimatePresence exitBeforeEnter>
       {isShowing && (
@@ -70,7 +80,7 @@ export const ModalCmp = ({
     </AnimatePresence>
   );
 
-  return document ? createPortal(modalEl, document.body) : null;
+  return mounted ? createPortal(modalEl, document.body) : null;
 };
 
 const ModalBackdrop = styled.div`
