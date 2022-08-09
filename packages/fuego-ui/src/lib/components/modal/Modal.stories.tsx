@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Modal } from './Modal';
 
@@ -27,6 +27,28 @@ ModalCmp.args = {
 export const FullscreenModalCmp = Template.bind({});
 FullscreenModalCmp.args = {
   isShowing: true,
+  fullscreen: true,
+  children: (
+    <>
+      <h1>Fuego UI Modal</h1>
+      <p>Modal Text</p>
+      <button>Modal Button</button>
+    </>
+  ),
+};
+
+const ExTemplate: ComponentStory<any> = (args) => {
+  const [show, setShow] = useState(false);
+  return (
+    <>
+      <button onClick={() => setShow(!show)}>Show Modal</button>
+      <Modal isShowing={show} hide={() => setShow(!show)} {...args} />
+    </>
+  );
+};
+
+export const Animation = ExTemplate.bind({});
+Animation.args = {
   fullscreen: true,
   children: (
     <>

@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import FocusTrap from 'focus-trap-react';
+import { AnimatePresence, motion } from 'framer-motion';
 export interface IModal {
   isShowing?: boolean;
   hide?: any;
   position?: string;
   className: string;
-  modalHeader?: React.ReactChild;
+  modalHeader?: any;
   children?: React.ReactElement;
   fullscreen?: boolean;
 }
@@ -19,41 +20,57 @@ export const ModalCmp = ({
   children,
   className = '',
   position = 'centered',
+  fullscreen,
   ...props
 }: IModal) => {
   const modalEl: any = (
-    <>
-      <ModalBackdrop></ModalBackdrop>
-      <FocusTrap>
-        <div
-          className={`modal ${className}`}
-          tabIndex={-1}
-          role="dialog"
-          {...props}
+    <AnimatePresence exitBeforeEnter>
+      {isShowing && (
+        <motion.div
+          key="modal"
+          initial="hidden"
+          animate="show"
+          exit="hidden"
+          variants={{
+            show: { opacity: 1 },
+            hidden: { opacity: 0 },
+          }}
         >
-          <div className="modal-dialog" role="document">
-            <div className="modal-content flex flex-col">
-              <div className="modal-header flex">
-                <div className="grow">{modalHeader}</div>
+          <div>
+            <ModalBackdrop></ModalBackdrop>
+            <FocusTrap>
+              <div
+                className={`modal ${className}`}
+                tabIndex={-1}
+                role="dialog"
+                {...props}
+              >
+                <div className="modal-dialog" role="document">
+                  <div className="modal-content flex flex-col">
+                    <div className="modal-header flex">
+                      <div className="grow">{modalHeader}</div>
 
-                <button
-                  type="button"
-                  className="close px-2"
-                  aria-label="Close"
-                  onClick={hide}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
+                      <button
+                        type="button"
+                        className="close px-2"
+                        aria-label="Close"
+                        onClick={hide}
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div className="modal-body relative p-4">{children}</div>
+                  </div>
+                </div>
               </div>
-              <div className="modal-body relative p-4">{children}</div>
-            </div>
+            </FocusTrap>
           </div>
-        </div>
-      </FocusTrap>
-    </>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 
-  return isShowing ? createPortal(modalEl, document.body) : null;
+  return createPortal(modalEl, document.body);
 };
 
 const ModalBackdrop = styled.div`
