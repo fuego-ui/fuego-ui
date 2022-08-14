@@ -37,6 +37,34 @@ FullscreenModalCmp.args = {
   ),
 };
 
+export const OffsetModal = Template.bind({});
+OffsetModal.args = {
+  isShowing: true,
+  fullscreen: true,
+  offset: '20px',
+  className: 'bottom-0 !top-auto',
+  children: (
+    <>
+      <h1>Fuego UI Modal</h1>
+      <p>Modal Text</p>
+      <button>Modal Button</button>
+    </>
+  ),
+};
+
+export const NoBackdropModal = Template.bind({});
+NoBackdropModal.args = {
+  isShowing: true,
+  backdrop: false,
+  children: (
+    <>
+      <h1>Fuego UI Modal</h1>
+      <p>Modal Text</p>
+      <button>Modal Button</button>
+    </>
+  ),
+};
+
 const ExTemplate: ComponentStory<any> = (args) => {
   const [show, setShow] = useState(false);
   return (

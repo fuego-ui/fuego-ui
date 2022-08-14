@@ -13,7 +13,13 @@ export interface IModal {
   children?: React.ReactElement;
   fullscreen?: boolean;
   selector?: string;
+  backdrop?: boolean;
+  offset?: number;
 }
+
+const ModalWrapper = styled.div<IModal>`
+  ${({ offset }) => offset && `height: calc(100vh - ${offset}) !important;`}
+`;
 
 export const ModalCmp = ({
   isShowing = false,
@@ -25,6 +31,7 @@ export const ModalCmp = ({
   position = 'centered',
   fullscreen,
   selector = 'body',
+  backdrop = true,
   ...props
 }: IModal) => {
   const ref = useRef<Element | null>();
@@ -49,9 +56,9 @@ export const ModalCmp = ({
           }}
         >
           <div>
-            <ModalBackdrop></ModalBackdrop>
+            {backdrop && <ModalBackdrop onClick={hide}></ModalBackdrop>}
             <FocusTrap>
-              <div
+              <ModalWrapper
                 className={`modal ${className}`}
                 tabIndex={-1}
                 role="dialog"
@@ -76,7 +83,7 @@ export const ModalCmp = ({
                     <div className="modal-body relative p-4">{children}</div>
                   </div>
                 </div>
-              </div>
+              </ModalWrapper>
             </FocusTrap>
           </div>
         </motion.div>
