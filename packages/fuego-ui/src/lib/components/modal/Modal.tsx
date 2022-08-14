@@ -18,7 +18,7 @@ export interface IModal {
 }
 
 const ModalWrapper = styled.div<IModal>`
-  ${({ offset }) => offset && `height: calc(100vh - ${offset}) !important;`}
+  ${({ offset }) => offset && `height: calc(100vh - ${offset}px) !important;`}
 `;
 
 export const ModalCmp = ({
