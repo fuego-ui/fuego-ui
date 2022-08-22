@@ -10,6 +10,7 @@
     "focus-trap-react": "^9.0.2",
     "lodash.debounce": "^4.0.8"
   },
+  "sideEffects": false,
   "peerDependencies": {
     "styled-components": "5.3.5"
   },
