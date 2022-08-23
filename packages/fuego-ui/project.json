@@ -13,17 +13,17 @@
         "project": "packages/fuego-ui/package.json",
         "postcssConfig": "packages/fuego-ui/postcss.config.js",
         "entryFile": "packages/fuego-ui/src/index.ts",
-        "external": ["react/jsx-runtime"],
+        "external": ["react/jsx-runtime", "typescript", "styled-components"],
         "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
         "compiler": "babel",
+        "format": ["esm"],
         "assets": [
           {
             "glob": "packages/fuego-ui/README.md",
             "input": ".",
             "output": "."
           }
-        ],
-        "webpackConfig": "packages/fuego-ui/custom-webpack.config.js"
+        ]
       }
     },
     "lint": {

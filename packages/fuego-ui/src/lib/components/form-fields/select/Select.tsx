@@ -1,24 +1,37 @@
-import React from "react";
-import Selectr from "react-select";
-import { ThemeLevel, ThemeValue } from "../../../models/themeModel";
-import { FieldStyle } from "../field/FieldModels";
-import { useTheme } from "styled-components";
+import React from 'react';
+import Selectr from 'react-select';
+import { FieldStyle } from '../field/FieldStyles';
+import { useTheme } from 'styled-components';
+
+export function ThemeValue(theme: any, path: Array<string>) {
+  if (!theme || path.length === 0) return '';
+  let result = theme;
+  for (let i = 0; i < path.length; i++) {
+    const property = path[i];
+    if (!(result && result[property])) {
+      return '';
+    } else {
+      result = result[property];
+    }
+  }
+  return result;
+}
 
 // (provided, state)
 const invisibleSelect = {
   control: (provided: any) => ({
     ...provided,
-    border: "none",
-    borderRadius: "0px",
-    margin: "0 1.2rem",
-    minHeight: "1.4rem",
+    border: 'none',
+    borderRadius: '0px',
+    margin: '0 1.2rem',
+    minHeight: '1.4rem',
   }),
   valueContainer: (provided: any) => ({
     ...provided,
-    padding: "0px 8px",
+    padding: '0px 8px',
   }),
   indicatorsContainer: () => ({
-    display: "none",
+    display: 'none',
   }),
 };
 
@@ -27,22 +40,22 @@ function getInvisibleSelectStyle(theme: any) {
   return {
     menu: (provided: any) => ({
       ...provided,
-      margin: "0 0 1rem",
+      margin: '0 0 1rem',
     }),
     control: (provided: any) => ({
       ...provided,
-      border: "none",
-      borderRadius: "0px",
-      margin: "0 1.2rem",
-      minHeight: "1.4rem",
+      border: 'none',
+      borderRadius: '0px',
+      margin: '0 1.2rem',
+      minHeight: '1.4rem',
       backgroundColor: theme && theme.formField && theme.formField.bg,
     }),
     valueContainer: (provided: any) => ({
       ...provided,
-      margin: "0px 1rem",
+      margin: '0px 1rem',
     }),
     indicatorsContainer: () => ({
-      display: "none",
+      display: 'none',
     }),
   };
 }
@@ -53,57 +66,57 @@ function getDefaultStyle(theme: any) {
       ...provided,
       color:
         state.isSelected || state.isFocused
-          ? ThemeValue(theme, ["formField", "hfg"])
-          : ThemeValue(theme, ["formField", "fg"]),
+          ? ThemeValue(theme, ['formField', 'hfg'])
+          : ThemeValue(theme, ['formField', 'fg']),
       backgroundColor:
         state.isSelected || state.isFocused
-          ? ThemeValue(theme, ["formField", "hbg"])
-          : ThemeValue(theme, ["formField", "bg"]),
-      "&:hover": {
-        backgroundColor: ThemeValue(theme, ["formField", "hbg"]),
-        color: ThemeValue(theme, ["formField", "hfg"]),
+          ? ThemeValue(theme, ['formField', 'hbg'])
+          : ThemeValue(theme, ['formField', 'bg']),
+      '&:hover': {
+        backgroundColor: ThemeValue(theme, ['formField', 'hbg']),
+        color: ThemeValue(theme, ['formField', 'hfg']),
       },
     }),
     menu: (provided: any) => ({
       ...provided,
-      margin: "0.2rem 0 1rem",
-      padding: "1rem 0 0",
-      top: "60%",
-      zIndex: "1",
-      backgroundColor: ThemeValue(theme, ["formField", "bg"]),
-      color: ThemeValue(theme, ["formField", "fg"]),
+      margin: '0.2rem 0 1rem',
+      padding: '1rem 0 0',
+      top: '60%',
+      zIndex: '1',
+      backgroundColor: ThemeValue(theme, ['formField', 'bg']),
+      color: ThemeValue(theme, ['formField', 'fg']),
     }),
     control: (provided: any) => ({
       ...provided,
-      borderColor: "transparent",
-      borderRadius: "1.4rem",
-      minHeight: "3.8rem",
-      backgroundColor: ThemeValue(theme, ["formField", "bg"]),
-      color: ThemeValue(theme, ["formField", "fg"]),
-      zIndex: "2",
-      boxShadow: "none",
-      "&:hover": {
-        borderColor: ThemeValue(theme, ["formField", "fg"]),
+      borderColor: 'transparent',
+      borderRadius: '1.4rem',
+      minHeight: '3.8rem',
+      backgroundColor: ThemeValue(theme, ['formField', 'bg']),
+      color: ThemeValue(theme, ['formField', 'fg']),
+      zIndex: '2',
+      boxShadow: 'none',
+      '&:hover': {
+        borderColor: ThemeValue(theme, ['formField', 'fg']),
       },
     }),
     valueContainer: (provided: any) => ({
       ...provided,
-      margin: "0px 1rem",
-      backgroundColor: ThemeValue(theme, ["formField", "bg"]),
-      color: ThemeValue(theme, ["formField", "fg"]),
+      margin: '0px 1rem',
+      backgroundColor: ThemeValue(theme, ['formField', 'bg']),
+      color: ThemeValue(theme, ['formField', 'fg']),
     }),
     singleValue: (provided: any) => ({
       ...provided,
-      color: ThemeValue(theme, ["formField", "fg"]),
+      color: ThemeValue(theme, ['formField', 'fg']),
     }),
     indicatorsContainer: () => ({
-      padding: "0px 8px",
+      padding: '0px 8px',
     }),
     dropdownIndicator: (provided: any, state: any) => ({
-      padding: "0",
-      color: ThemeValue(theme, ["formField", "fg"]),
-      transition: "all .2s ease",
-      transform: state.selectProps.menuIsOpen ? "rotate(180deg)" : null,
+      padding: '0',
+      color: ThemeValue(theme, ['formField', 'fg']),
+      transition: 'all .2s ease',
+      transform: state.selectProps.menuIsOpen ? 'rotate(180deg)' : null,
     }),
   };
 }
@@ -112,8 +125,8 @@ const noOutline = {
   // ...defaultStyle,
   control: (provided: any) => ({
     ...provided,
-    border: "none",
-    minHeight: "1.4rem",
+    border: 'none',
+    minHeight: '1.4rem',
   }),
 };
 
@@ -137,9 +150,9 @@ export const Select = ({
 
   function getSelectStyle(theme: any) {
     switch (theme) {
-      case "invisible":
+      case 'invisible':
         return getInvisibleSelectStyle(theme);
-      case "noOutline":
+      case 'noOutline':
         return noOutline;
       default:
         return getDefaultStyle(theme);

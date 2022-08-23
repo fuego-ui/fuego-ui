@@ -6,6 +6,7 @@
     "fuego-publish": "node ./tools/workflows/build-to-publish.js"
   },
   "private": true,
+  "sideEffects": false,
   "dependencies": {
     "@storybook/addons": "^6.5.9",
     "@storybook/theming": "^6.5.9",
