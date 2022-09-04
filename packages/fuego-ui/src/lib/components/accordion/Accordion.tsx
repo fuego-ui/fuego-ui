@@ -1,5 +1,4 @@
 import React, { useId, useState, Children, cloneElement } from 'react';
-import styled from 'styled-components';
 
 export const Accordion = ({ children }: any) => {
   const accordionId = useId();

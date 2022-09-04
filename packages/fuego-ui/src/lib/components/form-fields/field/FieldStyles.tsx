@@ -72,6 +72,10 @@ export const InFieldFloat = css`
     padding-bottom: 1.2rem;
   }
 
+  .field-contents {
+    ${({ theme }) => `outline: 2px solid ${theme.formField.outline};`}
+  }
+
   &.float-label {
     .field-contents {
       padding-top: 1.8rem;
