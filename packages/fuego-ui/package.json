@@ -1,6 +1,6 @@
 {
   "name": "@unbyte-io/fuego-ui",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "sideEffects": false,
   "peerDependencies": {
     "framer-motion": "^6.5.1",
