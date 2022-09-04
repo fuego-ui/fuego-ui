@@ -1,6 +1,6 @@
 import React, { useId, useState, Children, cloneElement } from 'react';
 
-export const Accordion = ({ children }: any) => {
+export const Accordion = ({ className, children }: any) => {
   const accordionId = useId();
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
@@ -12,7 +12,7 @@ export const Accordion = ({ children }: any) => {
   }
 
   return (
-    <div id={`accordion-${accordionId}`}>
+    <div className={`w-full ${className}`} id={`accordion-${accordionId}`}>
       {childrenEls.map((child: any, index: number) => {
         return cloneElement(child, {
           key: `${accordionId}-${index}`,
