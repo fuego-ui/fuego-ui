@@ -119,6 +119,7 @@ export const FieldCmp = forwardRef(
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           onFocus={onFocusHandler}
+          value={value}
           {...props}
         ></textarea>
       ) : (
@@ -134,6 +135,7 @@ export const FieldCmp = forwardRef(
           ref={ref}
           id={`text-field-${fieldId}`}
           autoComplete={props.autocomplete ? 'on' : 'off'}
+          value={value}
           {...props}
         />
       );
