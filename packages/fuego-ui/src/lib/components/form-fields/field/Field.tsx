@@ -1,4 +1,10 @@
-import { useState, forwardRef, BaseSyntheticEvent, useId } from 'react';
+import {
+  useState,
+  forwardRef,
+  BaseSyntheticEvent,
+  useId,
+  useEffect,
+} from 'react';
 import { FieldFix } from './Field-Fix';
 import styled from 'styled-components';
 import {
@@ -153,6 +159,12 @@ export const FieldCmp = forwardRef(
       },
       className
     );
+
+    useEffect(() => {
+      if (value && value.length > 0) {
+        setFilled(true);
+      }
+    }, []);
 
     return (
       <div className={textFieldClasses}>
