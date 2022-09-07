@@ -59,7 +59,7 @@ export const CheckboxCmp = forwardRef<HTMLInputElement, any>(
   }
 );
 
-const Checkbox = styled(CheckboxCmp)`
+export const Checkbox = styled(CheckboxCmp)`
   label {
     display: flex;
     align-items: center;
@@ -91,5 +91,3 @@ const Checkbox = styled(CheckboxCmp)`
     width: 1px;
   }
 `;
-
-export default Checkbox;
