@@ -3,12 +3,14 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const CheckboxCmp = forwardRef<HTMLInputElement, any>(
-  ({ className = '', children, valueChangeHandler, ...rest }, ref) => {
-    const [isChecked, setIsChecked] = useState(false);
-
+  (
+    { className = '', children, valueChangeHandler, value = false, ...rest },
+    ref: any
+  ) => {
+    const [isChecked, setIsChecked] = useState(value);
     const valueChange = (e: any) => {
-      setIsChecked(!isChecked);
-      valueChangeHandler && valueChangeHandler(!isChecked);
+      setIsChecked(e.target.checked);
+      valueChangeHandler && valueChangeHandler(e.target.checked);
     };
 
     const variants = {
@@ -23,11 +25,8 @@ export const CheckboxCmp = forwardRef<HTMLInputElement, any>(
     };
 
     useEffect(() => {
-      if (rest.value) {
-        setIsChecked(rest.value);
-        valueChangeHandler(rest.value);
-      }
-    }, []);
+      setIsChecked(value);
+    }, [value]);
 
     return (
       <div className={className}>
@@ -35,7 +34,8 @@ export const CheckboxCmp = forwardRef<HTMLInputElement, any>(
           <input
             ref={ref}
             type="checkbox"
-            onChange={(e) => valueChange(e)}
+            onChange={valueChange}
+            checked={isChecked}
             {...rest}
           />
           <motion.svg
@@ -63,6 +63,8 @@ const Checkbox = styled(CheckboxCmp)`
   label {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    max-width: fit-content;
   }
 
   .checkbox {
