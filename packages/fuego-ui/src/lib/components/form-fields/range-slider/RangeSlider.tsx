@@ -6,6 +6,8 @@ const RangeSliderCmp = ({
   label,
   defaultValue = 0,
   labelClassNames = '',
+  min = 0,
+  max = 100,
   ...rest
 }: any) => {
   const [value, setValue] = useState(defaultValue);
@@ -48,8 +50,8 @@ const RangeSliderCmp = ({
           type="range"
           name=""
           id={`range-slider-${idprefix}`}
-          min="0"
-          max="20"
+          min={min}
+          max={max}
           onChange={onSlide}
           onInput={inputHandler}
           value={value}
@@ -61,8 +63,8 @@ const RangeSliderCmp = ({
 };
 
 const RangeSlider = styled(RangeSliderCmp)`
-  --min: 0;
-  --max: 20;
+  --min: ${({ min }) => min};
+  --max: ${({ max }) => max};
   // colors
   --primary-color: #47014c;
 
