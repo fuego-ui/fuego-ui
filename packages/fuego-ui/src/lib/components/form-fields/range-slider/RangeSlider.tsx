@@ -101,24 +101,19 @@ export const RangeSlider = styled(RangeSliderCmp)`
 
   // ⚠️ BELOW VARIABLES SHOULD NOT BE CHANGED
   --step: 1;
-  --ticks-count: Calc(var(--max) - var(--min)) / var(--step);
+  --ticks-count: calc(var(--max) - var(--min)) / var(--step);
   --maxTicksAllowed: 30;
-  --too-many-ticks: Min(1, Max(var(--ticks-count) - var(--maxTicksAllowed), 0));
-  --x-step: Max(
-    var(--step),
-    var(--too-many-ticks) * (var(--max) - var(--min))
-  ); // manipulate the number of steps if too many ticks exist, so there would only be 2
+  --too-many-ticks: min(1, max(var(--ticks-count) - var(--maxTicksAllowed), 0));
+  --x-step: max(var(--step), var(--too-many-ticks) * (var(--max) - var(--min)));
+  // manipulate the number of steps if too many ticks exist, so there would only be 2
   --tickInterval: 100/ ((var(--max) - var(--min)) / var(--step)) * var(--tickEvery, 1);
   --tickIntervalPerc: calc(
     (100% - var(--thumb-size)) / ((var(--max) - var(--min)) / var(--x-step)) *
       var(--tickEvery, 1)
   );
 
-  --value-a: Clamp(
-    var(--min),
-    var(--value, 0),
-    var(--max)
-  ); // default value ("--value" is used in single-range markup)
+  --value-a: clamp(var(--min), var(--value, 0), var(--max));
+  // default value ("--value" is used in single-range markup)
   --value-b: var(--value, 0); // default value
   --text-value-a: var(--text-value, '');
 
@@ -128,8 +123,8 @@ export const RangeSlider = styled(RangeSliderCmp)`
   --completed-b: calc(
     (var(--value-b) - var(--min)) / (var(--max) - var(--min)) * 100
   );
-  --ca: Min(var(--completed-a), var(--completed-b));
-  --cb: Max(var(--completed-a), var(--completed-b));
+  --ca: min(var(--completed-a), var(--completed-b));
+  --cb: max(var(--completed-a), var(--completed-b));
 
   /* width: clamp(300px, 50vw, 800px); */
   min-width: 200px;
@@ -145,11 +140,11 @@ export const RangeSlider = styled(RangeSliderCmp)`
     -webkit-appearance: none;
     width: 100%;
     height: var(--thumb-size);
-    margin: 0;
+    margin: -10px 0 0 0;
     position: absolute;
     left: 0;
     top: calc(
-      50% - Max(var(--track-height), var(--thumb-size)) / 2 +
+      50% - max(var(--track-height), var(--thumb-size)) / 2 +
         calc(var(--ticks-gap) / 2 * var(--flip-y, -1))
     );
     cursor: grab;
@@ -202,7 +197,7 @@ export const RangeSlider = styled(RangeSliderCmp)`
     }
 
     &:nth-of-type(1) {
-      --is-left-most: Clamp(0, (var(--value-a) - var(--value-b)) * 99999, 1);
+      --is-left-most: clamp(0, (var(--value-a) - var(--value-b)) * 99999, 1);
       & + output {
         &:not(:only-of-type) {
           --flip: calc(var(--thumbs-too-close) * -1);
@@ -229,7 +224,7 @@ export const RangeSlider = styled(RangeSliderCmp)`
       var(--ticks-gap) * var(--flip-y, 0) + var(--thumb-size) / 2 -
         var(--track-height) / 2
     );
-    //  transform: var(--flip-y, translateY(-50%) translateZ(0));
+    transform: var(--flip-y, translateY(-50%) translateZ(0));
     height: calc(var(--track-height));
     background: var(--progress-background, #eee);
     pointer-events: none;

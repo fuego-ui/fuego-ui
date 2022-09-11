@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import RangeSlider from './RangeSlider';
+import { RangeSlider } from './RangeSlider';
 
 export default {
   component: RangeSlider,
