@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
 import styled from 'styled-components';
 
-const RangeSliderCmp = ({
+export const RangeSliderCmp = ({
   className = '',
   label,
   defaultValue = 0,
@@ -62,7 +62,7 @@ const RangeSliderCmp = ({
   );
 };
 
-const RangeSlider = styled(RangeSliderCmp)`
+export const RangeSlider = styled(RangeSliderCmp)`
   --min: ${({ min }) => min};
   --max: ${({ max }) => max};
   // colors
@@ -264,5 +264,3 @@ const RangeSlider = styled(RangeSliderCmp)`
     }
   }
 `;
-
-export default RangeSlider;
