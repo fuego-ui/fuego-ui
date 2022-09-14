@@ -2,13 +2,13 @@ import React, { useState, useRef, useEffect, useId, forwardRef } from 'react';
 import styled from 'styled-components';
 
 interface RangeSliderProps {
-  className: string;
-  label: string;
-  defaultValue: number;
-  labelClassNames: string;
-  min: number;
-  max: number;
-  onChange: any;
+  className?: string;
+  label?: string;
+  defaultValue?: number;
+  labelClassNames?: string;
+  min?: number;
+  max?: number;
+  onChange?: any;
 }
 
 export const RangeSliderCmp = forwardRef(
