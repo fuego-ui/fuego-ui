@@ -1,70 +1,87 @@
-import React, { useState, useRef, useEffect, useId } from 'react';
+import React, { useState, useRef, useEffect, useId, forwardRef } from 'react';
 import styled from 'styled-components';
 
-export const RangeSliderCmp = ({
-  className = '',
-  label,
-  defaultValue = 0,
-  labelClassNames = '',
-  min = 0,
-  max = 100,
-  ...rest
-}: any) => {
-  const [value, setValue] = useState(defaultValue);
-  const sliderParentRef = useRef<any>(null);
-  const idprefix = useId();
+interface RangeSliderProps {
+  className: string;
+  label: string;
+  defaultValue: number;
+  labelClassNames: string;
+  min: number;
+  max: number;
+  onChange: any;
+}
 
-  const onSlide = (e: any) => rest.onChange && rest.onChange(e);
+export const RangeSliderCmp = forwardRef(
+  (
+    {
+      className = '',
+      label,
+      defaultValue = 0,
+      labelClassNames = '',
+      min = 0,
+      max = 100,
+      ...rest
+    }: RangeSliderProps,
+    ref: any
+  ) => {
+    const [value, setValue] = useState(defaultValue);
+    const sliderParentRef = useRef<any>(null);
+    const idprefix = useId();
 
-  const inputHandler = (e: any) => {
-    e.target.parentNode.style.setProperty('--value', e.target.value);
-    e.target.parentNode.style.setProperty(
-      '--text-value',
-      JSON.stringify(e.target.value)
-    );
-    setValue(e.target.value);
-  };
+    const onSlide = (e: any) => rest.onChange && rest.onChange(e);
 
-  useEffect(() => {
-    if (
-      sliderParentRef &&
-      sliderParentRef.current &&
-      sliderParentRef.current.style
-    ) {
-      sliderParentRef.current.style.setProperty('--value', defaultValue);
-      sliderParentRef.current.style.setProperty(
+    const inputHandler = (e: any) => {
+      e.target.parentNode.style.setProperty('--value', e.target.value);
+      e.target.parentNode.style.setProperty(
         '--text-value',
-        JSON.stringify(defaultValue)
+        JSON.stringify(e.target.value)
       );
-    }
-  }, []);
+      setValue(e.target.value);
+    };
 
-  return (
-    <div>
-      <label className={labelClassNames} htmlFor={`range-slider-${idprefix}`}>
-        {label}
-      </label>
-      <div ref={sliderParentRef} className={`range-slider my-3 ${className}`}>
-        <input
-          className="w-full"
-          type="range"
-          name=""
-          id={`range-slider-${idprefix}`}
-          min={min}
-          max={max}
-          onChange={onSlide}
-          onInput={inputHandler}
-          value={value}
-        />
-        <div className="range-slider__progress"></div>
+    useEffect(() => {
+      if (
+        sliderParentRef &&
+        sliderParentRef.current &&
+        sliderParentRef.current.style
+      ) {
+        sliderParentRef.current.style.setProperty('--value', defaultValue);
+        sliderParentRef.current.style.setProperty(
+          '--text-value',
+          JSON.stringify(defaultValue)
+        );
+      }
+    }, []);
+
+    return (
+      <div>
+        <label className={labelClassNames} htmlFor={`range-slider-${idprefix}`}>
+          {label}
+        </label>
+        <div ref={sliderParentRef} className={`range-slider my-3 ${className}`}>
+          <input
+            className="w-full"
+            type="range"
+            name=""
+            id={`range-slider-${idprefix}`}
+            min={min}
+            max={max}
+            onChange={onSlide}
+            onInput={inputHandler}
+            value={value}
+            ref={ref}
+          />
+          <div className="range-slider__progress"></div>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
-export const RangeSlider = styled(RangeSliderCmp)`
-  --min: ${({ min }) => min};
-  --max: ${({ max }) => max};
+export const RangeSlider = styled(RangeSliderCmp)<RangeSliderProps>`
+  --min: ${({ min }) => min || 0};
+  --max: ${({ max }) => max || 100};
+
   // colors
   --primary-color: #47014c;
 
