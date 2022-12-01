@@ -1,15 +1,8 @@
-import React, {
-  cloneElement,
-  useCallback,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from 'react';
+import React, { cloneElement, useEffect, useId, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { classnames } from '../../utils/component-utils';
-import { Draggable } from '../draggable/Draggble';
+import { DraggableScroll } from '../draggable/DraggableScroll';
 
 type Direction = 'left' | 'right';
 type Alignment = 'left' | 'center' | 'right';
@@ -87,14 +80,16 @@ const TabPanel = styled.div`
   }
 `;
 
-const TabHighlight = styled.span<HighlightProps>`
-  width: ${({ width }) => (width ? `${width}px` : '9rem')};
+const TabHighlight = styled.span.attrs((props: HighlightProps) => ({
+  style: {
+    left: props.leftOffset ? `${props.leftOffset}px` : 0,
+    width: props.width ? `${props.width}px` : '96px',
+  },
+}))`
   height: 2px;
   position: absolute;
   transition: width 0.3s, left 0.3s;
-  left: ${({ leftOffset }) => (leftOffset ? `${leftOffset}px` : 0)};
   bottom: 0;
-  // theme
   background-color: ${({ theme }) => theme && theme.primary};
 `;
 
@@ -170,10 +165,10 @@ export const Tabs = ({
 }: ITabs) => {
   const [activeTab, setActiveTab] = useState('');
   const [ids, setIds] = useState<Array<TabIdProps>>([]);
-  const [hightlightWidth, setHighlightWidth] = useState(90);
   const [highlightOffset, sethighlightOffset] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScrollLeft, setMaxScrollLeft] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
   const [showArrows, setShowArrows] = useState(true);
   const [arrowState, setArrowState] = useState({
     left: true,
@@ -205,7 +200,19 @@ export const Tabs = ({
     }
   };
 
-  const onTabSelection = (tabId: string) => setActiveTab(tabId);
+  const onTabSelection = (tabId: string) => {
+    if (!isDragging) {
+      setActiveTab(tabId);
+    }
+  };
+  const tabIds = ids && ids.length > 0 ? ids : generateIDS();
+
+  const tabClasses = classnames(
+    {
+      scrollable: scrollable,
+    },
+    className
+  );
 
   // scrollable
   const scrollTab = (direction: Direction) => {
@@ -248,12 +255,9 @@ export const Tabs = ({
     }
   };
 
-  const handleDrag = useCallback(({ translation }: any) => {
-    if (tabScrollArea && tabScrollArea.current) {
-      tabScrollArea.current.scrollLeft =
-        tabScrollArea.current.scrollLeft - translation.x;
-    }
-  }, []);
+  const OnDragEndHandler = () => {
+    setIsDragging(false);
+  };
 
   const calculateMaxLeftScroll = () => {
     if (tabScrollArea && tabScrollArea.current && draggableRef) {
@@ -308,15 +312,6 @@ export const Tabs = ({
 
   // End declarations
 
-  const tabIds = ids && ids.length > 0 ? ids : generateIDS();
-
-  const tabClasses = classnames(
-    {
-      scrollable: scrollable,
-    },
-    className
-  );
-
   useEffect(() => {
     // Set Default Tab
     activeTab === '' && setActiveTab(tabIds[0].tabId);
@@ -348,7 +343,6 @@ export const Tabs = ({
       if (activeTabRef) {
         const offset = activeTabRef.offsetLeft;
         sethighlightOffset(offset);
-        setHighlightWidth(activeTabRef.offsetWidth);
       }
     };
 
@@ -399,7 +393,10 @@ export const Tabs = ({
           onScroll={onTabListScroll}
           className={`${fullWidth ? 'flex-grow-1' : ''}`}
         >
-          <Draggable draggableRef={draggableRef} onDrag={handleDrag}>
+          <DraggableScroll
+            draggableRef={draggableRef}
+            onDragEnd={OnDragEndHandler}
+          >
             {children.map((child: any, index: number) => {
               const { label, className = '' } = child.props;
               const newProps = {
@@ -414,8 +411,8 @@ export const Tabs = ({
               };
               return cloneElement(child, { ...newProps });
             })}
-          </Draggable>
-          <TabHighlight leftOffset={highlightOffset} width={hightlightWidth} />
+            <TabHighlight leftOffset={highlightOffset} />
+          </DraggableScroll>
         </TabsList>
         {scrollable && showArrows && scrollButton('right')}
       </div>
