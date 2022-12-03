@@ -1,4 +1,11 @@
-import React, { cloneElement, useEffect, useId, useRef, useState } from 'react';
+import React, {
+  cloneElement,
+  useCallback,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { classnames } from '../../utils/component-utils';
@@ -40,11 +47,8 @@ interface IArrowButton {
  * Minor issue, on tab click, full tab not necessarily moved into view
  * on window resize, lmaxsize is out of date
  */
-interface ITabsList {
-  ref: any;
-}
 
-const TabsList = styled.div<ITabsList>`
+const TabsList = styled.div`
   display: flex;
 `;
 
@@ -80,12 +84,14 @@ const TabPanel = styled.div`
   }
 `;
 
-const TabHighlight = styled.span.attrs((props: HighlightProps) => ({
-  style: {
-    left: props.leftOffset ? `${props.leftOffset}px` : 0,
-    width: props.width ? `${props.width}px` : '96px',
-  },
-}))`
+const TabHighlight = styled.span.attrs<HighlightProps>(
+  (props: HighlightProps) => ({
+    style: {
+      left: props.leftOffset ? `${props.leftOffset}px` : 0,
+      width: props.width ? `${props.width}px` : '96px',
+    },
+  })
+)<HighlightProps>`
   height: 2px;
   position: absolute;
   transition: width 0.3s, left 0.3s;
@@ -165,7 +171,7 @@ export const Tabs = ({
 }: ITabs) => {
   const [activeTab, setActiveTab] = useState('');
   const [ids, setIds] = useState<Array<TabIdProps>>([]);
-  const [highlightOffset, sethighlightOffset] = useState(0);
+  const [highlightOffset, setHighlightOffset] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScrollLeft, setMaxScrollLeft] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -175,7 +181,6 @@ export const Tabs = ({
     right: false,
   });
 
-  const tabScrollArea = useRef<HTMLDivElement>();
   const draggableRef = useRef<HTMLDivElement>();
   const tabRefs = useRef<HTMLElement[]>([]);
 
@@ -215,61 +220,40 @@ export const Tabs = ({
   );
 
   // scrollable
-  const scrollTab = (direction: Direction) => {
-    if (tabScrollArea && tabScrollArea.current) {
-      const boundingBox = tabScrollArea.current.getBoundingClientRect();
-      const scrollWindowWidth = boundingBox.width;
-      const scrollPosition = tabScrollArea.current.scrollLeft;
-      let newScrollPosition;
-      switch (direction) {
-        case 'right':
-          if (scrollPosition + scrollWindowWidth > maxScrollLeft) {
-            tabScrollArea.current.scrollLeft = maxScrollLeft;
-            newScrollPosition = maxScrollLeft;
-            setScrollPosition(maxScrollLeft);
-          } else {
-            newScrollPosition =
-              tabScrollArea.current.scrollLeft + scrollWindowWidth;
-            tabScrollArea.current.scrollLeft = newScrollPosition;
-            setScrollPosition(newScrollPosition);
-          }
-          break;
-        case 'left':
-          if (scrollPosition - scrollWindowWidth > 0) {
-            tabScrollArea.current.scrollLeft = 0;
-            newScrollPosition = 0;
-            setScrollPosition(0);
-          } else {
-            newScrollPosition =
-              tabScrollArea.current.scrollLeft - scrollWindowWidth;
-            tabScrollArea.current.scrollLeft = newScrollPosition;
-            setScrollPosition(newScrollPosition);
-          }
-          break;
-        default:
-          break;
+  const scrollTab = (direction: Direction) => (e: any) => {
+    if (draggableRef && draggableRef.current) {
+      const scrollWidth = draggableRef.current.scrollWidth;
+      const scrollWindowWidth = draggableRef.current.offsetWidth;
+      const scrollPosition = draggableRef.current.scrollLeft;
+
+      let newScrollPosition = 0;
+      if (direction === 'right') {
+        if (scrollWindowWidth + scrollPosition > scrollWidth) {
+          newScrollPosition = maxScrollLeft - scrollWindowWidth;
+        } else {
+          newScrollPosition = scrollPosition + scrollWindowWidth;
+        }
+      } else if (direction === 'left') {
+        if (scrollPosition - scrollWindowWidth <= 0) {
+          newScrollPosition = 0;
+        } else {
+          newScrollPosition = scrollPosition - scrollWindowWidth;
+        }
       }
 
-      // Need to check with scroll post this scroll
+      setScrollPosition(newScrollPosition);
+      draggableRef.current.scrollTo({
+        top: 0,
+        left: newScrollPosition,
+        behavior: 'smooth',
+      });
+
+      // Need to check with scroll post this scroll - hi love alex
       updateScrollArrowState(maxScrollLeft, newScrollPosition);
     }
   };
 
-  const OnDragEndHandler = () => {
-    setIsDragging(false);
-  };
-
-  const calculateMaxLeftScroll = () => {
-    if (tabScrollArea && tabScrollArea.current && draggableRef) {
-      const boundingBox = tabScrollArea.current.getBoundingClientRect();
-      const scrollableAreaWidth = draggableRef.current?.offsetWidth || 0;
-      const scrollWindowWidth = boundingBox.width;
-      if (scrollableAreaWidth > 0 && scrollWindowWidth > 0) {
-        const maxScroll = scrollableAreaWidth - scrollWindowWidth || 0;
-        setMaxScrollLeft(maxScroll);
-      }
-    }
-  };
+  const OnDragEndHandler = () => setIsDragging(false);
 
   /**
    * Call on ScrollTab, called on window resize
@@ -280,10 +264,11 @@ export const Tabs = ({
     lmaxScrollLeft: number,
     scrollPosition?: number
   ) => {
-    if (tabScrollArea && tabScrollArea.current && lmaxScrollLeft > 0) {
-      const currentScroll = scrollPosition || tabScrollArea.current.scrollLeft;
+    if (draggableRef && draggableRef.current && lmaxScrollLeft > 0) {
+      const currentScroll = scrollPosition || draggableRef.current.scrollLeft;
       const newState = { left: false, right: false };
 
+      console.log(currentScroll);
       if (currentScroll <= 0) {
         newState.left = true;
       }
@@ -295,17 +280,19 @@ export const Tabs = ({
     }
   };
 
-  const onTabListScroll = () => {
-    setScrollPosition(tabScrollArea.current?.scrollLeft || scrollPosition);
-    updateScrollArrowState(maxScrollLeft);
-  };
+  // TODO:Determine when we have stoppped scrolling
+  const onTabListScroll = useCallback((e: any) => {
+    // console.log(e);
+    setScrollPosition(draggableRef.current?.scrollLeft || 0);
+    updateScrollArrowState(draggableRef.current?.scrollLeft || 0);
+  }, []);
 
   const scrollButton = (direction: Direction) => {
     return (
       <ScrollArrow
         direction={direction}
         disabled={arrowState[direction]}
-        onClick={() => scrollTab(direction)}
+        onClick={scrollTab(direction)}
       ></ScrollArrow>
     );
   };
@@ -342,16 +329,16 @@ export const Tabs = ({
     const updateTabHighlightPosition = (activeTabRef: HTMLElement) => {
       if (activeTabRef) {
         const offset = activeTabRef.offsetLeft;
-        sethighlightOffset(offset);
+        setHighlightOffset(offset);
       }
     };
 
     const tabIndex = tabIds.findIndex((tab: any) => tab.tabId === activeTab);
     const activeTabRef = tabIndex >= -1 ? tabRefs.current[tabIndex] : null;
 
-    if (activeTab && tabScrollArea && tabScrollArea.current && activeTabRef) {
+    if (activeTab && draggableRef && draggableRef.current && activeTabRef) {
       const rightBoundScrollArea =
-        tabScrollArea.current?.offsetWidth + scrollPosition;
+        draggableRef.current?.offsetWidth + scrollPosition;
       const rightBoundCoordinateOfButton =
         activeTabRef.offsetLeft + activeTabRef.offsetWidth;
 
@@ -359,15 +346,15 @@ export const Tabs = ({
         const portionOfTabViewable =
           (activeTabRef.offsetLeft - rightBoundScrollArea) * -1;
         const delta = activeTabRef.offsetWidth - portionOfTabViewable;
-        const newPosition = (tabScrollArea.current.scrollLeft =
-          tabScrollArea.current.scrollLeft + delta);
+        const newPosition = (draggableRef.current.scrollLeft =
+          draggableRef.current.scrollLeft + delta);
         setScrollPosition(newPosition);
       }
 
       if (scrollPosition > activeTabRef.offsetLeft) {
         const delta = scrollPosition - activeTabRef.offsetLeft;
-        const newPosition = (tabScrollArea.current.scrollLeft =
-          tabScrollArea.current.scrollLeft - delta);
+        const newPosition = (draggableRef.current.scrollLeft =
+          draggableRef.current.scrollLeft - delta);
         setScrollPosition(newPosition);
       }
 
@@ -376,8 +363,17 @@ export const Tabs = ({
   }, [activeTab]);
 
   useEffect(() => {
+    const calculateMaxLeftScroll = () => {
+      if (draggableRef && draggableRef.current) {
+        const scrollWidth =
+          draggableRef.current?.scrollWidth -
+            draggableRef.current?.offsetWidth || 0;
+        setMaxScrollLeft(scrollWidth);
+      }
+    };
+
     calculateMaxLeftScroll();
-  }, [draggableRef, tabScrollArea]);
+  }, [draggableRef]);
 
   return (
     <TabsContainer id={`${seed} `} className={tabClasses}>
@@ -388,13 +384,12 @@ export const Tabs = ({
       >
         {scrollable && showArrows && scrollButton('left')}
         <TabsList
-          ref={tabScrollArea}
           role="tablist"
-          onScroll={onTabListScroll}
           className={`${fullWidth ? 'flex-grow-1' : ''}`}
         >
           <DraggableScroll
             draggableRef={draggableRef}
+            onScroll={onTabListScroll}
             onDragEnd={OnDragEndHandler}
           >
             {children.map((child: any, index: number) => {

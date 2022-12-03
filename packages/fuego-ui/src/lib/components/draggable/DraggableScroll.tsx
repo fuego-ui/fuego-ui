@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect, MouseEvent } from 'react';
 interface IDraggable {
   children: any;
   id?: string;
+  onScroll?: any;
   onDrag?: any;
   onDragEnd?: any;
   draggableRef: any;
@@ -14,6 +15,7 @@ export const DraggableScroll = ({
   children,
   id,
   onDrag,
+  onScroll,
   onDragEnd,
   draggableRef,
 }: IDraggable) => {
@@ -103,6 +105,19 @@ export const DraggableScroll = ({
 
     onDragEnd && onDragEnd();
   }, [onDragEnd]);
+
+  useEffect(() => {
+    const draggableEl = draggableRef.current;
+    if (onScroll) {
+      draggableEl.addEventListener('scroll', onScroll);
+    }
+
+    return () => {
+      if (onScroll) {
+        draggableEl.removeEventListener('scroll', onScroll);
+      }
+    };
+  }, [draggableRef, onScroll]);
 
   useEffect(() => {
     const draggableEl = draggableRef.current;
