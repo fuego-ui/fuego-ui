@@ -268,24 +268,27 @@ export const Tabs = ({
       const currentScroll = scrollPosition || draggableRef.current.scrollLeft;
       const newState = { left: false, right: false };
 
-      console.log(currentScroll);
       if (currentScroll <= 0) {
         newState.left = true;
       }
 
-      if (currentScroll >= lmaxScrollLeft) {
+      if (currentScroll >= lmaxScrollLeft - 1) {
         newState.right = true;
       }
       setArrowState(newState);
     }
   };
 
-  // TODO:Determine when we have stoppped scrolling
-  const onTabListScroll = useCallback((e: any) => {
-    // console.log(e);
-    setScrollPosition(draggableRef.current?.scrollLeft || 0);
-    updateScrollArrowState(draggableRef.current?.scrollLeft || 0);
-  }, []);
+  const onTabListScroll = useCallback(
+    (e: any) => {
+      setScrollPosition(draggableRef.current?.scrollLeft || 0);
+      updateScrollArrowState(
+        maxScrollLeft,
+        draggableRef.current?.scrollLeft || 0
+      );
+    },
+    [maxScrollLeft]
+  );
 
   const scrollButton = (direction: Direction) => {
     return (
