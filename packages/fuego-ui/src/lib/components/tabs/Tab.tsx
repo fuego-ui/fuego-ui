@@ -36,6 +36,7 @@ const TabComponent = forwardRef(
     ref: any
   ) => {
     const isActiveTab = () => (activeTab === tabId ? true : false);
+    const onClickHandler = () => (e: any) => !disabled && onTabClick(tabId);
 
     return (
       <button
@@ -45,7 +46,7 @@ const TabComponent = forwardRef(
         aria-controls={tabPanelId}
         aria-selected={isActiveTab()}
         className={`${props.className}`}
-        onClick={() => !disabled && onTabClick(tabId)}
+        onClick={onClickHandler()}
       >
         <span>{label}</span>
       </button>
@@ -60,7 +61,7 @@ export const Tab = styled(TabComponent)`
   min-height: 3rem;
   transition: background-color 0.3s, color 0.3s;
 
-  // theme
+  // theme i was here too
   background-color: ${({ theme }) => theme && theme.background};
   color: ${({ theme }) => theme && theme.primary};
 
