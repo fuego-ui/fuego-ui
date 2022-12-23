@@ -17,7 +17,7 @@ const secondaryCard = css`
   color: ${({ theme }) => theme && theme.contrastBackground};
 `;
 
-export const Card = styled(CardCmp)`
+const Card = styled(CardCmp)`
   padding: 2.5rem;
   min-height: 3.4rem;
   position: relative;
@@ -30,3 +30,5 @@ export const Card = styled(CardCmp)`
     return primaryCard;
   }}
 `;
+
+export default Card;

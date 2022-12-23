@@ -16,7 +16,7 @@ interface IDraggable {
 
 const POSITION = { x: 0, y: 0 };
 
-export const Draggable = ({
+const Draggable = ({
   children,
   id,
   onDrag,
@@ -99,3 +99,5 @@ export const Draggable = ({
     </div>
   );
 };
+
+export default Draggable;

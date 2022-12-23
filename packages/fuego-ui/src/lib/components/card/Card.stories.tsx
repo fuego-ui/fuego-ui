@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button } from '../button/Button';
-import { Card } from './Card';
+import Button from '../button';
+import Card from '.';
 
 export default {
   component: Card,

@@ -5,15 +5,15 @@ import {
   queryByText,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AccordionItem } from './Accordion-item';
+import Accordion from './Accordion';
 window.scrollTo = jest.fn();
 
 test('Expands Accordion on Click when closed', async () => {
   const user = userEvent.setup();
   const { container } = render(
-    <AccordionItem label="Accordion Item">
+    <Accordion label="Accordion Item">
       <span>Accordion Content</span>
-    </AccordionItem>
+    </Accordion>
   );
   await user.click(container.querySelector('button') as Element);
   const accordionPanel = container.querySelector('.accordion-panel');
@@ -24,9 +24,9 @@ test('Expands Accordion on Click when closed', async () => {
 test('Collapses Accordion on Click when open', async () => {
   const user = userEvent.setup();
   const { container } = render(
-    <AccordionItem label="Accordion Item" expanded={true}>
+    <Accordion label="Accordion Item" expanded={true}>
       <span>Accordion Content</span>
-    </AccordionItem>
+    </Accordion>
   );
   await user.click(container.querySelector('button') as Element);
   await waitForElementToBeRemoved(queryByText(container, 'Accordion Content'));
@@ -37,9 +37,9 @@ test('Collapses Accordion on Click when open', async () => {
 
 test('collapsed by default', async () => {
   const { container } = render(
-    <AccordionItem label="Accordion Item 2">
+    <Accordion label="Accordion Item 2">
       <span>Accordion Content</span>
-    </AccordionItem>
+    </Accordion>
   );
   expect(queryByText(container, 'Accordion Content')).toBeFalsy();
   cleanup();
@@ -48,9 +48,9 @@ test('collapsed by default', async () => {
 test('title is rendered in accordion button', () => {
   const title = 'Accordion Item 2';
   const { container } = render(
-    <AccordionItem label={title} expanded={true}>
+    <Accordion label={title} expanded={true}>
       <span>Accordion Content</span>
-    </AccordionItem>
+    </Accordion>
   );
 
   const button = container.querySelector('button');
@@ -62,9 +62,9 @@ test('title is rendered in accordion button', () => {
 test('Children is rendered in accordion panel', () => {
   const children = <span>Accordion Content</span>;
   const { container } = render(
-    <AccordionItem label="Accordion Item" expanded={true}>
+    <Accordion label="Accordion Item" expanded={true}>
       {children}
-    </AccordionItem>
+    </Accordion>
   );
 
   const accordionPanel = container.querySelector('.accordion-panel');

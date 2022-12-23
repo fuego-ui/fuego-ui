@@ -27,7 +27,7 @@ const ScrollWrapper = styled.div`
 } */
 `;
 
-export const DraggableScroll = ({
+const DraggableScroll = ({
   children,
   id,
   onDrag,
@@ -187,3 +187,5 @@ export const DraggableScroll = ({
     </ScrollWrapper>
   );
 };
+
+export default DraggableScroll;

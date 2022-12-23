@@ -3,14 +3,14 @@
 // export * from './lib/components';
 // export * from './lib/utils';
 
+export * from './lib/components/accordion/AccordionGroup';
 export * from './lib/components/accordion/Accordion';
-export * from './lib/components/accordion/Accordion-item';
 
 export * from './lib/components/button/Button';
 
 export * from './lib/components/card/Card';
 
-export * from './lib/components/draggable/Draggble';
+export * from './lib/components/draggable/useDraggble';
 
 export * from './lib/components/form-fields/TextInput';
 

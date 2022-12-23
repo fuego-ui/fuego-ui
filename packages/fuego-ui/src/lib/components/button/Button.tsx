@@ -1,12 +1,6 @@
 import React, { forwardRef } from 'react';
 import styled, { css } from 'styled-components';
-
-export interface ButtonProps
-  extends React.HTMLProps<HTMLButtonElement | HTMLAnchorElement> {
-  level?: 'primary' | 'secondary' | 'tertiary';
-  loading?: boolean;
-  loader?: any;
-}
+import { ButtonProps } from './Button.types';
 
 export const ButtonCmp = forwardRef<ButtonProps, any>(
   (
@@ -84,7 +78,7 @@ const tertiaryBtn = css`
   }
 `;
 
-export const Button = styled(ButtonCmp)`
+const Button = styled(ButtonCmp)`
   padding: 0 1.2rem;
   transition: background-color 0.2s, color 0.2s, border 0.2s;
   font-weight: 600;
@@ -102,3 +96,5 @@ export const Button = styled(ButtonCmp)`
   ${({ level }) => (level === 'secondary' ? secondaryBtn : '')}
   ${({ level }) => (level === 'tertiary' ? tertiaryBtn : '')}
 `;
+
+export default Button;
