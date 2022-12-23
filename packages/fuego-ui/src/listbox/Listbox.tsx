@@ -10,9 +10,9 @@ import React, {
 } from 'react';
 import Field from '../field';
 import styled from 'styled-components';
-import { Keys } from '../../utils/keycodes';
-import { classnames } from '../../utils/component-utils';
-import { themeOrDefault } from '../../utils/theme-utils';
+import { Keys } from '../utils/keycodes';
+import { classnames } from '../utils/component-utils';
+import { themeOrDefault } from '../utils/theme-utils';
 import { IListbox } from './Listbox.types';
 
 export const ListboxCmp = forwardRef(

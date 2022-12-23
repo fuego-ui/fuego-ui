@@ -13,8 +13,8 @@ import {
   outFieldFloat,
   outlineFieldFloat,
 } from './FieldStyles';
-import { themeOrDefault } from '../../utils/theme-utils';
-import { classnames } from '../../utils/component-utils';
+import { themeOrDefault } from '../utils/theme-utils';
+import { classnames } from '../utils/component-utils';
 import { FieldProps } from './Field.types';
 
 const selectFieldStyle = (theme: any, fieldParam: any) =>
