@@ -1,46 +1,53 @@
-// components
-// testing tree-shaking without barrel files
-// export * from './lib/components';
-// export * from './lib/utils';
+//Accordion
+export { default as Accordion } from './lib/accordion';
+export * from './lib/accordion';
 
-export * from './lib/components/accordion/AccordionGroup';
-export * from './lib/components/accordion/Accordion';
+export { default as useAutocomplete } from './lib/autocomplete';
 
-export * from './lib/components/button/Button';
+// Button
+export { default as Button } from './lib/button';
+export * from './lib/button';
 
-export * from './lib/components/card/Card';
+// Card
+export { default as Card } from './lib/card';
+export * from './lib/card';
 
-export * from './lib/components/draggable/useDraggble';
+export * from './lib/draggable';
 
-export * from './lib/components/form-fields/TextInput';
+// Checkbox
+export { default as Checkbox } from './lib/form-fields/checkbox';
+export * from './lib/form-fields/checkbox';
 
-export * from './lib/components/form-fields/checkbox/Checkbox';
+// Field
+export { default as Field } from './lib/form-fields/field';
+export * from './lib/form-fields/field';
 
-export * from './lib/components/form-fields/field/Field';
-export * from './lib/components/form-fields/field/Field-Fix';
-export * from './lib/components/form-fields/field/FieldStyles';
+export { default as Modal } from './lib/modal';
+export * from './lib/modal';
 
-export * from './lib/components/form-fields/listbox/Listbox';
-export * from './lib/components/form-fields/listbox/useAutocomplete';
+// Range Slider
+export { default as RangeSlider } from './lib/form-fields/range-slider';
+export * from './lib/form-fields/range-slider';
 
-export * from './lib/components/form-fields/range-slider/RangeSlider';
-export * from './lib/components/form-fields/select/Select';
-export * from './lib/components/form-fields/select-dropdown/SelectDropdown';
+// Select Dropdown
+export { default as SelectDropdown } from './lib/form-fields/select-dropdown';
 
-export * from './lib/components/loaders/Spinner';
+// Spinner
+export { default as Spinner } from './lib/loaders';
 
-export * from './lib/components/modal/Modal';
-export * from './lib/components/modal/useModal';
+// Temporary TextInput Wrapper Component
+export { default as TextInput } from './lib/form-fields/TextInput';
+export * from './lib/form-fields/TextInput';
 
-export * from './lib/components/tabs/Tab';
-export * from './lib/components/tabs/TabStyles';
-export * from './lib/components/tabs/Tabs';
+// Tabs
+export { default as Tabs } from './lib/tabs';
+export * from './lib/tabs';
 
-export * from './lib/components/textImage/TextImage';
+// Text Image Component
+export { default as TextImage } from './lib/textImage';
+export * from './lib/textImage';
 
-export * from './lib/components/video/Video';
+// Video Component
+export { default as Video } from './lib/video';
 
-export * from './lib/utils/breakpoints';
-export * from './lib/utils/component-utils';
-export * from './lib/utils/keycodes';
-export * from './lib/utils/theme-utils';
+export * from './lib/utils';
