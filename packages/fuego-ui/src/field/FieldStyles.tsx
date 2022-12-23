@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { themeOrDefault } from '../../utils/theme-utils';
+import { themeOrDefault } from '../utils/theme-utils';
 
 export const outFieldFloat = css`
   &.float-label {
