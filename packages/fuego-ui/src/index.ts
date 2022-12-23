@@ -1,4 +1,4 @@
-//Accordion
+// Accordion
 export { default as Accordion } from './accordion';
 export * from './accordion';
 
@@ -15,29 +15,29 @@ export * from './card';
 export * from './draggable';
 
 // Checkbox
-export { default as Checkbox } from './form-fields/checkbox';
-export * from './form-fields/checkbox';
+export { default as Checkbox } from './checkbox';
+export * from './checkbox';
 
 // Field
-export { default as Field } from './form-fields/field';
-export * from './form-fields/field';
+export { default as Field } from './field';
+export * from './field';
 
 export { default as Modal } from './modal';
 export * from './modal';
 
 // Range Slider
-export { default as RangeSlider } from './form-fields/range-slider';
-export * from './form-fields/range-slider';
+export { default as RangeSlider } from './range-slider';
+export * from './range-slider';
 
 // Select Dropdown
-export { default as SelectDropdown } from './form-fields/select-dropdown';
+export { default as SelectDropdown } from './select-dropdown';
 
 // Spinner
 export { default as Spinner } from './loaders';
 
 // Temporary TextInput Wrapper Component
-export { default as TextInput } from './form-fields/TextInput';
-export * from './form-fields/TextInput';
+export { default as TextInput } from './textInput';
+export * from './textInput';
 
 // Tabs
 export { default as Tabs } from './tabs';
