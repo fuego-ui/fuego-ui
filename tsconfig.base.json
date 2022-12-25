@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@fuego-ui/angular": ["packages/angular/src/index.ts"],
+      "@fuego-ui/fuego-styles": ["packages/fuego-styles/src/index.ts"],
+      "@fuego-ui/react": ["packages/react/src/index.ts"],
       "@unbyte-io/fuego-ui": ["packages/fuego-ui/src/index.ts"]
     }
   },

@@ -1,0 +1,44 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/fuego-styles/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/fuego-styles",
+        "tsConfig": "packages/fuego-styles/tsconfig.lib.json",
+        "project": "packages/fuego-styles/package.json",
+        "entryFile": "packages/fuego-styles/src/index.js",
+        "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+        "compiler": "babel",
+        "external": ["typescript"],
+        "format": ["cjs", "esm"],
+        "assets": [
+          {
+            "glob": "packages/fuego-styles/README.md",
+            "input": ".",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/fuego-styles/**/*.{ts,tsx,js,jsx}"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/fuego-styles"],
+      "options": {
+        "jestConfig": "packages/fuego-styles/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  }
+}

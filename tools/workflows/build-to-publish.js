@@ -3,16 +3,13 @@ const sysprocess = require('process');
 const { exec } = require('child_process');
 const { spawn } = require('node:child_process');
 const util = require('util');
-// import { exec } from 'node:child_process';
-// import util from 'node:util';
-// promisify exec
 
 const execPromise = util.promisify(exec);
 const baseCmd = 'npm version';
 
 async function buildLibrary() {
   console.info('Building Library...');
-  const { stdout, stderr } = await execPromise('nx build fuego-ui');
+  const { stdout, stderr } = await execPromise('nx build react');
   printOutput({ stdout, stderr });
   console.info('Library Built');
 }
