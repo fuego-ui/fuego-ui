@@ -1,8 +1,10 @@
 import { themes } from '@storybook/theming';
 import { ThemeProvider } from 'styled-components';
 import { useDarkMode } from 'storybook-dark-mode';
-import './global.css';
+// import './global.css';
 import 'tailwindcss/tailwind.css';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+
 const defaultTheme = {
   base: 'light',
   colorPrimary: 'purple',

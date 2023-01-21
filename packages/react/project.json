@@ -46,7 +46,8 @@
         "port": 4400,
         "config": {
           "configFolder": "packages/react/.storybook"
-        }
+        },
+        "postcssConfig": "packages/react/postcss.config.js"
       },
       "configurations": {
         "ci": {

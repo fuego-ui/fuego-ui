@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect, useId, useState } from 'react';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 
-export const AccordionCmp = ({
+export const Accordion = ({
   label,
   children,
   className,
@@ -25,7 +25,7 @@ export const AccordionCmp = ({
   }, [expanded]);
 
   return (
-    <div className={className}>
+    <div className={`accordion ${className ? className : ''}`}>
       <button
         className="accordion-item-trigger"
         aria-controls={accordionItemContentId}
@@ -35,7 +35,7 @@ export const AccordionCmp = ({
         onClick={accordionClick}
       >
         {label}
-        <AccordionIcon></AccordionIcon>
+        <span className="accordion-icon"></span>
       </button>
       <AnimatePresence initial={false}>
         {_expanded && (
@@ -62,63 +62,63 @@ export const AccordionCmp = ({
   );
 };
 
-const Accordion = styled(AccordionCmp)`
-  .accordion-item-trigger {
-    width: 100%;
-    text-align: left;
-    position: relative;
-    border: none;
-    min-height: 2.8rem;
-    padding: 0.4rem 0.5rem;
-    color: ${({ theme }) => theme && theme.contrastText};
-    background: ${({ theme }) => theme && theme.primary};
+// const Accordion = styled(AccordionCmp)`
+//   .accordion-item-trigger {
+//     width: 100%;
+//     text-align: left;
+//     position: relative;
+//     border: none;
+//     min-height: 2.8rem;
+//     padding: 0.4rem 0.5rem;
+//     color: ${({ theme }) => theme && theme.contrastText};
+//     background: ${({ theme }) => theme && theme.primary};
 
-    ${({ theme, divider }) => {
-      if (theme && divider && theme.contrastText) {
-        return `border-bottom: 1px solid ${theme.contrastText};`;
-      }
-      return;
-    }};
+//     ${({ theme, divider }) => {
+//       if (theme && divider && theme.contrastText) {
+//         return `border-bottom: 1px solid ${theme.contrastText};`;
+//       }
+//       return;
+//     }};
 
-    &:hover,
-    &:focus {
-      background-color: ${({ theme }: any) => theme.secondary};
-      color: ${({ theme }: any) => theme.contrastText};
-    }
+//     &:hover,
+//     &:focus {
+//       background-color: ${({ theme }: any) => theme.secondary};
+//       color: ${({ theme }: any) => theme.contrastText};
+//     }
 
-    &:focus-visible {
-      outline: 1px dashed
-        ${({ theme }) => (theme && theme.colorPrimary ? `${theme.accent}` : '')};
-      z-index: 1;
-      outline-offset: 1px;
-    }
-  }
+//     &:focus-visible {
+//       outline: 1px dashed
+//         ${({ theme }) => (theme && theme.colorPrimary ? `${theme.accent}` : '')};
+//       z-index: 1;
+//       outline-offset: 1px;
+//     }
+//   }
 
-  .accordion-panel {
-    overflow: hidden;
-    background: ${({ theme }) => theme && theme.background};
-    color: ${({ theme }) => theme && theme.accent};
-    & > div {
-      margin: 0.4rem 0.5rem;
-    }
-  }
-`;
+//   .accordion-panel {
+//     overflow: hidden;
+//     background: ${({ theme }) => theme && theme.background};
+//     color: ${({ theme }) => theme && theme.accent};
+//     & > div {
+//       margin: 0.4rem 0.5rem;
+//     }
+//   }
+// `;
 
-export const AccordionIcon = styled.span`
-  border: solid currentcolor;
-  border-width: 0 2px 2px 0;
-  height: 0.5rem;
-  pointer-events: none;
-  position: absolute;
-  right: 1em;
-  top: 50%;
-  transform: translateY(-60%) rotate(45deg);
-  transition: transform 0.4s;
-  width: 0.5rem;
+// export const AccordionIcon = styled.span`
+//   border: solid currentcolor;
+//   border-width: 0 2px 2px 0;
+//   height: 0.5rem;
+//   pointer-events: none;
+//   position: absolute;
+//   right: 1em;
+//   top: 50%;
+//   transform: translateY(-60%) rotate(45deg);
+//   transition: transform 0.4s;
+//   width: 0.5rem;
 
-  ${Accordion} .accordion-item-trigger[aria-expanded='true'] & {
-    transform: translateY(-50%) rotate(-135deg);
-  }
-`;
+//   ${Accordion} .accordion-item-trigger[aria-expanded='true'] & {
+//     transform: translateY(-50%) rotate(-135deg);
+//   }
+// `;
 
 export default Accordion;

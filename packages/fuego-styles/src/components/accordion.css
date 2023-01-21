@@ -1,17 +1,17 @@
-.accordion {
+.accordion .accordion-item-trigger {
   @apply w-full text-left relative border-none min-h-[2.8rem] bg-primary text-primary-content border-primary;
 }
 
-.accordion.has-divider {
+.accordion .accordion-item-trigger.has-divider {
   @apply border-b-[1px] border-solid border-accent;
 }
 
-.accordion:hover,
-.accordion:focus {
+.accordion .accordion-item-trigger:hover,
+.accordion .accordion-item-trigger:focus {
   @apply bg-secondary text-accent;
 }
 
-.accordion:focus-visible {
+.accordion .accordion-item-trigger:focus-visible {
   @apply outline-1 outline-dashed z-10 outline-accent outline-offset-1;
 }
 

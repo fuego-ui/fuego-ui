@@ -13,12 +13,12 @@ const Template: ComponentStory<typeof Accordion> = (args) => (
 export const Default = Template.bind({});
 Default.args = {
   label: 'Accordion Item',
-  children: <span>Accordion Content</span>,
+  children: <span className="flex">Accordion Content</span>,
 };
 
 export const Expanded = Template.bind({});
 Expanded.args = {
   label: 'Accordion Item',
-  children: <span>Accordion Content</span>,
+  children: <span className="accordion">Accordion Content</span>,
   expanded: true,
 };

@@ -10,7 +10,8 @@
     "react-dom": "18.2.0",
     "focus-trap-react": "^9.0.2",
     "lodash.debounce": "^4.0.8",
-    "styled-components": "5.3.5"
+    "styled-components": "5.3.5",
+    "tailwindcss": "^3"
   },
   "devDependencies": {
     "styled-components": ">= 5"

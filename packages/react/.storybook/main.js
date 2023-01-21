@@ -16,6 +16,9 @@ module.exports = {
     if (rootMain.webpackFinal) {
       config = await rootMain.webpackFinal(config, { configType });
     }
+    // if (process.env.NODE_ENV === 'development') {
+    //   process.env.TAILWIND_MODE = 'watch';
+    // }
 
     // add your own webpack tweaks if needed
 

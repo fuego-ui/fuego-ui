@@ -1,26 +1,7 @@
-const postcssJs = require('postcss-js');
-const autoprefixer = require('autoprefixer');
-const plugin = require('tailwindcss/plugin');
-// const postcssPrefix = require('./postcss-prefixer');
 const file = require('../../../dist/packages/fuego-ui-styles/components');
-const colors = require('./colors');
-
-// // add prefix to class names if specified
-// // const prefix = config('daisyui.prefix');
-// let postcssJsProcess;
-// let file;
-// const prefix = true;
-
-// // try {
-// //   postcssJsProcess = postcssJs.sync(postcssPrefix({ prefix, ignore: [] }));
-// // } catch (error) {
-// //   console.error(error);
-// // }
-
-// // const shouldApplyPrefix = prefix && postcssJsProcess;
-// // if (shouldApplyPrefix) {
-// //   file = postcssJsProcess(file);
-// // }
+const themes = require('./colors/themes');
+const colorFunctions = require('./colors/colorfunctions');
+const colors = require('./colors/index');
 
 const mainFunction = ({
   addBase,
@@ -30,6 +11,9 @@ const mainFunction = ({
   postcss,
 }) => {
   addComponents(file);
+  console.log(colorFunctions);
+  const themeInjector = colorFunctions.injectThemes(addBase, config, themes);
+  themeInjector;
 };
 
 module.exports = require('tailwindcss/plugin')(mainFunction, {
