@@ -8,10 +8,12 @@ export default {
 
 const Template: ComponentStory<typeof Accordion> = (args) => (
   <AccordionGroup {...args}>
-    <Accordion label="Item 1" className="btn">
+    <Accordion label="Item 1" titleClassName="bg-primary">
       Content 1
     </Accordion>
-    <Accordion label="Item 2">Content 2</Accordion>
+    <Accordion label="Item 2" titleClassName="bg-secondary">
+      Content 2
+    </Accordion>
   </AccordionGroup>
 );
 

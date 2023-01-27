@@ -8,7 +8,7 @@
 
 .accordion .accordion-item-trigger:hover,
 .accordion .accordion-item-trigger:focus {
-  @apply bg-secondary text-accent;
+  @apply bg-secondary;
 }
 
 .accordion .accordion-item-trigger:focus-visible {
@@ -16,7 +16,7 @@
 }
 
 .accordion-panel {
-  @apply overflow-hidden bg-background text-accent;
+  @apply overflow-hidden bg-base-100 text-primary-content;
 }
 
 .accordion-panel > div {

@@ -10,10 +10,6 @@ export default {
     label: {
       control: { type: 'text' },
     },
-    level: {
-      options: ['primary', 'secondary', 'tertiary'],
-      control: { type: 'select' },
-    },
     href: {
       control: { type: 'text' },
     },
@@ -37,10 +33,17 @@ export default {
 
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
+export const Default = Template.bind({});
+Default.args = {
+  label: 'Primary',
+  children: 'Primary',
+  rounded: true,
+};
+
 export const Primary = Template.bind({});
 Primary.args = {
-  level: 'primary',
   label: 'Primary',
+  className: 'btn-primary',
   children: 'Primary',
   rounded: true,
 };
@@ -48,13 +51,13 @@ Primary.args = {
 export const Secondary = Template.bind({});
 Secondary.args = {
   label: 'Secondary',
-  level: 'secondary',
+  className: 'btn-secondary',
   children: 'Secondary',
 };
 
 export const Tertiary = Template.bind({});
 Tertiary.args = {
   label: 'Tertiary',
-  level: 'tertiary',
+  className: 'btn-accent',
   children: 'Tertiary',
 };

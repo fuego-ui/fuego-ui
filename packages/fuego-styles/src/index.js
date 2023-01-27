@@ -11,7 +11,6 @@ const mainFunction = ({
   postcss,
 }) => {
   addComponents(file);
-  console.log(colorFunctions);
   const themeInjector = colorFunctions.injectThemes(addBase, config, themes);
   themeInjector;
 };

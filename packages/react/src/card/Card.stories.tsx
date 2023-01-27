@@ -1,5 +1,4 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Button from '../button';
 import Card from '.';
 
 export default {
@@ -11,75 +10,69 @@ const Template: ComponentStory<typeof Card> = (args) => <Card {...args} />;
 
 export const Primary = Template.bind({});
 Primary.args = {
-  className: 'max-w-sm',
+  className: 'max-w-sm bg-primary text-primary-content rounded-none',
   children: (
-    <div>
-      <img
-        src="https://source.unsplash.com/random/?city,night,200x200"
-        alt="sample image"
-      />
-      <h3>Cool Title</h3>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book.
-      </p>
-    </div>
+    <>
+      <figure>
+        <img
+          src="https://source.unsplash.com/random/400x225?city,night"
+          alt="Shoes"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">Shoes!</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
   level: 'secondary',
-  className: 'max-w-sm',
+  className: 'max-w-sm bg-secondary text-secondary-content',
   children: (
-    <div>
-      <img
-        src="https://source.unsplash.com/random/?city,night,200x200"
-        alt="sample image"
-      />
-      <h3>Cool Title</h3>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book.
-      </p>
-    </div>
+    <>
+      <figure>
+        <img
+          src="https://source.unsplash.com/random/400x225?city,night"
+          alt="Shoes"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">Shoes!</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Buy Now</button>
+        </div>
+      </div>
+    </>
   ),
 };
 
 export const tertiary = Template.bind({});
 tertiary.args = {
-  level: 'secondary',
-  className: 'max-w-sm',
+  level: 'tertiary',
+  className: 'max-w-sm bg-tertiary text-tertiary-content',
   children: (
-    <div>
-      <img
-        src="https://source.unsplash.com/random/?city,night,200x200"
-        alt="sample image"
-      />
-      <h3>Cool Title</h3>
-      <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book.
-      </p>
-      <div className="flex gap-3 mt-8">
-        <div className="flex-1">
-          <Button className="w-full" level="primary">
-            Primary
-          </Button>
-        </div>
-        <div className="flex-1">
-          <Button className="w-full" level="secondary">
-            Secondary
-          </Button>
+    <>
+      <figure>
+        <img
+          src="https://source.unsplash.com/random/400x225?city,night"
+          alt="Shoes"
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">Shoes!</h2>
+        <p>If a dog chews shoes whose shoes does he choose?</p>
+        <div className="card-actions justify-end">
+          <button className="btn btn-primary">Buy Now</button>
         </div>
       </div>
-    </div>
+    </>
   ),
 };
 
