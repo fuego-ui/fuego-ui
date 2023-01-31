@@ -1,11 +1,12 @@
 {
+  "name": "angular",
   "projectType": "library",
   "sourceRoot": "packages/angular/src",
   "prefix": "fuego-ui",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/packages/angular"],
+      "outputs": ["{workspaceRoot}/dist/packages/angular"],
       "options": {
         "project": "packages/angular/ng-package.json"
       },
@@ -21,7 +22,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/angular"],
+      "outputs": ["{workspaceRoot}/coverage/packages/angular"],
       "options": {
         "jestConfig": "packages/angular/jest.config.ts",
         "passWithNoTests": true

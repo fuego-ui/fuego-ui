@@ -1,11 +1,12 @@
 {
+  "name": "react",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/react/src",
   "projectType": "library",
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:rollup",
+      "executor": "@nrwl/rollup:rollup",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/react",
@@ -33,7 +34,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/react"],
+      "outputs": ["{workspaceRoot}/coverage/packages/react"],
       "options": {
         "jestConfig": "packages/react/jest.config.ts",
         "passWithNoTests": true
@@ -44,10 +45,8 @@
       "options": {
         "uiFramework": "@storybook/react",
         "port": 4400,
-        "config": {
-          "configFolder": "packages/react/.storybook"
-        },
-        "postcssConfig": "packages/react/postcss.config.js"
+        "postcssConfig": "packages/react/postcss.config.js",
+        "configDir": "packages/react/.storybook"
       },
       "configurations": {
         "ci": {
@@ -57,13 +56,11 @@
     },
     "build-storybook": {
       "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": ["{options.outputDir}"],
       "options": {
         "uiFramework": "@storybook/react",
-        "outputPath": "dist/storybook/react",
-        "config": {
-          "configFolder": "packages/react/.storybook"
-        }
+        "configDir": "packages/react/.storybook",
+        "outputDir": "dist/storybook/react"
       },
       "configurations": {
         "ci": {
