@@ -1,3 +1,5 @@
+import './index.css';
+
 // Accordion
 export { default as Accordion } from './accordion';
 export * from './accordion';

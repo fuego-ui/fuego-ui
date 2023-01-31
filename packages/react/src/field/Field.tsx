@@ -5,33 +5,11 @@ import {
   useId,
   useEffect,
 } from 'react';
-import { FieldFix } from './Field-Fix';
-import styled from 'styled-components';
-import {
-  BaseFieldStyles,
-  InFieldFloat,
-  outFieldFloat,
-  outlineFieldFloat,
-} from './FieldStyles';
-import { themeOrDefault } from '../utils/theme-utils';
 import { classnames } from '../utils/component-utils';
 import { FieldProps } from './Field.types';
+import styles from './Field.module.css';
 
-const selectFieldStyle = (theme: any, fieldParam: any) =>
-  switchFieldStyle((theme && theme.formField.style) || fieldParam);
-
-const switchFieldStyle = (fieldStyle: string) => {
-  switch (fieldStyle) {
-    case 'outlineFloat':
-      return outlineFieldFloat;
-    case 'outsideFloat':
-      return outFieldFloat;
-    default:
-      return InFieldFloat;
-  }
-};
-
-export const FieldCmp = forwardRef(
+const Field = forwardRef(
   (
     {
       id = 'field',
@@ -57,6 +35,7 @@ export const FieldCmp = forwardRef(
       fieldStyle,
       labelId = '',
       size = 'small',
+      inputClassName = '',
       ...props
     }: FieldProps,
     ref: any
@@ -98,6 +77,7 @@ export const FieldCmp = forwardRef(
           onChange={onChangeHandler}
           onBlur={onBlurHandler}
           onFocus={onFocusHandler}
+          className={`textarea ${inputClassName}`}
           value={value}
           {...props}
         ></textarea>
@@ -112,6 +92,7 @@ export const FieldCmp = forwardRef(
           placeholder={placeholder}
           type={type}
           ref={ref}
+          className={`input ${inputClassName}`}
           id={`text-field-${fieldId}`}
           autoComplete={props.autoComplete ? 'on' : 'off'}
           value={value}
@@ -129,6 +110,7 @@ export const FieldCmp = forwardRef(
         'has-prefix': prefix,
         'has-error': fieldErrors,
         'fue-field--sm': size === 'small' ? true : false,
+        field: true,
       },
       className
     );
@@ -140,8 +122,8 @@ export const FieldCmp = forwardRef(
     }, []);
 
     return (
-      <div className={textFieldClasses}>
-        <FieldFix type="prefix">{prefix}</FieldFix>
+      <div className={`${styles['field']} ${textFieldClasses}`}>
+        {/* <FieldFix type="prefix">{prefix}</FieldFix> */}
         <div className="field-contents">
           {field}
           <label id={labelId} htmlFor={`text-field-${fieldId}`}>
@@ -149,7 +131,7 @@ export const FieldCmp = forwardRef(
             {required && <span className="required">*</span>}
           </label>
         </div>
-        <FieldFix type="suffix">{suffix}</FieldFix>
+        {/* <FieldFix type="suffix">{suffix}</FieldFix> */}
         <div className="error">
           <span className="error--msg">{errorLabel}</span>
         </div>
@@ -158,158 +140,158 @@ export const FieldCmp = forwardRef(
   }
 );
 
-const Field = styled(FieldCmp)`
-  position: relative;
-  padding: 1rem 0;
-  margin: 1rem 0;
-  width: 100%;
+// const Field = styled(FieldCmp)`
+//   position: relative;
+//   padding: 1rem 0;
+//   margin: 1rem 0;
+//   width: 100%;
 
-  // Solves issues with list/dropdowns
-  z-index: 2;
+//   // Solves issues with list/dropdowns
+//   z-index: 2;
 
-  .field-contents {
-    padding: 0 1rem;
-    border-radius: 1.4rem;
-    position: relative;
-    padding: 0.5rem 1rem;
-  }
+//   .field-contents {
+//     padding: 0 1rem;
+//     border-radius: 1.4rem;
+//     position: relative;
+//     padding: 0.5rem 1rem;
+//   }
 
-  label {
-    position: absolute;
-    margin: 0;
-    top: 0.7rem;
-    left: 1rem;
-    font-size: 1.2rem;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: calc(100% - 24px);
-    pointer-events: none;
-    transform-origin: left top;
-    transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-      transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
-      max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  }
+//   label {
+//     position: absolute;
+//     margin: 0;
+//     top: 0.7rem;
+//     left: 1rem;
+//     font-size: 1.2rem;
+//     overflow: hidden;
+//     white-space: nowrap;
+//     text-overflow: ellipsis;
+//     max-width: calc(100% - 24px);
+//     pointer-events: none;
+//     transform-origin: left top;
+//     transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+//       transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+//       max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+//   }
 
-  &.float-label.filled label,
-  &.focused.float-label label,
-  &.has-placeholder label {
-    opacity: 1 !important;
-    background: transparent;
-  }
+//   &.float-label.filled label,
+//   &.focused.float-label label,
+//   &.has-placeholder label {
+//     opacity: 1 !important;
+//     background: transparent;
+//   }
 
-  &.filled label {
-    opacity: 0;
-  }
+//   &.filled label {
+//     opacity: 0;
+//   }
 
-  &.focused label,
-  &.focused.filled label,
-  &.float-label.filled label {
-    opacity: 0;
-  }
+//   &.focused label,
+//   &.focused.filled label,
+//   &.float-label.filled label {
+//     opacity: 0;
+//   }
 
-  input,
-  textarea {
-    border: none;
-    width: 100%;
-    font-size: 1.2rem;
-    font-family: inherit;
+//   input,
+//   textarea {
+//     border: none;
+//     width: 100%;
+//     font-size: 1.2rem;
+//     font-family: inherit;
 
-    &:focus {
-      outline: 0;
-    }
-  }
+//     &:focus {
+//       outline: 0;
+//     }
+//   }
 
-  input {
-    height: 1.4375em;
-  }
+//   input {
+//     height: 1.4375em;
+//   }
 
-  textarea {
-    resize: vertical;
-    min-height: 4.4rem;
-    max-height: 10rem;
-  }
+//   textarea {
+//     resize: vertical;
+//     min-height: 4.4rem;
+//     max-height: 10rem;
+//   }
 
-  /* prefix  */
+//   /* prefix  */
 
-  .field__prefix {
-    position: relative;
-  }
+//   .field__prefix {
+//     position: relative;
+//   }
 
-  .field__prefix img {
-    position: absolute;
-    left: 1rem;
-    top: 0.3rem;
-  }
+//   .field__prefix img {
+//     position: absolute;
+//     left: 1rem;
+//     top: 0.3rem;
+//   }
 
-  &.has-prefix input {
-    padding-left: 3rem;
-  }
+//   &.has-prefix input {
+//     padding-left: 3rem;
+//   }
 
-  /* Error  */
-  .error {
-    padding-top: 0.5rem;
-    padding-left: 1.6rem;
+//   /* Error  */
+//   .error {
+//     padding-top: 0.5rem;
+//     padding-left: 1.6rem;
 
-    &--msg {
-      transform-origin: 0 0;
-      transform: rotateX(270deg);
-      transition: transform 200ms ease;
-      position: absolute;
-    }
-  }
+//     &--msg {
+//       transform-origin: 0 0;
+//       transform: rotateX(270deg);
+//       transition: transform 200ms ease;
+//       position: absolute;
+//     }
+//   }
 
-  &.has-error .error--msg {
-    transform: rotateX(360deg);
-  }
+//   &.has-error .error--msg {
+//     transform: rotateX(360deg);
+//   }
 
-  /* Theme */
-  input,
-  textarea,
-  .field-contents {
-    background-color: ${({ theme }) =>
-      themeOrDefault(theme.formField.bg, theme.primary)};
-    color: ${({ theme }) => themeOrDefault(theme.formField.fg, theme.accent)};
-  }
+//   /* Theme */
+//   input,
+//   textarea,
+//   .field-contents {
+//     background-color: ${({ theme }) =>
+//       themeOrDefault(theme.formField.bg, theme.primary)};
+//     color: ${({ theme }) => themeOrDefault(theme.formField.fg, theme.accent)};
+//   }
 
-  label {
-    color: ${({ theme }) =>
-      theme && themeOrDefault(theme.formField.labelfg, theme.accent)};
+//   label {
+//     color: ${({ theme }) =>
+//       theme && themeOrDefault(theme.formField.labelfg, theme.accent)};
 
-    .required {
-      color: ${({ theme }) =>
-        theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
-    }
-  }
+//     .required {
+//       color: ${({ theme }) =>
+//         theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
+//     }
+//   }
 
-  ${() => {
-    return BaseFieldStyles;
-  }}
+//   ${() => {
+//     return BaseFieldStyles;
+//   }}
 
-  ${({ theme, fieldStyle }) => selectFieldStyle(theme, fieldStyle)}
+//   ${({ theme, fieldStyle }) => selectFieldStyle(theme, fieldStyle)}
 
-  // Error Theme
-  &.has-error label,  &.has-error input {
-    color: ${({ theme }) =>
-      theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
-  }
+//   // Error Theme
+//   &.has-error label,  &.has-error input {
+//     color: ${({ theme }) =>
+//       theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
+//   }
 
-  &.has-error .field-contents {
-    outline: 2px solid
-      ${({ theme }) =>
-        theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
-  }
+//   &.has-error .field-contents {
+//     outline: 2px solid
+//       ${({ theme }) =>
+//         theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
+//   }
 
-  &.has-error input,
-  &.has-error textarea {
-    caret-color: ${({ theme }) =>
-      theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
-  }
+//   &.has-error input,
+//   &.has-error textarea {
+//     caret-color: ${({ theme }) =>
+//       theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
+//   }
 
-  .error--msg {
-    color: ${({ theme }) =>
-      theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
-  }
-`;
+//   .error--msg {
+//     color: ${({ theme }) =>
+//       theme && themeOrDefault(theme.formField.errorfg, theme.error.main)};
+//   }
+// `;
 
 export default Field;

@@ -8,5 +8,5 @@
 // export { default as useButton } from './useButton';
 // export * from './useButton.types';
 
-export { default, ButtonCmp } from './Button';
+export { default } from './Button';
 export * from './Button.types';

@@ -1,5 +1,5 @@
 const { join } = require('path');
-const fuegoPath = join(__dirname, 'packages/fuego-styles/src/index.js');
+// const fuegoPath = join(__dirname, 'packages/fuego-styles/src/index.js');
 module.exports = {
   theme: {
     extend: {},

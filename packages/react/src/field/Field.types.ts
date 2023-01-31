@@ -25,5 +25,6 @@ export interface FieldProps {
   onKeyDown?: any;
   onKeyUp?: any;
   size: 'small' | 'regular';
+  inputClassName: string;
   fieldStyle?: 'inFieldFloat' | 'outlineFloat' | 'outsideFloat';
 }

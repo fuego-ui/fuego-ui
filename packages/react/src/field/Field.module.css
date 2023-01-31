@@ -1,0 +1,62 @@
+.field input,
+.field textarea {
+  @apply w-full text-inherit max-w-xs;
+}
+
+.field.focus {
+  @apply outline-none;
+}
+
+.field.float-label.filled label,
+.field.focused.float-label label,
+.field.has-placeholder label {
+  opacity: 1 !important;
+  background: transparent;
+}
+
+.field.filled label {
+  opacity: 0;
+}
+
+.field.focused label,
+.field.focused.filled label,
+.field.float-label.filled label {
+  opacity: 0;
+}
+/*
+
+
+
+
+ prefix  
+
+.field__prefix {
+  position: relative;
+}
+
+.field__prefix img {
+  position: absolute;
+  left: 1rem;
+  top: 0.3rem;
+}
+
+&.has-prefix input {
+  padding-left: 3rem;
+}
+
+ Error 
+.error {
+  padding-top: 0.5rem;
+  padding-left: 1.6rem;
+
+  &--msg {
+	transform-origin: 0 0;
+	transform: rotateX(270deg);
+	transition: transform 200ms ease;
+	position: absolute;
+  }
+}
+
+&.has-error .error--msg {
+  transform: rotateX(360deg);
+}*/

@@ -38,7 +38,7 @@ const Template: ComponentStory<typeof Field> = (args) => {
               fieldErrors={errors.name ? true : false}
               errorLabel={errors.name && 'Valid email is required!'}
             >
-              Name
+              {args.children}
             </Field>
           </form>
         </div>
@@ -52,28 +52,30 @@ TextField.args = {
   name: 'name',
   floatLabel: true,
   autoComplete: 'off',
+  placeholder: 'Type Here',
 };
 
-export const OutlineField = Template.bind({});
-OutlineField.args = {
+export const TextFieldBordered = Template.bind({});
+TextFieldBordered.args = {
   name: 'name',
-  floatLabel: true,
-  autocomplete: 'off',
-  fieldStyle: 'outlineFloat',
-};
-
-export const outfieldFloat = Template.bind({});
-outfieldFloat.args = {
-  name: 'name',
-  floatLabel: true,
-  autocomplete: 'off',
-  fieldStyle: 'outsideFloat',
+  inputClassName: 'input-bordered',
+  placeholder: 'Type Here',
+  autoComplete: 'off',
 };
 
 export const TextArea = Template.bind({});
 TextArea.args = {
   name: 'name',
   floatLabel: true,
-  autocomplete: 'off',
+  autoComplete: 'off',
+  type: 'textarea',
+};
+
+export const TextAreaBordered = Template.bind({});
+TextAreaBordered.args = {
+  name: 'name',
+  floatLabel: true,
+  autoComplete: 'off',
+  inputClassName: 'input-bordered',
   type: 'textarea',
 };

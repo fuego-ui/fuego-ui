@@ -45,7 +45,7 @@
       "options": {
         "uiFramework": "@storybook/react",
         "port": 4400,
-        "postcssConfig": "packages/react/postcss.config.js",
+        "postcssConfig": "../postcss.config.js",
         "configDir": "packages/react/.storybook"
       },
       "configurations": {

@@ -1,1 +1,1 @@
-export { default, CardCmp } from './Card';
+export { default } from './Card';

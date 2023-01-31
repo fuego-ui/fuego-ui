@@ -1,1 +1,1 @@
-export { default, CheckboxCmp } from './Checkbox';
+export { default } from './Checkbox';

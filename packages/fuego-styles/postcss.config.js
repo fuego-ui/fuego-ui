@@ -6,7 +6,9 @@ module.exports = {
     require('postcss-nested')({
       bubble: ['screen'],
     }),
-    require('tailwindcss')('packages/fuego-styles/tailwind.config.js'),
+    require('tailwindcss')(
+      'packages/fuego-styles/tailwind.workspace-preset.js'
+    ),
     require('autoprefixer'),
   ],
 };
