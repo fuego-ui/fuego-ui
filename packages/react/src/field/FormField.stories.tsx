@@ -58,9 +58,18 @@ TextField.args = {
 export const TextFieldBordered = Template.bind({});
 TextFieldBordered.args = {
   name: 'name',
-  inputClassName: 'input-bordered',
+  className: 'input-bordered',
   placeholder: 'Type Here',
   autoComplete: 'off',
+};
+
+export const TextFieldFloatLabel = Template.bind({});
+TextFieldFloatLabel.args = {
+  name: 'name',
+  floatLabel: true,
+  className: 'input-bordered',
+  autoComplete: 'off',
+  children: 'Name',
 };
 
 export const TextArea = Template.bind({});
@@ -76,6 +85,16 @@ TextAreaBordered.args = {
   name: 'name',
   floatLabel: true,
   autoComplete: 'off',
-  inputClassName: 'input-bordered',
+  className: 'input-bordered',
   type: 'textarea',
+};
+
+export const TextAreaFloatLabel = Template.bind({});
+TextAreaFloatLabel.args = {
+  name: 'name',
+  floatLabel: true,
+  autoComplete: 'off',
+  className: 'input-bordered',
+  type: 'textarea',
+  children: 'Name',
 };
