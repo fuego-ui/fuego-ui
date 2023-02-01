@@ -1,5 +1,6 @@
 export interface RangeSliderProps {
   className?: string;
+  wrapperClassName?: string;
   label?: string;
   defaultValue?: number;
   labelClassNames?: string;
