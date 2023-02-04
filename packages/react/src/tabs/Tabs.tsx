@@ -361,7 +361,7 @@ const Tabs = ({
   return (
     <TabsContainer id={`${seed} `} className={tabClasses}>
       <div
-        className={`${scrollable ? 'scrollable-area' : ''} ${
+        className={`max-h-[48px] ${scrollable ? 'scrollable-area' : ''} ${
           alignment === 'center' ? 'justify-content-center' : ''
         }`}
       >
