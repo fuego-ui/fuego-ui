@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, MouseEvent } from 'react';
-import styled from 'styled-components';
+import styles from './Draggable.module.css';
 
 interface IDraggable {
   children: any;
@@ -11,21 +11,6 @@ interface IDraggable {
 }
 
 const POSITION = { x: 0, y: 0 };
-
-const ScrollWrapper = styled.div`
-  cursor: grab;
-  overflow: auto;
-  position: relative;
-
-  ::-webkit-scrollbar {
-    width: 0; /* Remove scrollbar space */
-    background: transparent; /* Optional: just make scrollbar invisible */
-  }
-  /* Optional: show position indicator in red */
-  /* ::-webkit-scrollbar-thumb {
-    background: #FF0000;
-} */
-`;
 
 const DraggableScroll = ({
   children,
@@ -178,13 +163,14 @@ const DraggableScroll = ({
   ]);
 
   return (
-    <ScrollWrapper
+    <div
+      className={`${styles['scrollbar-hide']} cursor-grab relative overflow-auto`}
       ref={draggableRef}
       onTouchStart={handleTouchStart}
       onMouseDown={handleMouseDown}
     >
       {children}
-    </ScrollWrapper>
+    </div>
   );
 };
 

@@ -1,35 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
 import { Button } from './Button';
-
-const minimalButtonTheme = {
-  buttons: {
-    corners: '',
-    primary: {
-      bg: '#fff',
-      fg: '#000000',
-      hfg: '#fff',
-      hbg: '#212121',
-      accent: '',
-    },
-    secondary: {
-      bg: '#484848',
-      fg: '#fff',
-      hfg: '#212121',
-      hbg: '#fff',
-      accent: '',
-    },
-    tertiary: {
-      bg: '#212121',
-      fg: '#fff',
-      hfg: '#fff',
-      hbg: '#212121',
-      accent: '#484848',
-      haccent: '#fff',
-    },
-  },
-};
 
 describe('Button', () => {
   it('Html selector will switch to an anchor tag when an href prop is present', () => {
@@ -44,9 +15,9 @@ describe('Button', () => {
 
   it('Html selector will switch to an anchor tag when as prop is set', () => {
     const { container } = render(
-      <ThemeProvider theme={minimalButtonTheme}>
-        <Button as="a">Button</Button>
-      </ThemeProvider>
+      <Button clasName="bg-primary text-primary-content" as="a">
+        Button
+      </Button>
     );
 
     expect(container.querySelector('a')).toBeTruthy();
@@ -77,11 +48,7 @@ describe('Button', () => {
 
   it('Fires Event on Click', () => {
     const handleClick = jest.fn();
-    const { container } = render(
-      <ThemeProvider theme={minimalButtonTheme}>
-        <Button onClick={handleClick}>Button</Button>
-      </ThemeProvider>
-    );
+    const { container } = render(<Button onClick={handleClick}>Button</Button>);
 
     const button = container.querySelector('button');
     fireEvent(

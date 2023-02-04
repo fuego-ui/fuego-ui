@@ -1,1 +1,2 @@
-@import './field/Field.css';
+@import './field/Field.module.css';
+@import './draggable/Draggable.module.css';
