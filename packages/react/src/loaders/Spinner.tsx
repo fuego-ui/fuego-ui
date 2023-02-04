@@ -1,70 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import styles from './Spinner.module.css';
 
-const SpinnerCmp = ({ className }: any) => {
+const Spinner = ({ className }: any) => {
   return (
-    <div className={className}>
+    <div className={`${styles['spinner']} ${className}`}>
       <div></div>
       <div></div>
       <div></div>
     </div>
   );
 };
-
-const Spinner = styled(SpinnerCmp)`
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 10px;
-
-  div {
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: ${({ theme }) => theme && theme.primary};
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-  div:nth-child(1) {
-    left: 8px;
-    animation: lds-ellipsis1 0.8s infinite;
-  }
-  div:nth-child(2) {
-    left: 8px;
-    animation: lds-ellipsis2 0.8s infinite;
-  }
-  div:nth-child(3) {
-    left: 32px;
-    animation: lds-ellipsis2 0.8s infinite;
-  }
-  div:nth-child(4) {
-    left: 56px;
-    animation: lds-ellipsis3 0.8s infinite;
-  }
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(24px, 0);
-    }
-  }
-`;
 
 export default Spinner;

@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { ITextImage } from './TextImage.types';
 
-export function TextImageCmp({
+export function TextImage({
   children,
   title = '',
   img = '',
@@ -26,9 +25,5 @@ export function TextImageCmp({
     </section>
   );
 }
-
-const TextImage = styled(TextImageCmp)`
-  color: ${({ theme }) => theme && theme.accent};
-`;
 
 export default TextImage;

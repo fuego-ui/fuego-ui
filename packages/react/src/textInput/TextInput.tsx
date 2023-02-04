@@ -1,8 +1,7 @@
 import React, { useId, forwardRef } from 'react';
-import styled from 'styled-components';
 
 // TODO: MARKING FOR DELETION
-export const TextInputCmp = forwardRef<HTMLInputElement, any>(
+export const TextInput = forwardRef<HTMLInputElement, any>(
   (
     {
       font = 'sans-serif',
@@ -45,7 +44,7 @@ export const TextInputCmp = forwardRef<HTMLInputElement, any>(
           </label>
         ) : null}
         <input
-          className={className}
+          className={`w-full ${className}`}
           placeholder="Your Text Here"
           id={`text-input-${textIdSuffix}`}
           onChange={onChangeHandler}
@@ -60,9 +59,5 @@ export const TextInputCmp = forwardRef<HTMLInputElement, any>(
     );
   }
 );
-
-const TextInput = styled(TextInputCmp)`
-  width: 100%;
-`;
 
 export default TextInput;

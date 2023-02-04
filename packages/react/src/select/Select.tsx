@@ -1,7 +1,6 @@
 import React from 'react';
 import Selectr from 'react-select';
 import { FieldStyle } from '../field';
-import { useTheme } from 'styled-components';
 
 export function ThemeValue(theme: any, path: Array<string>) {
   if (!theme || path.length === 0) return '';
@@ -146,27 +145,22 @@ export const Select = ({
   className,
   ...props
 }: ISelect) => {
-  const theme = useTheme();
+  // const theme = useTheme();
 
-  function getSelectStyle(theme: any) {
-    switch (theme) {
-      case 'invisible':
-        return getInvisibleSelectStyle(theme);
-      case 'noOutline':
-        return noOutline;
-      default:
-        return getDefaultStyle(theme);
-    }
-  }
+  // function getSelectStyle(theme: any) {
+  //   switch (theme) {
+  //     case 'invisible':
+  //       return getInvisibleSelectStyle(theme);
+  //     case 'noOutline':
+  //       return noOutline;
+  //     default:
+  //       return getDefaultStyle(theme);
+  //   }
+  // }
 
-  const selectStyle = getSelectStyle(theme);
+  // const selectStyle = getSelectStyle(theme);
 
   return (
-    <Selectr
-      styles={selectStyle}
-      placeholder={placeholder}
-      onChange={onChange}
-      options={options}
-    />
+    <Selectr placeholder={placeholder} onChange={onChange} options={options} />
   );
 };

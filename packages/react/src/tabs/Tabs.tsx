@@ -28,35 +28,6 @@ import {
  * on window resize, lmaxsize is out of date
  */
 
-const TabsList = styled.div`
-  display: flex;
-`;
-
-const TabsContainer = styled.div`
-  position: relative;
-
-  &.scrollable {
-    overflow: hidden;
-  }
-
-  ${TabsList} {
-    position: relative;
-    display: inline-block;
-    white-space: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-
-    ::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .scrollable-area {
-    display: flex;
-  }
-`;
-
 const TabPanel = styled.div`
   padding: 2.4rem;
   &.hidden {
@@ -194,7 +165,7 @@ const Tabs = ({
 
   const tabClasses = classnames(
     {
-      scrollable: scrollable,
+      overfl: scrollable,
     },
     className
   );
@@ -359,16 +330,21 @@ const Tabs = ({
   }, [draggableRef]);
 
   return (
-    <TabsContainer id={`${seed} `} className={tabClasses}>
+    <div
+      id={`${seed} `}
+      className={`relative ${scrollable ? 'overflow-hidden' : ''}`}
+    >
       <div
-        className={`max-h-[48px] ${scrollable ? 'scrollable-area' : ''} ${
+        className={`max-h-[48px] ${scrollable ? 'flex' : ''} ${
           alignment === 'center' ? 'justify-content-center' : ''
         }`}
       >
         {scrollable && showArrows && scrollButton('left')}
-        <TabsList
+        <div
           role="tablist"
-          className={`${fullWidth ? 'flex-grow-1' : ''}`}
+          className={`flex relative whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth ${
+            fullWidth ? 'flex-grow-1' : ''
+          }`}
         >
           <DraggableScroll
             draggableRef={draggableRef}
@@ -391,7 +367,7 @@ const Tabs = ({
             })}
             <TabHighlight leftOffset={highlightOffset} />
           </DraggableScroll>
-        </TabsList>
+        </div>
         {scrollable && showArrows && scrollButton('right')}
       </div>
       {children.map((child: any, index: number) => {
@@ -408,7 +384,7 @@ const Tabs = ({
           </TabPanel>
         );
       })}
-    </TabsContainer>
+    </div>
   );
 };
 

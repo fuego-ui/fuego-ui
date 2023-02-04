@@ -1,15 +1,7 @@
 import React, { forwardRef } from 'react';
-import styled from 'styled-components';
 import { ITab } from './Tab.types';
 
-/**
- * TODO:
- *
- * Disabled View
- *
- */
-
-export const TabCmp = forwardRef(
+export const Tab = forwardRef(
   (
     {
       onTabClick,
@@ -34,7 +26,7 @@ export const TabCmp = forwardRef(
         ref={ref}
         aria-controls={tabPanelId}
         aria-selected={isActiveTab()}
-        className={`${props.className}`}
+        className={`rounded-none px-t-[ 0.5rem] p-y-[1rem] min-w-[6rem] m-h-[3rem] transition-colors ${props.className}`}
         onClick={onClickHandler()}
       >
         <span>{label}</span>
@@ -42,28 +34,5 @@ export const TabCmp = forwardRef(
     );
   }
 );
-
-const Tab = styled(TabCmp)`
-  border: none;
-  padding: 0.5rem 1rem;
-  min-width: 6rem;
-  min-height: 3rem;
-  transition: background-color 0.3s, color 0.3s;
-
-  // theme i was here too
-  background-color: ${({ theme }) => theme && theme.background};
-  color: ${({ theme }) => theme && theme.primary};
-
-  &:hover {
-    background-color: ${({ theme }: any) => theme.primary};
-    color: ${({ theme }: any) => theme.contrastText};
-  }
-
-  &:focus {
-    outline: 1px dashed
-      ${({ theme }) => theme && theme.tabs && theme.tabs.accent};
-    outline-offset: -1px;
-  }
-`;
 
 export default Tab;
