@@ -11,19 +11,19 @@
   border-radius: 50%;
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
-div:nth-child(1) {
+.spinner div:nth-child(1) {
   left: 8px;
   animation: lds-ellipsis1 0.8s infinite;
 }
-div:nth-child(2) {
+.spinner div:nth-child(2) {
   left: 8px;
   animation: lds-ellipsis2 0.8s infinite;
 }
-div:nth-child(3) {
+.spinner div:nth-child(3) {
   left: 32px;
   animation: lds-ellipsis2 0.8s infinite;
 }
-div:nth-child(4) {
+.spinner div:nth-child(4) {
   left: 56px;
   animation: lds-ellipsis3 0.8s infinite;
 }
