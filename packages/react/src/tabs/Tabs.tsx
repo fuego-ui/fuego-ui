@@ -332,7 +332,7 @@ const Tabs = ({
   return (
     <div
       id={`${seed} `}
-      className={`relative ${scrollable ? 'overflow-hidden' : ''}`}
+      className={`tabs relative ${scrollable ? 'overflow-hidden' : ''}`}
     >
       <div
         className={`max-h-[48px] ${scrollable ? 'flex' : ''} ${

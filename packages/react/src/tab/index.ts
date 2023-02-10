@@ -1,2 +1,2 @@
-export { default, TabCmp } from './Tab';
+export { default } from './Tab';
 export * from './Tab.types';
