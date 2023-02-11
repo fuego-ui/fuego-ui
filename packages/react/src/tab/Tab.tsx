@@ -16,21 +16,21 @@ export const Tab = forwardRef(
     }: ITab,
     ref: any
   ) => {
-    const isActiveTab = () => (activeTab === tabId ? true : false);
     const onClickHandler = () => (e: any) => !disabled && onTabClick(tabId);
+    const isActive = activeTab === tabId ? true : false;
 
     return (
-      <button
+      <a
         role="tab"
         id={tabId}
         ref={ref}
         aria-controls={tabPanelId}
-        aria-selected={isActiveTab()}
-        className={`rounded-none px-t-[ 0.5rem] p-y-[1rem] min-w-[6rem] m-h-[3rem] transition-colors ${props.className}`}
+        aria-selected={isActive}
+        className={`tab ${props.className} ${isActive ? 'tab-active' : ''}`}
         onClick={onClickHandler()}
       >
         <span>{label}</span>
-      </button>
+      </a>
     );
   }
 );

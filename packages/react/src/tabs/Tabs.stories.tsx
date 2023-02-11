@@ -17,7 +17,7 @@ export default {
 } as ComponentMeta<typeof Tabs>;
 
 const Template: ComponentStory<typeof Tabs> = (args) => (
-  <Tabs {...args}>
+  <Tabs {...args} className="tab-bordered">
     <Tab label="tab1">
       <div>
         <p>Tab 1</p>
