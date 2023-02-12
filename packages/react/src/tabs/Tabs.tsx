@@ -10,13 +10,8 @@ import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { classnames } from '../utils/component-utils';
 import { DraggableScroll } from '../draggable';
-import {
-  Direction,
-  HighlightProps,
-  IArrowButton,
-  ITabs,
-  TabIdProps,
-} from './Tabs.types';
+import { Direction, IArrowButton, ITabs, TabIdProps } from './Tabs.types';
+import styles from './tabs.module.css';
 
 /**
  * TODO:
@@ -35,20 +30,20 @@ const TabPanel = styled.div`
   }
 `;
 
-const TabHighlight = styled.span.attrs<HighlightProps>(
-  (props: HighlightProps) => ({
-    style: {
-      left: props.leftOffset ? `${props.leftOffset}px` : 0,
-      width: props.width ? `${props.width}px` : '96px',
-    },
-  })
-)<HighlightProps>`
-  height: 2px;
-  position: absolute;
-  transition: width 0.3s, left 0.3s;
-  bottom: 0;
-  background-color: ${({ theme }) => theme && theme.primary};
-`;
+// const TabHighlight = styled.span.attrs<HighlightProps>(
+//   (props: HighlightProps) => ({
+//     style: {
+//       left: props.leftOffset ? `${props.leftOffset}px` : 0,
+//       width: props.width ? `${props.width}px` : '96px',
+//     },
+//   })
+// )<HighlightProps>`
+//   height: 2px;
+//   position: absolute;
+//   transition: width 0.3s, left 0.3s;
+//   bottom: 0;
+//   background-color: ${({ theme }) => theme && theme.primary};
+// `;
 
 /**
  * TODO: Move to a separate file to separate from tabs
@@ -119,6 +114,7 @@ const Tabs = ({
   className,
   scrollable = false,
   alignment = 'center',
+  ...rest
 }: ITabs) => {
   const [activeTab, setActiveTab] = useState('');
   const [ids, setIds] = useState<Array<TabIdProps>>([]);
@@ -338,7 +334,7 @@ const Tabs = ({
           scrollable
             ? 'overflow-hidden whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth'
             : ''
-        }`}
+        } ${styles['tabs']}`}
       >
         {scrollable && showArrows && scrollButton('left')}
         <DraggableScroll
@@ -348,7 +344,6 @@ const Tabs = ({
         >
           {children.map((child: any, index: number) => {
             const { label, className = '' } = child.props;
-            console.log(tabIds);
             const newProps = {
               className: `${className}`,
               id: tabIds[index].tabId,
@@ -361,7 +356,11 @@ const Tabs = ({
             };
             return cloneElement(child, { ...newProps });
           })}
-          <TabHighlight leftOffset={highlightOffset} />
+          <span
+            className={`${styles['tab-highlight']}`}
+            style={{ left: highlightOffset ? `${highlightOffset}px` : 0 }}
+          ></span>
+          {/* width: rest.width ? `${rest.width}px` : '96px'; */}
         </DraggableScroll>
         {scrollable && showArrows && scrollButton('right')}
       </div>
