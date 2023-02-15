@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fuego-ui/angular": ["packages/angular/src/index.ts"],
+      "@fuego-ui/angular": ["packages/angular/src/lib/accordion/index.ts"],
+      "@fuego-ui/angular/accordion": ["packages/angular/src/index.ts"],
       "@fuego-ui/fuego-styles": ["packages/fuego-styles/src/index.js"],
       "@fuego-ui/react": ["packages/react/src/index.ts"],
       "@unbyte-io/fuego-ui": ["packages/fuego-ui/src/index.ts"]

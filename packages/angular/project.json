@@ -2,20 +2,29 @@
   "name": "angular",
   "projectType": "library",
   "sourceRoot": "packages/angular/src",
-  "prefix": "fuego-ui",
+  "prefix": "fue",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
       "outputs": ["{workspaceRoot}/dist/packages/angular"],
       "options": {
-        "project": "packages/angular/ng-package.json"
+        "project": "packages/angular/ng-package.json",
+        "tailwindConfig": "packages/angular/tailwind.config.js"
       },
       "configurations": {
         "production": {
-          "tsConfig": "packages/angular/tsconfig.lib.prod.json"
+          "tsConfig": "packages/angular/tsconfig.lib.prod.json",
+          "commands": [
+            "nx run lib1:build-angular:development",
+            "tailwindcss -c libs/lib1/tailwind.config.js"
+          ]
         },
         "development": {
-          "tsConfig": "packages/angular/tsconfig.lib.json"
+          "tsConfig": "packages/angular/tsconfig.lib.json",
+          "commands": [
+            "nx run lib1:build-angular:development",
+            "tailwindcss -c libs/lib1/tailwind.config.js"
+          ]
         }
       },
       "defaultConfiguration": "production"
