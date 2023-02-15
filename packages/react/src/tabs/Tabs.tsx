@@ -23,90 +23,59 @@ import styles from './tabs.module.css';
  * on window resize, lmaxsize is out of date
  */
 
-const TabPanel = styled.div`
-  padding: 2.4rem;
-  &.hidden {
-    display: none;
-  }
-`;
-
-// const TabHighlight = styled.span.attrs<HighlightProps>(
-//   (props: HighlightProps) => ({
-//     style: {
-//       left: props.leftOffset ? `${props.leftOffset}px` : 0,
-//       width: props.width ? `${props.width}px` : '96px',
-//     },
-//   })
-// )<HighlightProps>`
-//   height: 2px;
-//   position: absolute;
-//   transition: width 0.3s, left 0.3s;
-//   bottom: 0;
-//   background-color: ${({ theme }) => theme && theme.primary};
-// `;
-
 /**
  * TODO: Move to a separate file to separate from tabs
  */
-const RightScrollArrowStyles = css`
-  transform: rotate(45deg);
-  right: 12px;
-`;
 
-const LeftScrollArrowStyles = css`
-  transform: rotate(225deg);
-  right: 8px;
-`;
+// const ArrowDisabled = css`
+//   &:hover,
+//   &:focus {
+//     background-color: ${({ theme }) => theme && theme.background} !important;
+//   }
 
-const ArrowDisabled = css`
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) => theme && theme.background} !important;
-  }
+//   &::before {
+//     display: none;
+//   }
+// `;
 
-  &::before {
-    display: none;
-  }
-`;
+// const ScrollArrow = styled.button<IArrowButton>`
+//   border: none;
+//   min-width: 1.8rem;
+//   position: relative;
 
-const ScrollArrow = styled.button<IArrowButton>`
-  border: none;
-  min-width: 1.8rem;
-  position: relative;
+//   &::before {
+//     content: '';
+//     display: block;
+//     width: 10px;
+//     height: 10px;
+//     border: 1px solid ${({ theme }) => theme && theme.primary};
+//     border-bottom: none;
+//     border-left: none;
+//     position: absolute;
+//     right: 12px;
+//     top: 20px;
 
-  &::before {
-    content: '';
-    display: block;
-    width: 10px;
-    height: 10px;
-    border: 1px solid ${({ theme }) => theme && theme.primary};
-    border-bottom: none;
-    border-left: none;
-    position: absolute;
-    right: 12px;
-    top: 20px;
+//     ${({ direction }) =>
+//       direction === 'right' ? RightScrollArrowStyles : LeftScrollArrowStyles}
+//   }
 
-    ${({ direction }) =>
-      direction === 'right' ? RightScrollArrowStyles : LeftScrollArrowStyles}
-  }
+//   ${({ disabled }) => disabled && ArrowDisabled}
 
-  ${({ disabled }) => disabled && ArrowDisabled}
+//   // theme
+//   background-color: ${({ theme }) => theme && theme.background};
 
-  // theme
-  background-color: ${({ theme }) => theme && theme.background};
+//   &:hover,
+//   &:focus {
+//     background-color: ${({ theme }) => theme && theme.primary};
+//     color: ${({ theme }) => theme && theme.contrastText};
 
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) => theme && theme.primary};
-    color: ${({ theme }) => theme && theme.contrastText};
-
-    &::before {
-      border: 1px solid ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
-      border-bottom: none;
-      border-left: none;
-    }
-  }
-`;
+//     &::before {
+//       border: 1px solid ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
+//       border-bottom: none;
+//       border-left: none;
+//     }
+//   }
+// `;
 
 const Tabs = ({
   children,
@@ -119,6 +88,7 @@ const Tabs = ({
   const [activeTab, setActiveTab] = useState('');
   const [ids, setIds] = useState<Array<TabIdProps>>([]);
   const [highlightOffset, setHighlightOffset] = useState(0);
+  const [highlightWidth, setHighlightWidth] = useState(30);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [maxScrollLeft, setMaxScrollLeft] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -281,6 +251,7 @@ const Tabs = ({
       if (activeTabRef) {
         const offset = activeTabRef.offsetLeft;
         setHighlightOffset(offset);
+        setHighlightWidth(activeTabRef.offsetWidth);
       }
     };
 
@@ -343,9 +314,11 @@ const Tabs = ({
           onDragEnd={OnDragEndHandler}
         >
           {children.map((child: any, index: number) => {
-            const { label, className = '' } = child.props;
+            const { label, className: childClassName = '' } = child.props;
             const newProps = {
-              className: `${className}`,
+              className: `${childClassName} ${
+                rest.tabClassName ? rest.tabClassName : ''
+              }`,
               id: tabIds[index].tabId,
               ref: (ref: any) => pushTabRef(ref, index),
               activeTab: activeTab,
@@ -357,8 +330,11 @@ const Tabs = ({
             return cloneElement(child, { ...newProps });
           })}
           <span
-            className={`${styles['tab-highlight']}`}
-            style={{ left: highlightOffset ? `${highlightOffset}px` : 0 }}
+            className={`${styles['tab-highlight']} bg-accent`}
+            style={{
+              left: highlightOffset ? `${highlightOffset}px` : 0,
+              width: highlightWidth ? `${highlightWidth}px` : 0,
+            }}
           ></span>
           {/* width: rest.width ? `${rest.width}px` : '96px'; */}
         </DraggableScroll>
@@ -372,7 +348,9 @@ const Tabs = ({
             key={tabIds[index].tabPanelId}
             id={tabIds[index].tabPanelId}
             aria-labelledby={tabIds[index].tabId}
-            className={`${activeTab !== tabIds[index].tabId ? 'hidden' : ''}`}
+            className={`p-3 ${
+              activeTab !== tabIds[index].tabId ? 'hidden' : ''
+            }`}
           >
             {child.props.children}
           </div>

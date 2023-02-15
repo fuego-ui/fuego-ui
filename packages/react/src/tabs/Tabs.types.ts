@@ -5,6 +5,8 @@ export interface ITabs {
   scrollable?: boolean;
   className?: string;
   alignment?: Alignment;
+  tabClassName?:string;
+  panelClassName?:string;
 }
 export interface TabIdProps {
   tabId: string;
