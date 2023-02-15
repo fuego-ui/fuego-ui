@@ -7,5 +7,11 @@
   },
   "dependencies": {
     "tslib": "^2.3.0"
+  },
+  "exports": {
+    "./accordion": {
+      "import": "./accordion/fuego-ui-b.mjs",
+      "require": "./accordion/fuego-ui.cjs"
+    }
   }
 }
