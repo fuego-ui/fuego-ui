@@ -21,7 +21,10 @@ const ScrollArrow = ({
       }`}
       onClick={onClickHandler}
       disabled={disabled}
-    ></button>
+    >
+      <span className={styles['caret']}></span>
+      <span className="sr-only">Scroll {direction}</span>
+    </button>
   );
 };
 

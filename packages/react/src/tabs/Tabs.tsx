@@ -303,7 +303,7 @@ const Tabs = ({
         id={`${seed} `}
         className={`tabs relative ${
           scrollable
-            ? 'overflow-hidden whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth'
+            ? 'overflow-hidden whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth flex-nowrap items-center'
             : ''
         } ${styles['tabs']} ${className}`}
       >

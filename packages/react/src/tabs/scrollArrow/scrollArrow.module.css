@@ -2,9 +2,10 @@
   border: none;
   min-width: 1.8rem;
   position: relative;
+  min-height: 1.8rem;
 }
 
-.tabs-arrow::before {
+.tabs-arrow .caret::before {
   content: '';
   display: block;
   width: 10px;
@@ -13,8 +14,8 @@
   border-bottom: none;
   border-left: none;
   position: absolute;
-  right: 12px;
-  top: 20px;
+  right: 11px;
+  top: 10px;
 }
 
 /* .tabs-arrow:disabled:hover,
@@ -22,16 +23,16 @@
 	background-color: ${({ theme }) => theme && theme.background} !important;
   } */
 
-.tabs-arrow:disabled::before {
+.tabs-arrow:disabled .caret::before {
   display: none;
 }
 
-.tabs-arrow.left-arrow {
+.tabs-arrow.left-arrow .caret::before {
   transform: rotate(225deg);
   right: 8px;
 }
 
-.tabs-arrow.right-arrow {
+.tabs-arrow.right-arrow .caret::before {
   transform: rotate(45deg);
   right: 12px;
 }

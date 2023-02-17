@@ -164,7 +164,7 @@ const DraggableScroll = ({
 
   return (
     <div
-      className={`${styles['scrollbar-hide']} cursor-grab relative overflow-auto`}
+      className={`${styles['scrollbar-hide']} cursor-grab relative overflow-x-hidden overflow-hidden`}
       ref={draggableRef}
       onTouchStart={handleTouchStart}
       onMouseDown={handleMouseDown}
