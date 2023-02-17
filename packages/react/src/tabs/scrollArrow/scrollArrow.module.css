@@ -1,0 +1,37 @@
+.tabs-arrow {
+  border: none;
+  min-width: 1.8rem;
+  position: relative;
+}
+
+.tabs-arrow::before {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid hsl(var(--p));
+  border-bottom: none;
+  border-left: none;
+  position: absolute;
+  right: 12px;
+  top: 20px;
+}
+
+/* .tabs-arrow:disabled:hover,
+  .tabs-arrow:disabled:focus {
+	background-color: ${({ theme }) => theme && theme.background} !important;
+  } */
+
+.tabs-arrow:disabled::before {
+  display: none;
+}
+
+.tabs-arrow.left-arrow {
+  transform: rotate(225deg);
+  right: 8px;
+}
+
+.tabs-arrow.right-arrow {
+  transform: rotate(45deg);
+  right: 12px;
+}

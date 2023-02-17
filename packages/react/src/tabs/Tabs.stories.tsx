@@ -17,7 +17,7 @@ export default {
 } as ComponentMeta<typeof Tabs>;
 
 const Template: ComponentStory<typeof Tabs> = (args) => (
-  <Tabs {...args} tabClassName="tab-bordered">
+  <Tabs {...args}>
     <Tab label="tab1">
       <div>
         <p>Tab 1</p>
@@ -68,6 +68,29 @@ const ScrollTemplate: ComponentStory<typeof Tabs> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const OverrideHighlight = Template.bind({});
+OverrideHighlight.args = {
+  highlightClassName: 'bg-accent',
+};
+
+export const SimpleBordered = Template.bind({});
+SimpleBordered.args = {
+  tabClassName: 'tab-bordered',
+  noHighlight: true,
+};
+
+export const LiftedTabs = Template.bind({});
+LiftedTabs.args = {
+  tabClassName: 'tab-lifted',
+  noHighlight: true,
+};
+
+export const BoxedTabs = Template.bind({});
+BoxedTabs.args = {
+  className: 'tabs-boxed',
+  noHighlight: true,
+};
 
 export const FullWidth = Template.bind({});
 FullWidth.args = {

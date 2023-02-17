@@ -5,8 +5,10 @@ export interface ITabs {
   scrollable?: boolean;
   className?: string;
   alignment?: Alignment;
-  tabClassName?:string;
-  panelClassName?:string;
+  tabClassName?: string;
+  panelClassName?: string;
+  noHighlight?: boolean;
+  highlightClassName: string;
 }
 export interface TabIdProps {
   tabId: string;

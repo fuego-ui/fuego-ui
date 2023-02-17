@@ -6,12 +6,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import styled, { css } from 'styled-components';
 import debounce from 'lodash.debounce';
 import { classnames } from '../utils/component-utils';
 import { DraggableScroll } from '../draggable';
-import { Direction, IArrowButton, ITabs, TabIdProps } from './Tabs.types';
+import { Direction, ITabs, TabIdProps } from './Tabs.types';
 import styles from './tabs.module.css';
+import ScrollArrow from './scrollArrow/ScrollArrow';
 
 /**
  * TODO:
@@ -305,7 +305,7 @@ const Tabs = ({
           scrollable
             ? 'overflow-hidden whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth'
             : ''
-        } ${styles['tabs']}`}
+        } ${styles['tabs']} ${className}`}
       >
         {scrollable && showArrows && scrollButton('left')}
         <DraggableScroll
@@ -329,14 +329,17 @@ const Tabs = ({
             };
             return cloneElement(child, { ...newProps });
           })}
-          <span
-            className={`${styles['tab-highlight']} bg-accent`}
-            style={{
-              left: highlightOffset ? `${highlightOffset}px` : 0,
-              width: highlightWidth ? `${highlightWidth}px` : 0,
-            }}
-          ></span>
-          {/* width: rest.width ? `${rest.width}px` : '96px'; */}
+          {!rest.noHighlight && (
+            <span
+              className={`${styles['tab-highlight']} bg-primary ${
+                rest.highlightClassName ? rest.highlightClassName : ''
+              }`}
+              style={{
+                left: highlightOffset ? `${highlightOffset}px` : 0,
+                width: highlightWidth ? `${highlightWidth}px` : 0,
+              }}
+            ></span>
+          )}
         </DraggableScroll>
         {scrollable && showArrows && scrollButton('right')}
       </div>
