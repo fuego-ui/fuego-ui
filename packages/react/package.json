@@ -1,0 +1,14 @@
+{
+  "name": "@fuego-ui/react",
+  "version": "1.0.2",
+  "sideEffects": false,
+  "peerDependencies": {
+    "framer-motion": "^6.5.1",
+    "react": "18.2.0",
+    "react-select": "^5.4.0",
+    "react-dom": "18.2.0",
+    "focus-trap-react": "^9.0.2",
+    "lodash.debounce": "^4.0.8",
+    "tailwindcss": "^3"
+  }
+}

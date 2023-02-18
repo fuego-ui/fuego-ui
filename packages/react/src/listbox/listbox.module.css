@@ -1,0 +1,16 @@
+.listbox .combobox-wrapper {
+  border-radius: 7px;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  position: absolute;
+  max-width: 20rem;
+  width: 100%;
+  border-top: none !important;
+  top: 58px;
+}
+
+.listbox .combobox-wrapper > ul li:last-child {
+  border-bottom-left-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+  border-bottom: none;
+}

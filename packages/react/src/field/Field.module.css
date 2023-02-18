@@ -1,0 +1,76 @@
+.field input,
+.field textarea {
+  @apply w-full text-inherit max-w-xs;
+}
+
+.field {
+  @apply max-w-xs;
+}
+
+.field input:focus,
+.field textarea:focus {
+  @apply outline-offset-0;
+}
+
+.field label {
+  transform-origin: left top;
+  transition: color 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    transform 200ms cubic-bezier(0, 0, 0.2, 1) 0ms,
+    max-width 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}
+
+.field.float-label.filled label,
+.field.focused.float-label label,
+.field.has-placeholder label {
+  opacity: 1 !important;
+  --tw-bg-opacity: 1;
+}
+
+.field.filled label {
+  opacity: 0;
+}
+
+.field.float-label label {
+  position: absolute;
+  background-color: hsl(var(--b1) / var(--tw-bg-opacity));
+  top: 1.2rem;
+  left: 1.8rem;
+}
+
+.field.focused label,
+.field.focused.filled label,
+.field.float-label.filled label {
+  opacity: 0;
+}
+
+.field.float-label.filled label,
+.field.focused.float-label label,
+.field.has-placeholder label {
+  transform: translate(0rem, -0.8rem) scale(0.75);
+  padding: 0 0.35rem;
+}
+
+.error {
+  @apply pl-4;
+}
+
+.error--msg {
+  transform-origin: 0 0;
+  transform: rotateX(270deg);
+  transition: transform 200ms ease;
+  position: absolute;
+}
+
+.field.has-error .error--msg {
+  transform: rotateX(360deg);
+}
+
+.field.has-error label {
+  @apply text-error;
+}
+
+.field.has-error input,
+.field.has-error textarea {
+  @apply outline-error caret-error border-error;
+  transition: outline 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+}

@@ -1,0 +1,11 @@
+.scrollbar-hide::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent;
+  scrollbar-width: none;
+  /* Optional: just make scrollbar invisible */
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
