@@ -9,13 +9,12 @@ import React, {
   useId,
 } from 'react';
 import Field from '../field';
-import styled from 'styled-components';
 import { Keys } from '../utils/keycodes';
 import { classnames } from '../utils/component-utils';
-import { themeOrDefault } from '../utils/theme-utils';
 import { IListbox } from './Listbox.types';
+import styles from './listbox.module.css';
 
-export const ListboxCmp = forwardRef(
+const Listbox = forwardRef(
   (
     {
       label = '',
@@ -220,7 +219,7 @@ export const ListboxCmp = forwardRef(
         aria-owns={listId}
         aria-haspopup="listbox"
         id={id}
-        className={className}
+        className={`${styles['listbox']} ${className}`}
       >
         <Field
           ref={fieldRef}
@@ -237,90 +236,16 @@ export const ListboxCmp = forwardRef(
         >
           {label}
         </Field>
-        <div className={`combobox-wrapper ${expanded ? '' : 'hidden'}`}>
+        <div
+          className={`${styles['combobox-wrapper']} ${
+            expanded ? '' : 'hidden'
+          }`}
+        >
           {listRender}
         </div>
       </div>
     );
   }
 );
-
-const Listbox = styled(ListboxCmp)`
-  position: relative;
-  .combobox-wrapper {
-    border-radius: 7px;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    position: absolute;
-    top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')};
-    width: 100%;
-    border-top: none !important;
-    z-index: 1;
-    padding-top: ${({ fieldSize }) =>
-      fieldSize === 'small' ? '.8rem' : '.5rem'};
-
-    &.hidden {
-      display: none;
-    }
-
-    & > ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      &.loader li {
-        color: ${({ theme }) =>
-          theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
-        background-color: ${({ theme }) =>
-          theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
-      }
-
-      li {
-        padding: ${({ fieldSize }) =>
-          fieldSize === 'small' ? '0.8rem 1rem' : '1rem .8rem'};
-
-        ${({ theme }) =>
-          theme.formField.bg === theme.backgroundColor &&
-          `border-bottom: 2px solid ${theme.formField.outline};`}
-
-        &:first-child {
-          padding-top: 1.8rem;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 0.4rem;
-          border-bottom-right-radius: 0.4rem;
-          border-bottom: none;
-        }
-      }
-    }
-  }
-
-  // theme
-  .combobox-wrapper {
-    ${({ theme }) =>
-      theme.formField.bg === theme.primary &&
-      `
-    outline: 2px solid ${theme.formField.outline};
-  `}
-
-    & > ul {
-      & li {
-        color: ${({ theme }) =>
-          theme && themeOrDefault(theme.formField.fg, theme.primary)};
-        background-color: ${({ theme }) =>
-          theme && themeOrDefault(theme.formField.bg, theme.backgroundColor)};
-
-        &:hover,
-        &.focused {
-          color: ${({ theme }) =>
-            theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
-          background-color: ${({ theme }) =>
-            theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
-        }
-      }
-    }
-  }
-`;
 
 export default Listbox;
