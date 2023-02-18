@@ -1,6 +1,6 @@
 {
   "name": "@fuego-ui/react",
-  "version": "1.0.2",
+  "version": "0.0.1",
   "sideEffects": false,
   "peerDependencies": {
     "framer-motion": "^6.5.1",
