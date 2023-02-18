@@ -23,60 +23,6 @@ import ScrollArrow from './scrollArrow/ScrollArrow';
  * on window resize, lmaxsize is out of date
  */
 
-/**
- * TODO: Move to a separate file to separate from tabs
- */
-
-// const ArrowDisabled = css`
-//   &:hover,
-//   &:focus {
-//     background-color: ${({ theme }) => theme && theme.background} !important;
-//   }
-
-//   &::before {
-//     display: none;
-//   }
-// `;
-
-// const ScrollArrow = styled.button<IArrowButton>`
-//   border: none;
-//   min-width: 1.8rem;
-//   position: relative;
-
-//   &::before {
-//     content: '';
-//     display: block;
-//     width: 10px;
-//     height: 10px;
-//     border: 1px solid ${({ theme }) => theme && theme.primary};
-//     border-bottom: none;
-//     border-left: none;
-//     position: absolute;
-//     right: 12px;
-//     top: 20px;
-
-//     ${({ direction }) =>
-//       direction === 'right' ? RightScrollArrowStyles : LeftScrollArrowStyles}
-//   }
-
-//   ${({ disabled }) => disabled && ArrowDisabled}
-
-//   // theme
-//   background-color: ${({ theme }) => theme && theme.background};
-
-//   &:hover,
-//   &:focus {
-//     background-color: ${({ theme }) => theme && theme.primary};
-//     color: ${({ theme }) => theme && theme.contrastText};
-
-//     &::before {
-//       border: 1px solid ${({ theme }) => theme && theme.tabs && theme.tabs.hfg};
-//       border-bottom: none;
-//       border-left: none;
-//     }
-//   }
-// `;
-
 const Tabs = ({
   children,
   fullWidth = false,

@@ -1,6 +1,6 @@
 # Fuego UI 🔥
 
-A library of components meant to be easily extended, themed or modified on the fly with the help of styled components and tailwind.
+A library of components meant to be easily extended, themed or modified on the fly with the help of DaisyUI and Tailwind.
 
 ## Build
 
