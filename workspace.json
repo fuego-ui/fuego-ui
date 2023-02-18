@@ -4,7 +4,6 @@
   "projects": {
     "angular": "packages/angular",
     "angular-e2e": "packages/angular-e2e",
-    "fuego-styles": "packages/fuego-styles",
     "react": "packages/react",
     "react-e2e": "packages/react-e2e"
   }
