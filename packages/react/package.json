@@ -1,6 +1,6 @@
 {
   "name": "@fuego-ui/react",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "sideEffects": false,
   "peerDependencies": {
     "react": "^18.2.0",
