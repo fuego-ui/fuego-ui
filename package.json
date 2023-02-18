@@ -4,11 +4,7 @@
   "license": "MIT",
   "scripts": {
     "fuego-publish": "node ./tools/workflows/build-to-publish.js",
-    "postinstall": "ngcc --properties es2020 browser module main",
-    "merge:components": "cat dist/packages/fuego-ui-styles/*.css > dist/packages/fuego-ui-styles/components.css",
-    "postmerge:components": "prejss-cli dist/packages/fuego-ui-styles/components.css --format commonjs",
-    "prebuild:fuego-styles": "rm -rf dist/packages/fuego-ui-styles",
-    "build:fuego-styles": "postcss --config packages/fuego-styles packages/fuego-styles/src/components/*.css src --dir dist/packages/fuego-ui-styles && npm run merge:components && nx build fuego-styles"
+    "postinstall": "ngcc --properties es2020 browser module main"
   },
   "private": true,
   "sideEffects": false,
@@ -29,8 +25,6 @@
     "daisyui": "^2.46.0",
     "framer-motion": "^6.5.1",
     "lodash.debounce": "^4.0.8",
-    "postcss-js": "^4.0.0",
-    "prejss-cli": "^0.3.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-focus-lock": "^2.9.3",
