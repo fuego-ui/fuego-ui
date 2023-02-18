@@ -1,1 +1,1 @@
-export { default, ListboxCmp } from './Listbox';
+export { default } from './Listbox';

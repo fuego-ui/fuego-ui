@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { IModal } from './Modal.types';
 import FocusLock from 'react-focus-lock';
 
-export const Modal = ({
+const Modal = ({
   isShowing = false,
   hide,
   modalHeader = true,

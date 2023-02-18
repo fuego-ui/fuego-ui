@@ -1,7 +1,7 @@
 import React from 'react';
 import { ITextImage } from './TextImage.types';
 
-export function TextImage({
+function TextImage({
   children,
   title = '',
   img = '',

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useId, forwardRef } from 'react';
 import { RangeSliderProps } from './RangeSlider.types';
 
-export const RangeSlider = forwardRef(
+const RangeSlider = forwardRef(
   (
     {
       className = '',

@@ -1,2 +1,2 @@
-export { default, TextImageCmp } from './TextImage';
+export { default } from './TextImage';
 export * from './TextImage.types';

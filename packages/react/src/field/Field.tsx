@@ -33,7 +33,6 @@ const Field = forwardRef(
       required,
       fieldStyle,
       labelId = '',
-      size = 'small',
       wrapperClassName = '',
       ...props
     }: FieldProps,
