@@ -3,33 +3,10 @@
   border-top-right-radius: 0;
   border-top-left-radius: 0;
   position: absolute;
-  /* top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')}; */
+  max-width: 20rem;
   width: 100%;
   border-top: none !important;
-  z-index: 1;
-  /* padding-top: ${({ fieldSize }) =>
-      fieldSize === 'small' ? '.8rem' : '.5rem'}; */
-}
-
-.listbox .combobox-wrapper.hidden {
-  display: none;
-}
-
-.listbox .combobox-wrapper > ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.listbox .combobox-wrapper > ul.loader li {
-  /* color: ${({ theme }) =>
-      theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
-    background-color: ${({ theme }) =>
-      theme && themeOrDefault(theme.listbox.hbg, theme.primary)}; */
-}
-
-.listbox .combobox-wrapper > ul li:first-child {
-  padding-top: 1.8rem;
+  top: 58px;
 }
 
 .listbox .combobox-wrapper > ul li:last-child {
@@ -37,100 +14,3 @@
   border-bottom-right-radius: 0.4rem;
   border-bottom: none;
 }
-
-/* .listbox .combobox-wrapper > ul li {
-    padding: ${({ fieldSize }) =>
-      fieldSize === 'small' ? '0.8rem 1rem' : '1rem .8rem'};
-
-    ${({ theme }) =>
-      theme.formField.bg === theme.backgroundColor &&
-      `border-bottom: 2px solid ${theme.formField.outline};`}
-
-    &:first-child {
-      padding-top: 1.8rem;
-    }
-
-    &:last-child {
-      border-bottom-left-radius: 0.4rem;
-      border-bottom-right-radius: 0.4rem;
-      border-bottom: none;
-    }
-  } */
-
-/* const Listbox = styled(ListboxCmp)`
-  position: relative;
-  .combobox-wrapper {
-    border-radius: 7px;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-    position: absolute;
-    top: ${({ fieldSize }) => (fieldSize === 'small' ? '2.6rem' : '3rem')};
-    width: 100%;
-    border-top: none !important;
-    z-index: 1;
-    padding-top: ${({ fieldSize }) =>
-      fieldSize === 'small' ? '.8rem' : '.5rem'};
-
-    &.hidden {
-      display: none;
-    }
-
-    & > ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-
-      &.loader li {
-        color: ${({ theme }) =>
-          theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
-        background-color: ${({ theme }) =>
-          theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
-      }
-
-      li {
-        padding: ${({ fieldSize }) =>
-          fieldSize === 'small' ? '0.8rem 1rem' : '1rem .8rem'};
-
-        ${({ theme }) =>
-          theme.formField.bg === theme.backgroundColor &&
-          `border-bottom: 2px solid ${theme.formField.outline};`}
-
-        &:first-child {
-          padding-top: 1.8rem;
-        }
-
-        &:last-child {
-          border-bottom-left-radius: 0.4rem;
-          border-bottom-right-radius: 0.4rem;
-          border-bottom: none;
-        }
-      }
-    }
-  } */
-
-/* // theme
-  .combobox-wrapper {
-    ${({ theme }) =>
-      theme.formField.bg === theme.primary &&
-      `
-    outline: 2px solid ${theme.formField.outline};
-  `}
-
-    & > ul {
-      & li {
-        color: ${({ theme }) =>
-          theme && themeOrDefault(theme.formField.fg, theme.primary)};
-        background-color: ${({ theme }) =>
-          theme && themeOrDefault(theme.formField.bg, theme.backgroundColor)};
-
-        &:hover,
-        &.focused {
-          color: ${({ theme }) =>
-            theme && themeOrDefault(theme.listbox.hfg, theme.accent)};
-          background-color: ${({ theme }) =>
-            theme && themeOrDefault(theme.listbox.hbg, theme.primary)};
-        }
-      }
-    }
-  } */
-/* `; */

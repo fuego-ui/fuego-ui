@@ -3,16 +3,13 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Listbox from './Listbox';
 import { useForm } from 'react-hook-form';
+import Field from '../field/Field';
 
 export default {
   title: 'Components/Form Fields/Listbox',
   component: Listbox,
   argTypes: {
-    // backgroundColor: { control: "color" },
-    fieldSize: {
-      options: ['small', 'regular'],
-      control: { type: 'radio' },
-    },
+    // backgroundColor: { control: "color" }
   },
 } as ComponentMeta<typeof Listbox>;
 
@@ -35,7 +32,11 @@ const Template: ComponentStory<typeof Listbox> = (args) => {
       <div className="row">
         <div className="col">
           <form>
-            <Listbox label="Name" {...args}></Listbox>
+            <div className="max-w-[20rem]">
+              <Listbox {...args}>
+                <Field className="input-bordered">Name</Field>
+              </Listbox>
+            </div>
           </form>
         </div>
       </div>
@@ -57,26 +58,13 @@ Default.args = {
   },
 };
 
-// export const Small = Template.bind({});
-// Small.args = {
-//   name: 'name',
-//   options: [
-//     { id: 1, label: 'Cool', value: 'cool' },
-//     { id: 2, label: 'Dropdown', value: 'dropdown' },
-//     { id: 3, label: 'Bro', value: 'bro' },
-//   ],
-//   fieldSize: 'small',
-//   onSelection: (e) => console.log(e),
-//   onChange: () => console.log('woo'),
-// };
-
-// export const Loading = Template.bind({});
-// Loading.args = {
-//   name: 'name',
-//   loading: true,
-//   options: [
-//     { id: 1, label: 'Cool', value: 'cool' },
-//     { id: 2, label: 'Dropdown', value: 'dropdown' },
-//     { id: 3, label: 'Bro', value: 'bro' },
-//   ],
-// };
+export const Loading = Template.bind({});
+Loading.args = {
+  // name: 'name',
+  loading: true,
+  options: [
+    { id: 1, label: 'Cool', value: 'cool' },
+    { id: 2, label: 'Dropdown', value: 'dropdown' },
+    { id: 3, label: 'Bro', value: 'bro' },
+  ],
+};

@@ -24,7 +24,6 @@ export interface FieldProps {
   autoComplete?: any;
   onKeyDown?: any;
   onKeyUp?: any;
-  size: 'small' | 'regular';
   wrapperClassName?: string;
   fieldStyle?: 'inFieldFloat' | 'outlineFloat' | 'outsideFloat';
 }

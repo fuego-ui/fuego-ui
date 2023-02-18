@@ -2,7 +2,7 @@ export interface IListbox {
   id?: string;
   label?: string;
   children?: any;
-  className: string;
+  className?: string;
   autocomplete?: any;
   options?: Array<any>;
   loading?: boolean;

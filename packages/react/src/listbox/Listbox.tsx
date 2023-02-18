@@ -7,8 +7,8 @@ import React, {
   useImperativeHandle,
   SyntheticEvent,
   useId,
+  cloneElement,
 } from 'react';
-import Field from '../field';
 import { Keys } from '../utils/keycodes';
 import { classnames } from '../utils/component-utils';
 import { IListbox } from './Listbox.types';
@@ -26,7 +26,6 @@ const Listbox = forwardRef(
       onSelection,
       onChange,
       className = '',
-      fieldSize = 'small',
       ...props
     }: IListbox,
     ref: any
@@ -182,8 +181,10 @@ const Listbox = forwardRef(
     }, [clickedOutside]);
 
     const defaultLoader = (
-      <ul className="loader">
-        <li>...Loading</li>
+      <ul className="menu loader">
+        <li>
+          <span className="active !pt-2 pb-1">...Loading</span>
+        </li>
       </ul>
     );
 
@@ -192,23 +193,47 @@ const Listbox = forwardRef(
     const listRender = loading ? (
       loader
     ) : (
-      <ul aria-labelledby={labelId} role="listbox" id={listId}>
+      <ul
+        className="menu bg-base-100 shadow-xl"
+        aria-labelledby={labelId}
+        role="listbox"
+        id={listId}
+      >
         {suggestions.map(({ id, label, value }, index) => {
           return (
             <li
               id={`suggestion-${id}`}
               key={id}
               ref={(el) => suggestionRefs.push(el)}
-              className={classnames({ focused: activeIndex === index })}
-              aria-selected={activeIndex === index}
+              className={`${classnames({
+                focused: activeIndex === index,
+              })}`}
+              // aria-selected={activeIndex === index}
               onClick={(e) => onSelectionHandler(e, { label, value })}
             >
-              {label}
+              <span className={`${index === 0 ? 'pt-4' : ''}`}>{label}</span>
             </li>
           );
         })}
       </ul>
     );
+
+    const childProps = {
+      ...children.props,
+      ref: fieldRef,
+      id: id,
+      labelId: labelId,
+      floatLabel: false,
+      children: '',
+      placeholder: children.props.children,
+      'aria-activedescendant': activedescendant,
+      className: `${children.props.className} z-20 relative`,
+      onFocus: showDropdown,
+      onBlur: onBlurHandler,
+      onKeyUp: checkKey,
+      onKeyDown: setActiveItem,
+      onChange: onChangeHandler,
+    };
 
     // Have an option for static options and also a function to pass and format suggestions
     return (
@@ -217,25 +242,12 @@ const Listbox = forwardRef(
         role="combobox"
         aria-expanded={expanded}
         aria-owns={listId}
+        aria-controls={listId}
         aria-haspopup="listbox"
         id={id}
         className={`${styles['listbox']} ${className}`}
       >
-        <Field
-          ref={fieldRef}
-          id={id}
-          labelId={labelId}
-          floatLabel={false}
-          onFocus={showDropdown}
-          onBlur={onBlurHandler}
-          onKeyUp={checkKey}
-          onKeyDown={setActiveItem}
-          onChange={onChangeHandler}
-          size={fieldSize}
-          aria-activedescendant={activedescendant}
-        >
-          {label}
-        </Field>
+        {children && cloneElement(children, { ...childProps })}
         <div
           className={`${styles['combobox-wrapper']} ${
             expanded ? '' : 'hidden'
