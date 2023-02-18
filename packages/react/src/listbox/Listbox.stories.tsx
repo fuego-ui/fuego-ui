@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Listbox from './Listbox';
-import { useForm } from 'react-hook-form';
+import { useForm } from '../../../../node_modules/react-hook-form';
 import Field from '../field/Field';
 
 export default {

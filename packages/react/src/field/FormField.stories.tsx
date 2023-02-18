@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Field from '.';
-import { useForm } from 'react-hook-form';
+import { useForm } from '../../../../node_modules/react-hook-form';
 
 export default {
   title: 'Components/Form Fields/Text Fields',

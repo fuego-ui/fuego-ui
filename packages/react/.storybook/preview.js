@@ -1,4 +1,4 @@
-import { themes } from '@storybook/theming';
+import { themes } from '../../../node_modules/@storybook/theming';
 import 'tailwindcss/tailwind.css';
 // eslint-disable-next-line import/no-webpack-loader-syntax
 
