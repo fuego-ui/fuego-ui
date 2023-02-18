@@ -53,7 +53,7 @@ async function buildToPublish() {
 
     // Npm Version
     console.log('Updating Version...');
-    process.chdir('./packages/fuego-ui');
+    process.chdir('./packages/react');
     await execPromise(versionCmd);
     console.log('Version Updated');
 
@@ -62,7 +62,7 @@ async function buildToPublish() {
     await buildLibrary();
 
     // Publish Library
-    process.chdir('./dist/packages/fuego-ui');
+    process.chdir('./dist/packages/react');
     await publishLibrary();
   } catch (error) {
     console.log(error);
