@@ -8,7 +8,7 @@ export interface ITabs {
   tabClassName?: string;
   panelClassName?: string;
   noHighlight?: boolean;
-  highlightClassName: string;
+  highlightClassName?: string;
 }
 export interface TabIdProps {
   tabId: string;

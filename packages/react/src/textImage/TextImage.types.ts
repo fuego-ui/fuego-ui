@@ -6,7 +6,7 @@ export interface ITextImage {
   imgAlt?: string;
   imgChild?: any;
   orderReverse?: boolean;
-  className: string;
+  className?: string;
   imgColClassName?: string;
   textColClassName?: string;
 }

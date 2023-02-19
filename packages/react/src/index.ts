@@ -45,6 +45,9 @@ export * from './textInput';
 export { default as Tabs } from './tabs';
 export * from './tabs';
 
+export { default as Tab } from './tab';
+export * from './tab';
+
 // Text Image Component
 export { default as TextImage } from './textImage';
 export * from './textImage';
