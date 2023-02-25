@@ -10,8 +10,9 @@ export function useOnWindowResize() {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', updateWidthAndHeight);
-    return () => window.removeEventListener('resize', updateWidthAndHeight);
+    window && window.addEventListener('resize', updateWidthAndHeight);
+    return () =>
+      window && window.removeEventListener('resize', updateWidthAndHeight);
   });
 
   return {
