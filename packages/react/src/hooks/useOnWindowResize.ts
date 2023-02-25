@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 export function useOnWindowResize() {
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const [height, setHeight] = React.useState(window.innerHeight);
+  const [width, setWidth] = useState(window ? window.innerWidth : 0);
+  const [height, setHeight] = useState(window ? window.innerHeight : 0);
 
   const updateWidthAndHeight = () => {
     setWidth(window.innerWidth);
