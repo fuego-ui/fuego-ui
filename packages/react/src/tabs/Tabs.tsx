@@ -6,12 +6,12 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import debounce from 'lodash.debounce';
 import { classnames } from '../utils/component-utils';
 import { DraggableScroll } from '../draggable';
 import { Direction, ITabs, TabIdProps } from './Tabs.types';
 import styles from './tabs.module.css';
 import ScrollArrow from './scrollArrow/ScrollArrow';
+import { useOnWindowResize } from '../hooks/useOnWindowResize';
 
 /**
  * TODO:
@@ -43,6 +43,7 @@ const Tabs = ({
     left: true,
     right: false,
   });
+  const { width } = useOnWindowResize();
 
   const draggableRef = useRef<HTMLDivElement>();
   const tabRefs = useRef<HTMLElement[]>([]);
@@ -173,23 +174,18 @@ const Tabs = ({
 
   // Listener for on window resize
   useEffect(() => {
-    const onWindowResize = debounce((e: any) => {
-      if (
-        draggableRef.current &&
-        draggableRef.current.offsetWidth &&
-        draggableRef.current.offsetWidth > e.target.innerWidth
-      ) {
-        setShowArrows(true);
-      } else {
-        setShowArrows(false);
-      }
-      // TODO: this one has the issue of caching
-      updateScrollArrowState(maxScrollLeft);
-    }, 50);
+    if (
+      draggableRef.current &&
+      draggableRef.current.offsetWidth &&
+      draggableRef.current.offsetWidth > width
+    ) {
+      setShowArrows(true);
+    } else {
+      setShowArrows(false);
+    }
 
-    window.addEventListener('resize', onWindowResize, { passive: true });
-    return window.removeEventListener('resize', onWindowResize);
-  }, [maxScrollLeft]);
+    updateScrollArrowState(maxScrollLeft);
+  }, [width, maxScrollLeft]);
 
   // On Active Tab Change
   useEffect(() => {
@@ -228,7 +224,7 @@ const Tabs = ({
 
       updateTabHighlightPosition(activeTabRef);
     }
-  }, [activeTab]);
+  }, [activeTab, width]);
 
   useEffect(() => {
     const calculateMaxLeftScroll = () => {
@@ -255,6 +251,7 @@ const Tabs = ({
       >
         {scrollable && showArrows && scrollButton('left')}
         <DraggableScroll
+          className={fullWidth ? 'flex w-full' : ''}
           draggableRef={draggableRef}
           onScroll={onTabListScroll}
           onDragEnd={OnDragEndHandler}
@@ -264,7 +261,7 @@ const Tabs = ({
             const newProps = {
               className: `${childClassName} ${
                 rest.tabClassName ? rest.tabClassName : ''
-              }`,
+              } ${fullWidth ? 'grow flex-1' : ''}`,
               id: tabIds[index].tabId,
               ref: (ref: any) => pushTabRef(ref, index),
               activeTab: activeTab,
@@ -306,60 +303,6 @@ const Tabs = ({
         );
       })}
     </>
-    //   id={`${seed} `}
-    //   className={`tabs relative ${scrollable ? 'overflow-hidden' : ''}`}
-    // >
-    //   <div
-    //     className={`max-h-[48px] ${scrollable ? 'flex' : ''} ${
-    //       alignment === 'center' ? 'justify-content-center' : ''
-    //     }`}
-    //   >
-    //     {scrollable && showArrows && scrollButton('left')}
-    //     <div
-    //       role="tablist"
-    //       className={`flex relative whitespace-nowrap overflow-x-auto overflow-y-hidden scroll-smooth ${
-    //         fullWidth ? 'flex-grow-1' : ''
-    //       }`}
-    //     >
-    //       <DraggableScroll
-    //         draggableRef={draggableRef}
-    //         onScroll={onTabListScroll}
-    //         onDragEnd={OnDragEndHandler}
-    //       >
-    //         {children.map((child: any, index: number) => {
-    //           const { label, className = '' } = child.props;
-    //           const newProps = {
-    //             className: `${fullWidth ? 'flex-grow-1' : ''} ${className}`,
-    //             id: tabIds[index].tabId,
-    //             ref: (ref: any) => pushTabRef(ref, index),
-    //             activeTab: { activeTab },
-    //             key: tabIds[index].tabId,
-    //             label: label,
-    //             onTabClick: onTabSelection,
-    //             ...tabIds[index],
-    //           };
-    //           return cloneElement(child, { ...newProps });
-    //         })}
-    //         <TabHighlight leftOffset={highlightOffset} />
-    //       </DraggableScroll>
-    //     </div>
-    //     {scrollable && showArrows && scrollButton('right')}
-    //   </div>
-    //   {children.map((child: any, index: number) => {
-    //     return (
-    //       <TabPanel
-    //         tabIndex={0}
-    //         role="tabpanel"
-    //         key={tabIds[index].tabPanelId}
-    //         id={tabIds[index].tabPanelId}
-    //         aria-labelledby={tabIds[index].tabId}
-    //         className={`${activeTab !== tabIds[index].tabId ? 'hidden' : ''}`}
-    //       >
-    //         {child.props.children}
-    //       </TabPanel>
-    //     );
-    //   })}
-    // </div>
   );
 };
 

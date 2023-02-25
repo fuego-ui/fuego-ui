@@ -19,7 +19,7 @@ function TextImage({
   );
 
   return (
-    <section className={`${className} flex flex-col md:flex-row gap-3`}>
+    <section className={`flex flex-col md:flex-row gap-3 ${className}`}>
       <div className={imgColClassName}>{imgEl}</div>
       <div className={textColClassName}>{children}</div>
     </section>

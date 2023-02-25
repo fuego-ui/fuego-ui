@@ -8,12 +8,14 @@ interface IDraggable {
   onDrag?: any;
   onDragEnd?: any;
   draggableRef: any;
+  className?: any;
 }
 
 const POSITION = { x: 0, y: 0 };
 
 const DraggableScroll = ({
   children,
+  className,
   id,
   onDrag,
   onScroll,
@@ -164,7 +166,11 @@ const DraggableScroll = ({
 
   return (
     <div
-      className={`${styles['scrollbar-hide']} cursor-grab relative overflow-x-hidden overflow-hidden`}
+      className={`${
+        styles['scrollbar-hide']
+      } cursor-grab relative overflow-x-hidden overflow-hidden ${
+        className ? className : ''
+      }`}
       ref={draggableRef}
       onTouchStart={handleTouchStart}
       onMouseDown={handleMouseDown}
