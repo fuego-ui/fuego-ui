@@ -1,26 +1,86 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+} from '@angular/core';
 
 @Component({
-  selector: 'fue-accordion',
-  template: `<div
-    tabindex="0"
-    [ngClass]="className"
-    (onClick)="expanded = !expanded"
-    class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box {{
-      expanded ? 'collapse-open' : 'collapse-close'
-    }}"
-  >
-    <div class="collapse-title text-xl font-medium">
-      <ng-content select="fue-accordion-header"></ng-content>
+  standalone: true,
+  selector: 'accordion-item',
+  imports: [CommonModule],
+  template: `
+    <div class="accordion-item">
+      <div
+        class="accordion-title"
+        (click)="toggleAccordion()"
+        (keydown)="onKeyDown($event)"
+        [attr.aria-expanded]="expanded.toString()"
+        [attr.aria-controls]="accordionId"
+        tabindex="0"
+      >
+        {{ title }}
+      </div>
+      <div
+        class="accordion-content"
+        [ngClass]="{ expanded: expanded }"
+        [hidden]="!expanded"
+        [attr.aria-hidden]="(!expanded).toString()"
+        [attr.id]="accordionId"
+      >
+        <ng-content></ng-content>
+      </div>
     </div>
-    <div class="collapse-content">
-      <ng-content select="fue-accordion-content"></ng-content>
-    </div>
-  </div>`,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  `,
+  styles: [
+    `
+      .accordion-item {
+        cursor: pointer;
+      }
+
+      .accordion-title {
+        font-weight: bold;
+      }
+
+      .accordion-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+      }
+
+      .accordion-content.expanded {
+        max-height: 500px; /* Adjust the value as needed */
+        transition: max-height 0.3s ease-in-out;
+      }
+    `,
+  ],
 })
-export class AccordionComponent {
-  @Input() className: any;
+export class AccordionItemComponent {
+  private static nextId = 0;
+
+  @Input() title!: string;
+  @Input() className!: string;
+  @Output() byOnToggle: EventEmitter<string> = new EventEmitter<string>();
 
   expanded = false;
+  accordionId: string;
+
+  constructor() {
+    this.accordionId = `accordion-${AccordionItemComponent.nextId++}`;
+  }
+
+  toggleAccordion() {
+    this.expanded = !this.expanded;
+    this.byOnToggle.emit(this.expanded ? 'expanded' : 'collapsed');
+  }
+
+  @HostListener('keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent) {
+    if (event.code === 'Enter' || event.code === 'Space') {
+      event.preventDefault();
+      this.toggleAccordion();
+    }
+  }
 }
