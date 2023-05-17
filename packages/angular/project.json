@@ -1,11 +1,12 @@
 {
   "name": "angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/angular/src",
   "prefix": "fue",
   "targets": {
     "build": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/packages/angular"],
       "options": {
         "project": "packages/angular/ng-package.json",
@@ -15,22 +16,22 @@
         "production": {
           "tsConfig": "packages/angular/tsconfig.lib.prod.json",
           "commands": [
-            "nx run lib1:build-angular:development",
-            "tailwindcss -c libs/lib1/tailwind.config.js"
+            "nx run angular:build-angular:development",
+            "tailwindcss -c packages/angular/tailwind.config.js"
           ]
         },
         "development": {
           "tsConfig": "packages/angular/tsconfig.lib.json",
           "commands": [
-            "nx run lib1:build-angular:development",
-            "tailwindcss -c libs/lib1/tailwind.config.js"
+            "nx run angular:build-angular:development",
+            "tailwindcss -c packages/angular/tailwind.config.js"
           ]
         }
       },
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/packages/angular"],
       "options": {
         "jestConfig": "packages/angular/jest.config.ts",
@@ -38,7 +39,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "options": {
         "lintFilePatterns": [
           "packages/angular/**/*.ts",

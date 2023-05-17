@@ -1,26 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { moduleMetadata, Story, Meta } from '@storybook/angular';
-
-import { AccordionComponent } from './accordion.component';
-import { AccordionModule } from './accordion.module';
-
+import { AccordionItemComponent } from './accordion.component';
 export default {
   title: 'Accordion',
-  component: AccordionComponent,
+  component: AccordionItemComponent,
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, AccordionModule],
+      imports: [CommonModule],
     }),
   ],
-} as Meta<AccordionComponent>;
+} as Meta<AccordionItemComponent>;
 
-const Template: Story<AccordionComponent> = (args: AccordionComponent) => ({
+const Template: Story<AccordionItemComponent> = (
+  args: AccordionItemComponent
+) => ({
   props: args,
-  template: `
-  <fue-accordion>
-    <fue-accordion-header>Header</fue-accordion-header>
-    <fue-accordion-content><p>Content!</p></fue-accordion-content>
-  </fue-accordion>
+  template: `<accordion-item title="Accordion Heading"><p>Content</p></accordion-item>
 `,
 });
 
