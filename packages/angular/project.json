@@ -43,7 +43,7 @@
       "executor": "@storybook/angular:start-storybook",
       "options": {
         "port": 4400,
-        "styles": ["node_modules/tailwindcss/tailwind.css"],
+        "styles": ["packages/angular/src/lib/styles/styles.css"],
         "configDir": "packages/angular/.storybook",
         "browserTarget": "angular:build-storybook",
         "compodoc": false
@@ -58,7 +58,7 @@
       "executor": "@storybook/angular:build-storybook",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "styles": ["node_modules/tailwindcss/tailwind.css"],
+        "styles": ["packages/angular/src/lib/styles/styles.css"],
         "outputDir": "dist/storybook/angular",
         "configDir": "packages/angular/.storybook",
         "browserTarget": "angular:build-storybook",
