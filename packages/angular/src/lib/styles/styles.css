@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import './accordion.css'; */
+@layer components {
+  .accordion-group accordion-item:first-child .collapse {
+    @apply rounded-b-none;
+  }
+
+  .accordion-group accordion-item:last-child .collapse {
+    @apply rounded-t-none;
+  }
+
+  .accordion-group accordion-item:not(:first-child):not(:last-child) .collapse {
+    @apply rounded-none;
+  }
+
+  .accordion-group accordion-item:not(:last-child) .collapse {
+    @apply border-b-0;
+  }
+}
