@@ -3,13 +3,19 @@ import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
 
 import { AccordionItemComponent } from './accordion.component';
 import { AccordionGroupDirective } from './accordion-group.directive';
-
+import { AccordionTriggerDirective } from './accordion-trigger.directive';
+import { AccordionContentDirective } from './accordion-content.directive';
 const meta: Meta<AccordionItemComponent> = {
   title: 'Accordion',
   component: AccordionItemComponent,
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, AccordionGroupDirective],
+      imports: [
+        CommonModule,
+        AccordionGroupDirective,
+        AccordionTriggerDirective,
+        AccordionContentDirective,
+      ],
     }),
     // With template
     // componentWrapperDecorator(
@@ -26,7 +32,10 @@ type Story = StoryObj<AccordionItemComponent>;
 export const Default: Story = {
   render: () => ({
     props: { title: 'Accordion Heading', content: `Content` },
-    template: `<accordion-item [title]="title">{{content}}</accordion-item>`,
+    template: `<accordion-item>
+    <accordion-trigger>{{title}}</accordion-trigger>
+    <accordion-content>{{content}}</accordion-content>
+   </accordion-item>`,
   }),
 };
 
@@ -34,7 +43,22 @@ export const AccordionGroup: Story = {
   render: () => ({
     props: { title: 'Accordion Heading', content: `Content` },
     template: `<accordion-group>
-    <accordion-item [title]="title">{{content}}</accordion-item>
-    <accordion-item [title]="title">{{content}}</accordion-item></accordion-group>`,
+      <accordion-item>
+        <accordion-trigger>{{title}}</accordion-trigger>
+        <accordion-content>{{content}}</accordion-content>
+      </accordion-item>
+      <accordion-item >
+        <accordion-trigger>{{title}}</accordion-trigger>
+        <accordion-content>{{content}}</accordion-content>
+      </accordion-item>
+      <accordion-item >
+      <accordion-trigger>{{title}}</accordion-trigger>
+      <accordion-content>{{content}}</accordion-content>
+    </accordion-item>
+    <accordion-item >
+    <accordion-trigger>{{title}}</accordion-trigger>
+    <accordion-content>{{content}}</accordion-content>
+  </accordion-item>
+    </accordion-group>`,
   }),
 };

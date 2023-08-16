@@ -2,62 +2,52 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
-  Output,
-  EventEmitter,
   HostListener,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  inject,
-  signal,
+  ContentChild,
+  AfterViewInit,
 } from '@angular/core';
+import { AccordionTriggerDirective } from './accordion-trigger.directive';
+import { AccordionContentDirective } from './accordion-content.directive';
+import { AccordionService } from './accordion.service';
 
 let nextId = 0;
 @Component({
   standalone: true,
   selector: 'accordion-item',
   imports: [CommonModule],
+  providers: [AccordionService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div
-      class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-sm {{
+      *ngIf="{ expanded: expanded$ | async } as expanded"
+      class="collapse collapse-arrow border-b-2 border-base-300 bg-base-100 rounded-sm {{
         className || ''
       }}"
-      [ngClass]="{ 'collapse-open': expanded() }"
+      [ngClass]="{ 'collapse-open': expanded.expanded }"
     >
-      <div
-        class="collapse-title cursor-pointer p-3 min-h-[2.5rem]"
-        (click)="toggleAccordion()"
-        (keydown)="onKeyDown($event)"
-        [attr.aria-expanded]="expanded().toString()"
-        [attr.aria-controls]="accordionId"
-        tabindex="0"
-      >
-        {{ title }}
-      </div>
-      <div
-        class="collapse-content px-3 pb-3"
-        [hidden]="!expanded()"
-        [attr.aria-hidden]="(!expanded()).toString()"
-        [attr.id]="accordionId"
-      >
-        <ng-content></ng-content>
-      </div>
+      <ng-content select="accordion-trigger"></ng-content>
+      <ng-content select="accordion-content"></ng-content>
     </div>
   `,
 })
-export class AccordionItemComponent {
+export class AccordionItemComponent implements AfterViewInit {
   @Input() title!: string;
   @Input() className!: string;
-  @Output() byToggle: EventEmitter<string> = new EventEmitter<string>();
 
   accordionId = `accordion-${nextId++}`;
-  expanded = signal(false);
+  expanded$ = this.accordionService.expanded$;
 
-  private cdr = inject(ChangeDetectorRef);
+  @ContentChild(AccordionTriggerDirective, { static: true })
+  accordionTrigger!: AccordionTriggerDirective;
+
+  @ContentChild(AccordionContentDirective, { static: false })
+  accordionContent!: AccordionContentDirective;
+
+  constructor(private accordionService: AccordionService) {}
 
   toggleAccordion(): void {
-    this.expanded.set(!this.expanded());
-    this.byToggle.emit(this.expanded() ? 'expanded' : 'collapsed');
+    this.accordionService.toggleAccordion();
   }
 
   @HostListener('keydown', ['$event'])
@@ -70,7 +60,11 @@ export class AccordionItemComponent {
   }
 
   collapse(): void {
-    this.expanded.set(false);
-    this.cdr.detectChanges();
+    this.accordionService.collapse();
+  }
+
+  ngAfterViewInit(): void {
+    this.accordionTrigger.accordionId = this.accordionId;
+    this.accordionContent.id = this.accordionId;
   }
 }
