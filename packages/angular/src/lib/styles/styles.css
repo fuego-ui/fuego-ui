@@ -19,4 +19,35 @@
   .accordion-group accordion-item:not(:last-child) .collapse {
     @apply border-b-0;
   } */
+
+  .transition-colors {
+    transition-property: color, background-color, border-color,
+      text-decoration-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.15s;
+  }
+
+  .btn {
+    @apply normal-case;
+  }
+
+  .btn-primary {
+    @apply bg-white text-black hover:bg-white/90;
+  }
+
+  .btn-destructive {
+    @apply bg-error/50 hover:bg-error/40 border-0;
+  }
+
+  .btn-outline {
+    @apply transition-colors hover:text-white border-neutral hover:bg-secondary hover:border-base-100;
+  }
+
+  .btn-ghost {
+    @apply transition-colors bg-base-100 hover:bg-neutral;
+  }
+
+  .btn-link {
+    @apply transition-colors text-white no-underline bg-base-100;
+  }
 }
