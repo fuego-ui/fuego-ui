@@ -28,11 +28,11 @@
   }
 
   .btn {
-    @apply normal-case;
+    @apply normal-case rounded-md;
   }
 
   .btn-primary {
-    @apply bg-white text-black hover:bg-white/90;
+    @apply bg-white text-black hover:bg-white/90 border-0;
   }
 
   .btn-destructive {
@@ -49,5 +49,13 @@
 
   .btn-link {
     @apply transition-colors text-white no-underline bg-base-100;
+  }
+
+  .card {
+    @apply border-neutral border-2 rounded-lg;
+  }
+
+  .card-body {
+    @apply p-6 pt-0 grid gap-4;
   }
 }
