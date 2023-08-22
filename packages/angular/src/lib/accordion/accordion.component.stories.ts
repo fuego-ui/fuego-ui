@@ -1,58 +1,58 @@
 import { CommonModule } from "@angular/common";
 import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
 
-import { AccordionItemComponent } from "./accordion.component";
-import { AccordionGroupDirective } from "./accordion-group.directive";
-import { AccordionTriggerComponent } from "./accordion-trigger.component";
-import { AccordionContentComponent } from "./accordion-content.component";
-const meta: Meta<AccordionItemComponent> = {
+import { FueAccordionItemComponent } from "./accordion.component";
+import { FueAccordionGroupDirective } from "./accordion-group.directive";
+import { FueAccordionTriggerComponent } from "./accordion-trigger.component";
+import { FueAccordionContentComponent } from "./accordion-content.component";
+const meta: Meta<FueAccordionItemComponent> = {
   title: "Accordion",
-  component: AccordionItemComponent,
+  component: FueAccordionItemComponent,
   decorators: [
     moduleMetadata({
       imports: [
         CommonModule,
-        AccordionGroupDirective,
-        AccordionTriggerComponent,
-        AccordionContentComponent,
+        FueAccordionGroupDirective,
+        FueAccordionTriggerComponent,
+        FueAccordionContentComponent,
       ],
     }),
   ],
 };
 
 export default meta;
-type Story = StoryObj<AccordionItemComponent>;
+type Story = StoryObj<FueAccordionItemComponent>;
 
 export const Default: Story = {
   render: () => ({
     props: { title: "Accordion Heading", content: `Content` },
-    template: `<accordion-item>
-    <accordion-trigger>{{title}}</accordion-trigger>
-    <accordion-content><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p></accordion-content>
-   </accordion-item>`,
+    template: `<fue-accordion-item>
+    <fue-accordion-trigger>{{title}}</fue-accordion-trigger>
+    <fue-accordion-content><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p></fue-accordion-content>
+   </fue-accordion-item>`,
   }),
 };
 
 export const AccordionGroup: Story = {
   render: () => ({
     props: { title: "Accordion Heading", content: `Content` },
-    template: `<accordion-group>
-      <accordion-item>
-        <accordion-trigger>{{title}}</accordion-trigger>
-        <accordion-content>{{content}}</accordion-content>
-      </accordion-item>
-      <accordion-item >
-        <accordion-trigger>{{title}}</accordion-trigger>
-        <accordion-content>{{content}}</accordion-content>
-      </accordion-item>
-      <accordion-item >
-      <accordion-trigger>{{title}}</accordion-trigger>
-      <accordion-content>{{content}}</accordion-content>
-    </accordion-item>
-    <accordion-item >
-    <accordion-trigger>{{title}}</accordion-trigger>
-    <accordion-content>{{content}}</accordion-content>
-  </accordion-item>
-    </accordion-group>`,
+    template: `<fue-accordion-group>
+      <fue-accordion-item>
+        <fue-accordion-trigger>{{title}}</fue-accordion-trigger>
+        <fue-accordion-content>{{content}}</fue-accordion-content>
+      </fue-accordion-item>
+      <fue-accordion-item>
+        <fue-accordion-trigger>{{title}}</fue-accordion-trigger>
+        <fue-accordion-content>{{content}}</fue-accordion-content>
+      </fue-accordion-item>
+      <fue-accordion-item>
+      <fue-accordion-trigger>{{title}}</fue-accordion-trigger>
+      <fue-accordion-content>{{content}}</fue-accordion-content>
+    </fue-accordion-item>
+    <fue-accordion-item >
+    <fue-accordion-trigger>{{title}}</fue-accordion-trigger>
+    <fue-accordion-content>{{content}}</fue-accordion-content>
+  </fue-accordion-item>
+    </fue-accordion-group>`,
   }),
 };

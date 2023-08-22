@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable()
-export class AccordionService {
+export class FueAccordionService {
   accordionId!: string;
 
   private readonly expandedSubject = new BehaviorSubject(false);

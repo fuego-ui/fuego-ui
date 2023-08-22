@@ -10,8 +10,8 @@ import {
   EventEmitter,
   OnDestroy,
 } from "@angular/core";
-import { AccordionTriggerComponent } from "./accordion-trigger.component";
-import { AccordionService } from "./accordion.service";
+import { FueAccordionTriggerComponent } from "./accordion-trigger.component";
+import { FueAccordionService } from "./accordion.service";
 import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
 import { FocusableOption } from "@angular/cdk/a11y";
 import { tap } from "rxjs";
@@ -20,18 +20,18 @@ import { cn } from "../utils";
 let nextId = 0;
 @Component({
   standalone: true,
-  selector: "accordion-item",
+  selector: "fue-accordion-item",
   imports: [CommonModule],
-  providers: [AccordionService],
+  providers: [FueAccordionService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div *ngIf="{ expanded: expanded$ | async } as expanded" [class]="classes">
-      <ng-content select="accordion-trigger"></ng-content>
-      <ng-content select="accordion-content"></ng-content>
+      <ng-content select="fue-accordion-trigger"></ng-content>
+      <ng-content select="fue-accordion-content"></ng-content>
     </div>
   `,
 })
-export class AccordionItemComponent
+export class FueAccordionItemComponent
   implements AfterViewInit, OnDestroy, FocusableOption
 {
   @Input() className!: string;
@@ -65,10 +65,10 @@ export class AccordionItemComponent
     })
   );
 
-  @ContentChild(AccordionTriggerComponent, { static: true })
-  accordionTrigger!: AccordionTriggerComponent;
+  @ContentChild(FueAccordionTriggerComponent, { static: true })
+  accordionTrigger!: FueAccordionTriggerComponent;
 
-  constructor(private accordionService: AccordionService) {
+  constructor(private accordionService: FueAccordionService) {
     this.accordionService.accordionId = this.accordionId;
   }
 

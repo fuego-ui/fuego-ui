@@ -7,14 +7,14 @@ import {
   OnDestroy,
   ViewChild,
 } from "@angular/core";
-import { AccordionService } from "./accordion.service";
+import { FueAccordionService } from "./accordion.service";
 import { Subject, takeUntil, tap } from "rxjs";
 import { cn } from "../utils";
 import { NgIconComponent, provideIcons } from "@ng-icons/core";
 import { radixChevronDown } from "@ng-icons/radix-icons";
 
 @Component({
-  selector: "accordion-trigger",
+  selector: "fue-accordion-trigger",
   template: ` <div
     role="heading"
     class="flex"
@@ -41,7 +41,7 @@ import { radixChevronDown } from "@ng-icons/radix-icons";
   imports: [NgIconComponent],
   viewProviders: [provideIcons({ radixChevronDown })],
 })
-export class AccordionTriggerComponent implements OnDestroy {
+export class FueAccordionTriggerComponent implements OnDestroy {
   @Input() @HostBinding("class") className!: string;
   @Input() ariaLevel = "3";
   @ViewChild("btn", { static: true }) trigger!: ElementRef;
@@ -51,7 +51,7 @@ export class AccordionTriggerComponent implements OnDestroy {
 
   unsubscribe = new Subject<boolean>();
 
-  constructor(private accordionService: AccordionService) {
+  constructor(private accordionService: FueAccordionService) {
     this.accordionService.expanded$
       .pipe(
         takeUntil(this.unsubscribe),

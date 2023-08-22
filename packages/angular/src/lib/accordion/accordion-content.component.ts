@@ -10,12 +10,12 @@ import {
 } from "@angular/core";
 import { ClassValue } from "clsx";
 import { tap } from "rxjs";
-import { AccordionService } from "./accordion.service";
+import { FueAccordionService } from "./accordion.service";
 import { cn } from "../utils";
 import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
-  selector: "accordion-content",
+  selector: "fue-accordion-content",
   standalone: true,
   imports: [AsyncPipe, NgIf],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,13 +39,13 @@ import { AsyncPipe, NgIf } from "@angular/common";
     <div #innerContent class="pb-4 pt-0"><ng-content /></div>
   </div>`,
 })
-export class AccordionContentComponent implements AfterViewInit {
+export class FueAccordionContentComponent implements AfterViewInit {
   @Input("class") className!: ClassValue;
 
   @ViewChild("content") contentRef!: ElementRef;
   @ViewChild("innerContent") innerContentRef!: ElementRef;
 
-  accordionService = inject(AccordionService);
+  accordionService = inject(FueAccordionService);
 
   id!: string;
 
@@ -56,15 +56,11 @@ export class AccordionContentComponent implements AfterViewInit {
   contentHeight!: number;
 
   expanded$ = this.accordionService.expanded$.pipe(
-    tap((curr) => {
-      if (!curr) {
-        setTimeout(() => {
-          this.isVisible.set(false);
-        }, 150);
-      } else {
-        this.isVisible.set(true);
-      }
-    })
+    tap((curr) =>
+      !curr
+        ? setTimeout(() => this.isVisible.set(false), 150)
+        : this.isVisible.set(true)
+    )
   );
 
   constructor() {

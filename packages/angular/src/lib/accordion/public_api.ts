@@ -1,3 +1,3 @@
-export { AccordionItemComponent } from './accordion.component';
-export { AccordionGroupDirective } from './accordion-group.directive';
-export { AccordionTriggerDirective } from './accordion-trigger.directive';
+export { FueAccordionItemComponent } from "./accordion.component";
+export { FueAccordionGroupDirective } from "./accordion-group.directive";
+export { AccordionTriggerDirective } from "./accordion-trigger.directive";

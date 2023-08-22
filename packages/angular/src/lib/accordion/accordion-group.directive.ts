@@ -8,21 +8,21 @@ import {
   OnDestroy,
   HostListener,
 } from "@angular/core";
-import { AccordionItemComponent } from "./accordion.component";
+import { FueAccordionItemComponent } from "./accordion.component";
 import { Subject, takeUntil } from "rxjs";
 import { FocusKeyManager } from "@angular/cdk/a11y";
 @Directive({
   standalone: true,
-  selector: "accordion-group",
+  selector: "fue-accordion-group",
 })
-export class AccordionGroupDirective implements AfterContentInit, OnDestroy {
-  @ContentChildren(AccordionItemComponent)
-  accordionItems!: QueryList<AccordionItemComponent>;
+export class FueAccordionGroupDirective implements AfterContentInit, OnDestroy {
+  @ContentChildren(FueAccordionItemComponent)
+  accordionItems!: QueryList<FueAccordionItemComponent>;
 
   @Input() @HostBinding("class") className: string = "accordion-group";
   @Input() _type: "single" | "" = "";
 
-  private keyManager!: FocusKeyManager<AccordionItemComponent>;
+  private keyManager!: FocusKeyManager<FueAccordionItemComponent>;
 
   @HostListener("keydown", ["$event"])
   manage(event: any) {
@@ -46,7 +46,7 @@ export class AccordionGroupDirective implements AfterContentInit, OnDestroy {
     }
   }
 
-  closeOtherAccordionItems(currentItem: AccordionItemComponent) {
+  closeOtherAccordionItems(currentItem: FueAccordionItemComponent) {
     this.accordionItems.forEach((item) => {
       if (item !== currentItem) {
         item.collapse();
