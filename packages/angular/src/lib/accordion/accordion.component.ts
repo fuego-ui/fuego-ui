@@ -11,7 +11,6 @@ import {
   OnDestroy,
 } from "@angular/core";
 import { AccordionTriggerComponent } from "./accordion-trigger.component";
-import { AccordionContentComponent } from "./accordion-content.component";
 import { AccordionService } from "./accordion.service";
 import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
 import { FocusableOption } from "@angular/cdk/a11y";
@@ -69,10 +68,9 @@ export class AccordionItemComponent
   @ContentChild(AccordionTriggerComponent, { static: true })
   accordionTrigger!: AccordionTriggerComponent;
 
-  @ContentChild(AccordionContentComponent, { static: false })
-  accordionContent!: AccordionContentComponent;
-
-  constructor(private accordionService: AccordionService) {}
+  constructor(private accordionService: AccordionService) {
+    this.accordionService.accordionId = this.accordionId;
+  }
 
   toggleAccordion(): void {
     if (!this.disabled) {
@@ -103,7 +101,6 @@ export class AccordionItemComponent
 
   ngAfterViewInit(): void {
     this.accordionTrigger.accordionId = this.accordionId;
-    this.accordionContent.id = this.accordionId;
   }
 
   ngOnDestroy(): void {

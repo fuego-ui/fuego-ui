@@ -1,12 +1,12 @@
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
   ViewChild,
   inject,
+  signal,
 } from "@angular/core";
 import { ClassValue } from "clsx";
 import { tap } from "rxjs";
@@ -29,9 +29,10 @@ import { AsyncPipe, NgIf } from "@angular/common";
     [attr.aria-labelledby]="this.id + '-trigger' || ''"
     [style.--accordion-content-width]="getContentWidth()"
     [style.--accordion-content-height]="getContentHeight()"
-    [style.height]="initialHeight === -1 ? 'auto' : 0"
+    [style.height]="initialHeight() === -1 ? 'auto' : 0"
     [attr.hidden]="
-      (this.initialHeight === -1 && !state.expanded && !this.isVisible) || null
+      (this.initialHeight() === -1 && !state.expanded && !this.isVisible()) ||
+      null
     "
     [attr.aria-hidden]="!state.expanded"
   >
@@ -45,15 +46,12 @@ export class AccordionContentComponent implements AfterViewInit {
   @ViewChild("innerContent") innerContentRef!: ElementRef;
 
   accordionService = inject(AccordionService);
-  changeDetectionRef = inject(ChangeDetectorRef);
 
   id!: string;
 
-  // signal
-  isVisible!: boolean;
+  isVisible = signal<boolean | null>(null);
+  initialHeight = signal(0);
 
-  // signal
-  initialHeight = 0;
   contentWidth!: number;
   contentHeight!: number;
 
@@ -61,18 +59,21 @@ export class AccordionContentComponent implements AfterViewInit {
     tap((curr) => {
       if (!curr) {
         setTimeout(() => {
-          this.isVisible = false;
-          this.changeDetectionRef.markForCheck();
+          this.isVisible.set(false);
         }, 150);
       } else {
-        this.isVisible = true;
+        this.isVisible.set(true);
       }
     })
   );
 
+  constructor() {
+    this.id = this.accordionService.accordionId;
+  }
+
   ngAfterViewInit(): void {
     this.contentHeight = this.innerContentRef.nativeElement.offsetHeight;
-    this.initialHeight = -1;
+    this.initialHeight.set(-1);
   }
 
   get classes() {
