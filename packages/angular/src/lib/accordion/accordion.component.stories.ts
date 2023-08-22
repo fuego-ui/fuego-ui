@@ -1,28 +1,22 @@
-import { CommonModule } from '@angular/common';
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
+import { CommonModule } from "@angular/common";
+import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
 
-import { AccordionItemComponent } from './accordion.component';
-import { AccordionGroupDirective } from './accordion-group.directive';
-import { AccordionTriggerDirective } from './accordion-trigger.directive';
-import { AccordionContentDirective } from './accordion-content.directive';
+import { AccordionItemComponent } from "./accordion.component";
+import { AccordionGroupDirective } from "./accordion-group.directive";
+import { AccordionTriggerComponent } from "./accordion-trigger.component";
+import { AccordionContentComponent } from "./accordion-content.component";
 const meta: Meta<AccordionItemComponent> = {
-  title: 'Accordion',
+  title: "Accordion",
   component: AccordionItemComponent,
   decorators: [
     moduleMetadata({
       imports: [
         CommonModule,
         AccordionGroupDirective,
-        AccordionTriggerDirective,
-        AccordionContentDirective,
+        AccordionTriggerComponent,
+        AccordionContentComponent,
       ],
     }),
-    // With template
-    // componentWrapperDecorator(
-    //   (story) => `<div style="margin: 3em">${story}</div>`
-    // ),
-    // // With component which contains ng-content
-    // componentWrapperDecorator(Parent),
   ],
 };
 
@@ -31,17 +25,17 @@ type Story = StoryObj<AccordionItemComponent>;
 
 export const Default: Story = {
   render: () => ({
-    props: { title: 'Accordion Heading', content: `Content` },
+    props: { title: "Accordion Heading", content: `Content` },
     template: `<accordion-item>
     <accordion-trigger>{{title}}</accordion-trigger>
-    <accordion-content>{{content}}</accordion-content>
+    <accordion-content><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p><p>ndasndkjsndjsa</p></accordion-content>
    </accordion-item>`,
   }),
 };
 
 export const AccordionGroup: Story = {
   render: () => ({
-    props: { title: 'Accordion Heading', content: `Content` },
+    props: { title: "Accordion Heading", content: `Content` },
     template: `<accordion-group>
       <accordion-item>
         <accordion-trigger>{{title}}</accordion-trigger>

@@ -6,32 +6,44 @@ import {
   Input,
   HostBinding,
   OnDestroy,
-} from '@angular/core';
-import { AccordionItemComponent } from './accordion.component';
-import { Subject, takeUntil } from 'rxjs';
-
+  HostListener,
+} from "@angular/core";
+import { AccordionItemComponent } from "./accordion.component";
+import { Subject, takeUntil } from "rxjs";
+import { FocusKeyManager } from "@angular/cdk/a11y";
 @Directive({
   standalone: true,
-  selector: 'accordion-group',
+  selector: "accordion-group",
 })
 export class AccordionGroupDirective implements AfterContentInit, OnDestroy {
   @ContentChildren(AccordionItemComponent)
   accordionItems!: QueryList<AccordionItemComponent>;
 
-  @Input() @HostBinding('class') className: string = 'accordion-group';
+  @Input() @HostBinding("class") className: string = "accordion-group";
+  @Input() _type: "single" | "" = "";
+
+  private keyManager!: FocusKeyManager<AccordionItemComponent>;
+
+  @HostListener("keydown", ["$event"])
+  manage(event: any) {
+    this.keyManager.onKeydown(event);
+  }
 
   unsubscribe = new Subject<boolean>();
 
   ngAfterContentInit() {
-    this.accordionItems.forEach((item) => {
-      item.expanded$
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe((expanded: boolean) => {
-          if (expanded) {
-            this.closeOtherAccordionItems(item);
-          }
-        });
-    });
+    this.keyManager = new FocusKeyManager(this.accordionItems).withWrap();
+    this.keyManager.setFirstItemActive();
+
+    if (this._type === "single") {
+      this.accordionItems.forEach((item) => {
+        item.expanded$
+          .pipe(takeUntil(this.unsubscribe))
+          .subscribe((expanded: boolean) => {
+            expanded && this.closeOtherAccordionItems(item);
+          });
+      });
+    }
   }
 
   closeOtherAccordionItems(currentItem: AccordionItemComponent) {
