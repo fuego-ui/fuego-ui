@@ -1,19 +1,19 @@
-import { CommonModule } from '@angular/common';
-import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { CardDirective } from './card.directive';
+import { CommonModule } from "@angular/common";
+import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
+import { CardDirective } from "./card.directive";
 // import { CardTitleDirective } from './card-title.directive';
 // import { CardFooterDirective } from './card-footer.directive';
 // import { CardHeaderComponent } from './card-header.component';
 // import { CardContentComponent } from './card-content.component';
 // import { CardDescriptionDirective } from './card-description.directive';
-import { CardModule } from './card.module';
-import { ButtonDirective } from '../button/button.directive';
+import { CardModule } from "./card.module";
+import { FueButtonDirective } from "../button/button.directive";
 
 const meta: Meta<CardDirective> = {
-  title: 'Card',
+  title: "Card",
   decorators: [
     moduleMetadata({
-      imports: [CommonModule, CardModule, ButtonDirective],
+      imports: [CommonModule, CardModule, FueButtonDirective],
     }),
     // With template
     // componentWrapperDecorator(
@@ -29,7 +29,7 @@ type Story = StoryObj<CardDirective>;
 
 export const Default: Story = {
   render: () => ({
-    props: { title: 'Accordion Heading', content: `Content` },
+    props: { title: "Accordion Heading", content: `Content` },
     template: `<fue-card class="max-w-[312px]">
     <fue-card-header>
       <fue-card-title>Deal of a Lifetime</fue-card-title>
