@@ -1,13 +1,12 @@
 import { Directive, HostBinding, Input } from "@angular/core";
 import { ClassValue } from "clsx";
 import { cn } from "../utils";
-
 @Directive({
-  selector: "fue-card-description, [fueCardDescription]",
+  selector: "fue-card-content, [fueCardContent]",
   standalone: true,
 })
-export class FueCardDescriptionDirective {
-  base = "text-sm text-muted-foreground";
+export class FueCardContentDirective {
+  base = "block p-6 pt-0";
   @Input("class") classNames: ClassValue = "";
 
   @HostBinding("class")

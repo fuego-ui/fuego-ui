@@ -1,5 +1,6 @@
 import { Directive, HostBinding, Input } from "@angular/core";
 import { cn } from "../utils";
+import { ClassValue } from "clsx";
 
 @Directive({
   selector: "[fueBtn]",
@@ -7,16 +8,16 @@ import { cn } from "../utils";
 })
 export class FueButtonDirective {
   @Input() variant = "primary";
-  @Input() className: string = "";
   @Input() size: "default" | "sm" | "icon" | "lg" = "default";
+  @Input("class") classNames: ClassValue = "";
 
   @HostBinding("class")
-  get classes() {
+  get allClassNames() {
     return cn(
       this.base,
       this.getVariantClasses(),
       this.getSizeClasses(),
-      this.className
+      this.classNames
     );
   }
 
