@@ -1,81 +1,78 @@
 import {
   AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Input,
-  OnDestroy,
   ViewChild,
+  inject,
 } from "@angular/core";
-import { Subject, takeUntil, tap } from "rxjs";
+import { ClassValue } from "clsx";
+import { tap } from "rxjs";
 import { AccordionService } from "./accordion.service";
 import { cn } from "../utils";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
-  selector: "accordion-content,[accordionContent]",
+  selector: "accordion-content",
   standalone: true,
+  imports: [AsyncPipe, NgIf],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `<div
+    *ngIf="{ expanded: expanded$ | async } as state"
     #content
     class="{{ classes }}"
     [id]="this.id"
-    [attr.data-state]="dataState"
+    [attr.data-state]="state.expanded ? 'open' : 'closed'"
     role="region"
     [attr.aria-labelledby]="this.id + '-trigger' || ''"
     [style.--accordion-content-width]="getContentWidth()"
     [style.--accordion-content-height]="getContentHeight()"
     [style.height]="initialHeight === -1 ? 'auto' : 0"
     [attr.hidden]="
-      (this.initialHeight === -1 && !this._expanded && !this.isVisible) || null
+      (this.initialHeight === -1 && !state.expanded && !this.isVisible) || null
     "
-    [attr.aria-hidden]="!this._expanded"
+    [attr.aria-hidden]="!state.expanded"
   >
     <div #innerContent class="pb-4 pt-0"><ng-content /></div>
   </div>`,
 })
-export class AccordionContentComponent implements AfterViewInit, OnDestroy {
-  @Input("class") className!: string;
+export class AccordionContentComponent implements AfterViewInit {
+  @Input("class") className!: ClassValue;
 
   @ViewChild("content") contentRef!: ElementRef;
   @ViewChild("innerContent") innerContentRef!: ElementRef;
 
+  accordionService = inject(AccordionService);
+  changeDetectionRef = inject(ChangeDetectorRef);
+
   id!: string;
-  _expanded!: boolean;
+
+  // signal
   isVisible!: boolean;
 
+  // signal
   initialHeight = 0;
-
   contentWidth!: number;
   contentHeight!: number;
 
-  private element!: HTMLElement;
-
-  unsubscribe = new Subject<boolean>();
-
-  onAnimationEnd = (e: Event) => {
-    if (!this._expanded) {
-      this.isVisible = false;
-    } else {
-      this.isVisible = true;
-    }
-  };
-
-  constructor(private accordionService: AccordionService) {
-    this.accordionService.expanded$
-      .pipe(
-        takeUntil(this.unsubscribe),
-        tap((val) => (this._expanded = val))
-      )
-      .subscribe();
-  }
+  expanded$ = this.accordionService.expanded$.pipe(
+    tap((curr) => {
+      if (!curr) {
+        setTimeout(() => {
+          this.isVisible = false;
+          this.changeDetectionRef.markForCheck();
+        }, 150);
+      } else {
+        this.isVisible = true;
+      }
+    })
+  );
 
   ngAfterViewInit(): void {
-    this.element = this.contentRef.nativeElement;
     this.contentHeight = this.innerContentRef.nativeElement.offsetHeight;
     this.initialHeight = -1;
-    this.element.addEventListener("animationend", this.onAnimationEnd);
-  }
-
-  get dataState() {
-    return this._expanded ? "open" : "closed";
   }
 
   get classes() {
@@ -93,9 +90,5 @@ export class AccordionContentComponent implements AfterViewInit, OnDestroy {
     return this.contentHeight > 0
       ? this.contentHeight + "px"
       : "var(--collapsible-content-height)";
-  }
-
-  ngOnDestroy(): void {
-    this.element.removeEventListener("animationend", this.onAnimationEnd);
   }
 }
