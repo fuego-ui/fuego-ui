@@ -61,27 +61,3 @@ export const Link: Story = {
     template: `<button fueBtn variant="link">Button</button>`,
   }),
 };
-
-// export const AccordionGroup: Story = {
-//   render: () => ({
-//     props: { title: 'Accordion Heading', content: `Content` },
-//     template: `<accordion-group>
-//       <accordion-item>
-//         <accordion-trigger>{{title}}</accordion-trigger>
-//         <accordion-content>{{content}}</accordion-content>
-//       </accordion-item>
-//       <accordion-item >
-//         <accordion-trigger>{{title}}</accordion-trigger>
-//         <accordion-content>{{content}}</accordion-content>
-//       </accordion-item>
-//       <accordion-item >
-//       <accordion-trigger>{{title}}</accordion-trigger>
-//       <accordion-content>{{content}}</accordion-content>
-//     </accordion-item>
-//     <accordion-item >
-//     <accordion-trigger>{{title}}</accordion-trigger>
-//     <accordion-content>{{content}}</accordion-content>
-//   </accordion-item>
-//     </accordion-group>`,
-//   }),
-// };
