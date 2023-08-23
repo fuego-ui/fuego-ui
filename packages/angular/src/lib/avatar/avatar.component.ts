@@ -33,7 +33,8 @@ export class FueAvatarComponent implements OnInit, OnDestroy {
   base = "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full";
 
   @Input("class") classNames: ClassValue = "";
-  @Input() fallbackDelay: number | undefined = 100;
+  // TODO: Radix uses undefined but I find using at least a small value prevents some flashing
+  @Input() fallbackDelay: number = 100;
 
   delayFallback = signal(false);
 
