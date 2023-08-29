@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   ContentChild,
@@ -19,45 +20,34 @@ let nextId = 0;
 @Component({
   selector: "fue-switch",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FueLabelDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <div class="flex items-center space-x-2">
     <button
-      [attr.data-state]="checked() ? 'checked' : 'unchecked'"
+      type="button"
+      role="switch"
+      [attr.data-state]="dataState"
       [class]="classes"
       [disabled]="disabled()"
-      type="button"
-      role="checkbox"
       (blur)="_onBlur()"
       (click)="_onToggle()"
+      [attr.ariaLabelledby]="labelledBy()"
+      [attr.aria-checked]="checked()"
     >
       <span
-        [attr.data-state]="checked() ? 'checked' : 'unchecked'"
+        [attr.data-state]="dataState"
         class="pointer-events-none block h-5 w-5 rounded-full bg-background shadow-lg ring-0 transition-transform data-[state=checked]:translate-x-5 data-[state=unchecked]:translate-x-0"
       >
       </span>
     </button>
-    <input
-      #input
-      type="checkbox"
-      class="absolute pointer-none opacity-0 m-0 left-7"
-      [attr.aria-label]="ariaLabel || null"
-      [attr.aria-labelledby]="ariaLabelledby"
-      [attr.aria-describedby]="ariaDescribedby"
-      [attr.name]="name"
-      [attr.value]="value"
-      [checked]="checked()"
-      [disabled]="disabled()"
-      [id]="inputId"
-      [required]="required"
-      [tabIndex]="tabIndex"
-    />
     <div (click)="_preventBubblingFromLabel($event)">
       <ng-content />
     </div>
   </div>`,
 })
-export class FueSwitchComponent implements ControlValueAccessor {
+export class FueSwitchComponent
+  implements ControlValueAccessor, AfterContentInit
+{
   base =
     "peer inline-flex h-[24px] w-[44px] shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input";
 
@@ -72,9 +62,15 @@ export class FueSwitchComponent implements ControlValueAccessor {
     return `${this.id || "fue-switch-" + this._uniqueId}`;
   }
 
+  get dataState(): string {
+    return this.checked() ? "checked" : "unchecked";
+  }
+
   disabled = signal(false);
 
   checked = signal(false);
+
+  labelledBy = signal("");
 
   @ViewChild("input", { static: true }) input!: ElementRef;
 
@@ -95,7 +91,6 @@ export class FueSwitchComponent implements ControlValueAccessor {
   _onToggle(): void {
     if (!this.disabled()) {
       this.checked.set(!this.checked());
-      this._emitChangeEvent();
     }
   }
 
@@ -134,20 +129,15 @@ export class FueSwitchComponent implements ControlValueAccessor {
     return cn(this.base, this.classNames);
   }
 
-  private _emitChangeEvent() {
-    // this._controlValueAccessorChangeFn(this.checked);
-    // this.change.emit(this._createChangeEvent(this.checked));
-    // Assigning the value again here is redundant, but we have to do it in case it was
-    // changed inside the `change` listener which will cause the input to be out of sync.
-    if (this.input) {
-      this.input.nativeElement.checked = this.checked();
+  ngAfterContentInit(): void {
+    if (this.labelEl) {
+      this.labelEl.forInput.set(this.inputId);
+      this.labelledBy.set(this.labelEl.elementId);
     }
   }
 
   // ControlValueAccessor methods
   writeValue(value: any): void {
-    console.log(value);
-    // this.input.nativeElement.checked = value;
     this.checked.set(!!value);
   }
 
