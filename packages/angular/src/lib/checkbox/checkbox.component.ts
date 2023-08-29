@@ -98,7 +98,8 @@ export class FueCheckboxComponent implements ControlValueAccessor {
 
   @ViewChild("input", { static: true }) input!: ElementRef;
 
-  @ContentChild(FueLabelDirective) labelEl!: FueLabelDirective;
+  @ContentChild(FueLabelDirective)
+  labelEl!: FueLabelDirective;
 
   ngControl = inject(NgControl);
 

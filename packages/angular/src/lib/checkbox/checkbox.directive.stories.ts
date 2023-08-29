@@ -1,11 +1,10 @@
 import { CommonModule } from "@angular/common";
 import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
-import { ReactiveFueCheckboxComponentStory } from "./story-wrappers/checkbox.component";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { FueCheckboxComponent } from "./checkbox.component";
 import { FueLabelDirective } from "../label/label.directive";
 
-const meta: Meta<ReactiveFueCheckboxComponentStory> = {
+const meta: Meta<FueCheckboxComponent> = {
   title: "Checkbox",
   decorators: [
     moduleMetadata({
@@ -21,7 +20,7 @@ const meta: Meta<ReactiveFueCheckboxComponentStory> = {
 };
 
 export default meta;
-type Story = StoryObj<ReactiveFueCheckboxComponentStory>;
+type Story = StoryObj<FueCheckboxComponent>;
 
 export const Default: Story = {
   render: () => ({
