@@ -1,86 +1,109 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   Component,
   Input,
+  HostListener,
+  ChangeDetectionStrategy,
+  ContentChild,
+  AfterViewInit,
   Output,
   EventEmitter,
-  HostListener,
-} from '@angular/core';
+  OnDestroy,
+} from "@angular/core";
+import { FueAccordionTriggerComponent } from "./accordion-trigger.component";
+import { FueAccordionService } from "./accordion.service";
+import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
+import { FocusableOption } from "@angular/cdk/a11y";
+import { tap } from "rxjs";
+import { cn } from "../utils";
 
+let nextId = 0;
 @Component({
   standalone: true,
-  selector: 'accordion-item',
+  selector: "fue-accordion-item",
   imports: [CommonModule],
+  providers: [FueAccordionService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="accordion-item">
-      <div
-        class="accordion-title"
-        (click)="toggleAccordion()"
-        (keydown)="onKeyDown($event)"
-        [attr.aria-expanded]="expanded.toString()"
-        [attr.aria-controls]="accordionId"
-        tabindex="0"
-      >
-        {{ title }}
-      </div>
-      <div
-        class="accordion-content"
-        [ngClass]="{ expanded: expanded }"
-        [hidden]="!expanded"
-        [attr.aria-hidden]="(!expanded).toString()"
-        [attr.id]="accordionId"
-      >
-        <ng-content></ng-content>
-      </div>
+    <div *ngIf="{ expanded: expanded$ | async } as expanded" [class]="classes">
+      <ng-content select="fue-accordion-trigger"></ng-content>
+      <ng-content select="fue-accordion-content"></ng-content>
     </div>
   `,
-  styles: [
-    `
-      .accordion-item {
-        cursor: pointer;
-      }
-
-      .accordion-title {
-        font-weight: bold;
-      }
-
-      .accordion-content {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
-      }
-
-      .accordion-content.expanded {
-        max-height: 500px; /* Adjust the value as needed */
-        transition: max-height 0.3s ease-in-out;
-      }
-    `,
-  ],
 })
-export class AccordionItemComponent {
-  private static nextId = 0;
-
-  @Input() title!: string;
+export class FueAccordionItemComponent
+  implements AfterViewInit, OnDestroy, FocusableOption
+{
   @Input() className!: string;
-  @Output() byOnToggle: EventEmitter<string> = new EventEmitter<string>();
 
-  expanded = false;
-  accordionId: string;
+  @Input()
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(disabled: BooleanInput) {
+    this._disabled = coerceBooleanProperty(disabled);
+  }
+  private _disabled = false;
 
-  constructor() {
-    this.accordionId = `accordion-${AccordionItemComponent.nextId++}`;
+  /** Event emitted every time the AccordionItem is opened. */
+  @Output() readonly opened: EventEmitter<void> = new EventEmitter<void>();
+
+  /** Event emitted every time the AccordionItem is closed. */
+  @Output() readonly closed: EventEmitter<void> = new EventEmitter<void>();
+
+  /** Event emitted when the AccordionItem is destroyed. */
+  @Output() readonly destroyed: EventEmitter<void> = new EventEmitter<void>();
+
+  accordionId = `accordion-${nextId++}`;
+  expanded$ = this.accordionService.expanded$.pipe(
+    tap((expanded) => {
+      if (expanded) {
+        this.opened.emit();
+      } else {
+        this.closed.emit();
+      }
+    })
+  );
+
+  @ContentChild(FueAccordionTriggerComponent, { static: true })
+  accordionTrigger!: FueAccordionTriggerComponent;
+
+  constructor(private accordionService: FueAccordionService) {
+    this.accordionService.accordionId = this.accordionId;
   }
 
-  toggleAccordion() {
-    this.expanded = !this.expanded;
-    this.byOnToggle.emit(this.expanded ? 'expanded' : 'collapsed');
+  toggleAccordion(): void {
+    if (!this.disabled) {
+      this.accordionService.toggleAccordion();
+    }
   }
 
-  @HostListener('keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent) {
-    if (event.code === 'Enter' || event.code === 'Space') {
+  @HostListener("keydown", ["$event"])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.code === "Enter" || event.code === "Space") {
       event.preventDefault();
+      event.stopPropagation();
       this.toggleAccordion();
     }
+  }
+
+  get classes() {
+    return cn("border-b", this.className);
+  }
+
+  focus(): void {
+    this.accordionTrigger.focus();
+  }
+
+  collapse(): void {
+    this.accordionService.collapse();
+  }
+
+  ngAfterViewInit(): void {
+    this.accordionTrigger.accordionId = this.accordionId;
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed.emit();
   }
 }

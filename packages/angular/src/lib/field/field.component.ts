@@ -15,10 +15,15 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
   imports: [CommonModule],
   template: `
     <div [class]="getWrapperClasses()">
-      <label [for]="inputId">{{ label }}</label>
+      <label class="label" [for]="inputId"
+        ><span class="label-text">{{ label }}</span></label
+      >
       <ng-container [ngSwitch]="inputType">
         <textarea
           *ngSwitchCase="'textarea'"
+          class="input w-full {{ fieldBorder }} {{ textareaTw }} {{
+            className || ''
+          }}"
           [id]="inputId"
           [class.disabled]="isDisabled"
           (focus)="onFocus()"
@@ -28,6 +33,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
         >
         <input
           *ngSwitchDefault
+          class="input w-full {{ fieldBorder }} {{ className || '' }}"
           type="text"
           [id]="inputId"
           [class.disabled]="isDisabled"
@@ -39,7 +45,7 @@ import { ControlValueAccessor, NgControl } from '@angular/forms';
       </ng-container>
     </div>
   `,
-  styleUrls: ['./field.component.css'],
+  // styleUrls: ['./field.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FieldComponent implements ControlValueAccessor {
@@ -47,9 +53,13 @@ export class FieldComponent implements ControlValueAccessor {
   @Input() inputType: string = 'text';
   @Input() label!: string;
   @Input() disabled: boolean = false;
+
+  fieldBorder = `textarea input-bordered focus:outline-offset-0`;
+  textareaTw = `min-h-[80px]`;
+
   isFocused: boolean = false;
   inputId: string = `field-input-${uniqueId()}`;
-  value: any;
+  value: any = '';
   onChange: any = () => {};
   onTouched: any = () => {};
 

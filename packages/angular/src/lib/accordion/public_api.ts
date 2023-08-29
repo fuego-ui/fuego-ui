@@ -1,2 +1,3 @@
-// export { AccordionPanelComponent } from './accordion-group.component';
-export { AccordionItemComponent } from './accordion.component';
+export { FueAccordionItemComponent } from "./accordion.component";
+export { FueAccordionGroupDirective } from "./accordion-group.directive";
+export { AccordionTriggerDirective } from "./accordion-trigger.directive";
