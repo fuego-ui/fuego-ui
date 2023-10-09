@@ -64,10 +64,16 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-}
 
-@layer components {
   .inset-0 {
     inset: 0;
   }
+
+  .caption-bottom {
+    caption-side: bottom;
+  }
 }
+
+/* @layer components {
+
+} */
