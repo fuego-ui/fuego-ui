@@ -3,6 +3,8 @@ import {
   ContentChildren,
   Directive,
   HostBinding,
+  HostListener,
+  InjectionToken,
   Input,
   OnDestroy,
   OnInit,
@@ -20,25 +22,56 @@ import {
   NG_VALUE_ACCESSOR,
   NgControl,
 } from "@angular/forms";
-import { Subject, takeUntil } from "rxjs";
+import { Subject, takeUntil, tap } from "rxjs";
+import { FocusKeyManager } from "@angular/cdk/a11y";
 
-// export const RADIO_GROUP_CONTROL_VALUE_ACCESSOR: Provider = {
+// export const FUE_RADIO_GROUP_CONTROL_VALUE_ACCESSOR: Provider = {
 //   provide: NG_VALUE_ACCESSOR,
 //   useExisting: forwardRef(() => FueRadioGroupDirective),
 //   multi: true,
 // };
 
+// export const FUE_RADIO_GROUP = new InjectionToken<FueRadioGroupDirective>(
+//   "FueRadioGroup"
+// );
+//
+/**
+ * Consider this possibility from MAT Radio?
+ * 'A group of radio buttons. May contain one or more `<mat-radio-button>` elements.'
+ */
+
+/**
+ * Scenarios
+ * 1. Reactive Form
+ * 2. NgModel
+ * 3. Default Value setting, for each
+ * 4. Entire Disabled
+ * 5. Single option disable
+ * 6. Verify Form Group States
+ */
+
+/**
+ * TODOS
+ * 1. Give consistent unique group name
+ * 2. Setup Different Form type samples
+ * 3. Unit Tests
+ * 4. Create Playwright tests
+ * 5. Cleanup
+ */
 @Directive({
   selector: "[fueRadioGroup],fue-radio-group",
   standalone: true,
-  //   providers: [RADIO_GROUP_CONTROL_VALUE_ACCESSOR],
+  // providers: [
+  //   FUE_RADIO_GROUP_CONTROL_VALUE_ACCESSOR,
+  //   { provide: FUE_RADIO_GROUP, useExisting: FueRadioGroupDirective },
+  // ],
 })
 export class FueRadioGroupDirective
   implements ControlValueAccessor, AfterContentInit, OnDestroy
 {
   base = ``;
 
-  @Input("class") classNames: ClassValue = "";
+  @Input("class") classNames: ClassValue = "Alex loves Sammy";
   @Input() name!: string;
 
   @HostBinding("class")
@@ -49,6 +82,13 @@ export class FueRadioGroupDirective
   @ContentChildren(FueRadioComponent) radios!: QueryList<FueRadioComponent>;
 
   ngControl = inject(NgControl);
+
+  private keyManager!: FocusKeyManager<FueRadioComponent>;
+
+  @HostListener("keydown", ["$event"])
+  manage(event: any) {
+    this.keyManager.onKeydown(event);
+  }
 
   checked = signal(false);
   disabled = signal(false);
@@ -65,22 +105,22 @@ export class FueRadioGroupDirective
   }
 
   ngAfterContentInit(): void {
-    console.log(this.radios);
+    this.keyManager = new FocusKeyManager(this.radios).withWrap();
+    this.keyManager.setFirstItemActive();
+
     this.radios.forEach((radio) => {
       radio.name = this.name;
-      radio.select.pipe(takeUntil(this.unsubscribe)).subscribe(() => {
-        console.log("on sub");
-        console.log(radio);
-        console.log(radio.value);
-        this.updateValue(radio.value);
-      });
+      radio.select
+        .pipe(
+          takeUntil(this.unsubscribe),
+          tap(() => this.updateValue(radio.value))
+        )
+        .subscribe();
     });
   }
 
   private updateValue(value: any) {
     this.radios.forEach((radio) => {
-      console.log(radio.input.nativeElement.value);
-      console.log(value);
       radio.input.nativeElement.value = radio.value === value;
       radio.checked.set(radio.value === value);
     });
@@ -88,15 +128,9 @@ export class FueRadioGroupDirective
     this.onTouched();
   }
 
-  // ControlValueAccessor methods
   writeValue(value: any): void {
-    // this.input.nativeElement.checked = value;
-    // this.checked.set(!!value);
     if (this.radios) {
-      this.radios.forEach((radio) => {
-        console.log(radio.value);
-        radio.checked.set(radio.value === value);
-      });
+      this.radios.forEach((radio) => radio.checked.set(radio.value === value));
     }
   }
 
@@ -106,10 +140,6 @@ export class FueRadioGroupDirective
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled.set(isDisabled);
   }
 
   ngOnDestroy(): void {

@@ -14,6 +14,8 @@ import { NgIf } from "@angular/common";
 import { ClassValue } from "clsx";
 import { cn } from "../utils";
 import { FueLabelDirective } from "../label/label.directive";
+import { FocusableOption } from "@angular/cdk/a11y";
+import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
 
 let nextId = 0;
 
@@ -29,15 +31,17 @@ let nextId = 0;
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <div class="flex items-center space-x-2">
     <button
+      #radioBtn
       type="button"
       role="radio"
+      [disabled]="disabled"
+      [tabIndex]="checked() ? '0' : '-1'"
       [attr.data-state]="checked() ? 'checked' : 'unchecked'"
       [class]="classes"
-      [disabled]="disabled()"
       [attr.aria-checked]="checked()"
-      (blur)="_onBlur()"
       (click)="_onToggle()"
     >
+      <!-- friendship -->
       <span
         *ngIf="checked()"
         class="flex items-center justify-center pointer-events-none"
@@ -69,7 +73,7 @@ let nextId = 0;
       [attr.name]="name"
       [attr.value]="value"
       [checked]="checked()"
-      [disabled]="disabled()"
+      [disabled]="disabled"
       [id]="inputId"
       [required]="required"
       [value]="value"
@@ -79,27 +83,41 @@ let nextId = 0;
     </div>
   </div>`,
 })
-export class FueRadioComponent implements AfterContentInit {
+export class FueRadioComponent implements AfterContentInit, FocusableOption {
   base =
     "aspect-square h-4 w-4 rounded-full border border-primary text-primary ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
-  @Input("class") classNames: ClassValue = "";
-  @Input() name: string | null = null;
-  @Input() value!: string;
-  @Input() id!: string;
-  @Output() select = new EventEmitter<void>();
-
   private _uniqueId!: number;
+
+  private _disabled = signal(false);
+
+  checked = signal(false);
 
   get inputId(): string {
     return `${this.id || "fue-radio-" + this._uniqueId}`;
   }
 
-  disabled = signal(false);
+  get classes() {
+    return cn(this.base, this.classNames);
+  }
 
-  checked = signal(false);
+  @Input("class") classNames: ClassValue = "";
+  @Input() name: string | null = null;
+  @Input() value!: string;
+  @Input() id!: string;
+
+  @Input()
+  get disabled(): boolean {
+    return this._disabled();
+  }
+  set disabled(disabled: BooleanInput) {
+    this._disabled.set(coerceBooleanProperty(disabled));
+  }
+
+  @Output() select = new EventEmitter<void>();
 
   @ViewChild("input", { static: true }) input!: ElementRef;
+  @ViewChild("radioBtn", { static: true }) radioBtn!: ElementRef;
 
   @ContentChild(FueLabelDirective)
   labelEl!: FueLabelDirective;
@@ -109,16 +127,9 @@ export class FueRadioComponent implements AfterContentInit {
   }
 
   _onToggle(): void {
-    if (!this.disabled() && !this.checked()) {
-      // this.value = true;
+    if (!this.disabled && !this.checked()) {
       this._emitChangeEvent();
     }
-  }
-
-  _onBlur(): void {
-    // Promise.resolve().then(() => {
-    //   this.onTouched();
-    // });
   }
 
   _preventBubblingFromLabel($event: MouseEvent): void {
@@ -146,8 +157,9 @@ export class FueRadioComponent implements AfterContentInit {
     }
   }
 
-  get classes() {
-    return cn(this.base, this.classNames);
+  focus(): void {
+    this._onToggle();
+    this.radioBtn.nativeElement.focus();
   }
 
   ngAfterContentInit(): void {
@@ -166,23 +178,4 @@ export class FueRadioComponent implements AfterContentInit {
     }
     this.select.emit();
   }
-
-  // writeValue(value: any): void {
-  //   this.checked.set(!!value);
-  // }
-
-  // registerOnChange(fn: any): void {
-  //   this.onChange = fn;
-  // }
-
-  // registerOnTouched(fn: any): void {
-  //   this.onTouched = fn;
-  // }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled.set(isDisabled);
-  }
-
-  // private onChange = (value: any) => {};
-  // private onTouched = () => {};
 }

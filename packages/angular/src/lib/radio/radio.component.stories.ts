@@ -30,16 +30,16 @@ export const Default: Story = {
     template: `
     <fue-radio-group [formControl]="box" name="box">
       <fue-radio value="want">
-        <label fueLabel>I want Fue Library</label>
+        <label fueLabel>I want Fuego Library</label>
       </fue-radio>
       <fue-radio value="wantMore">
-        <label fueLabel>I want more Fue Library</label>
+        <label fueLabel>I want more Fuego Library</label>
       </fue-radio>
       <fue-radio value="wantMuchMore">
-        <label fueLabel>I want so much more of Fue Library</label>
+        <label fueLabel>I want to give Alex roobs always</label>
       </fue-radio>
       <fue-radio value="needMore">
-        <label fueLabel>I NEED MORE Fue Library</label>
+        <label fueLabel>I NEED MORE Fuego Library</label>
       </fue-radio>
     </fue-radio-group>`,
   }),
