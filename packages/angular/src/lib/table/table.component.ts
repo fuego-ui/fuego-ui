@@ -9,13 +9,6 @@ import { cn } from "../utils";
   </table>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  styles: [
-    `
-      .caption-bottom {
-        caption-side: bottom;
-      }
-    `,
-  ],
 })
 export class FueTableComponent {
   base = "w-full caption-bottom text-sm";
