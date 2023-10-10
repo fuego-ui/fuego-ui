@@ -26,7 +26,7 @@ export const Default: Story = {
   render: () => ({
     props: { box: new FormControl(false) },
     template: `
-    <fue-slider [formControl]="box">
+    <fue-slider class="w-[60%]" [formControl]="box">
       <label fueLabel>Fire Mode</label>
     </fue-slider>`,
   }),

@@ -63,7 +63,7 @@ const SLIDER_VALUE_ACCESSOR: any = {
   </span>`,
 })
 export class FueSliderComponent implements ControlValueAccessor {
-  base = "relative flex touch-none select-none items-center w-[60%]";
+  base = "relative flex touch-none select-none items-center";
 
   get classes() {
     return cn(this.base, this.classNames);
