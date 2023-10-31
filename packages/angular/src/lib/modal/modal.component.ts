@@ -11,10 +11,10 @@ import {
   ViewChild,
   signal,
 } from "@angular/core";
-import { FocusTrapDirective } from "../focus-trap/focus-trap.directive";
 import { Subject } from "rxjs";
 import { cn } from "../utils";
 import { NgTemplateOutlet } from "@angular/common";
+import { A11yModule } from "@angular/cdk/a11y";
 
 let id = 0;
 @Component({
@@ -32,7 +32,7 @@ let id = 0;
       <div
         #modalContent
         [class]="classes"
-        focusTrap
+        cdkTrapFocus
         [attr.data-state]="openState"
       >
         <ng-container *ngTemplateOutlet="content"></ng-container>
@@ -45,7 +45,7 @@ let id = 0;
     ></div>
   `,
   standalone: true,
-  imports: [FocusTrapDirective, NgTemplateOutlet],
+  imports: [A11yModule, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent implements OnInit {
