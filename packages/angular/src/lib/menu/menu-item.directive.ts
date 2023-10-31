@@ -1,9 +1,7 @@
 import { CdkMenuItem } from "@angular/cdk/menu";
 import {
   Directive,
-  EventEmitter,
   HostBinding,
-  HostListener,
   Input,
   Output,
   inject,
@@ -24,7 +22,7 @@ export class FueMenuItemDirective {
 
   private _cdkMenuItem = inject(CdkMenuItem, { host: true });
 
-  private _tabIndex = signal(-1);
+  // private _tabIndex = signal(-1);
 
   @Input("class") classNames: ClassValue = "";
 
