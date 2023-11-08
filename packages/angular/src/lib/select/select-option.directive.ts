@@ -8,6 +8,9 @@ import { CdkMenuItem } from "@angular/cdk/menu";
   selector: "[fueSelectOption]",
   standalone: true,
   hostDirectives: [CdkOption, CdkMenuItem],
+  host: {
+    "(keydown)": "_onKeydown($event)",
+  },
 })
 export class FueSelectOptionDirective {
   private _cdkSelectOption = inject(CdkOption, { host: true });
@@ -27,6 +30,40 @@ export class FueSelectOptionDirective {
     this._cdkSelectOption.value = value;
   }
 
-  // @Output()
-  // triggered = this._cdkSelectOption._clicked.next($event);
+  _onKeydown(event: KeyboardEvent) {
+    console.log("ncjds");
+    // switch (event.keyCode) {
+    //   case SPACE:
+    //   case ENTER:
+    //     // Skip events that will trigger clicks so the handler doesn't get triggered twice.
+    //     if (!hasModifierKey(event) && !eventDispatchesNativeClick(this._elementRef, event)) {
+    //       this.trigger({keepOpen: event.keyCode === SPACE && !this.closeOnSpacebarTrigger});
+    //     }
+    //     break;
+
+    //   case RIGHT_ARROW:
+    //     if (!hasModifierKey(event)) {
+    //       if (this._parentMenu && this._isParentVertical()) {
+    //         if (this._dir?.value !== 'rtl') {
+    //           this._forwardArrowPressed(event);
+    //         } else {
+    //           this._backArrowPressed(event);
+    //         }
+    //       }
+    //     }
+    //     break;
+
+    //   case LEFT_ARROW:
+    //     if (!hasModifierKey(event)) {
+    //       if (this._parentMenu && this._isParentVertical()) {
+    //         if (this._dir?.value !== 'rtl') {
+    //           this._backArrowPressed(event);
+    //         } else {
+    //           this._forwardArrowPressed(event);
+    //         }
+    //       }
+    //     }
+    //     break;
+    // }
+  }
 }

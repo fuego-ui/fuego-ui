@@ -1,14 +1,4 @@
-import { NgIf } from "@angular/common";
-import {
-  AfterContentInit,
-  ChangeDetectionStrategy,
-  Component,
-  ContentChild,
-  inject,
-} from "@angular/core";
-import { FueLabelDirective } from "../label";
-import { CdkListboxModule } from "@angular/cdk/listbox";
-import { FueSelectContentDirective } from "./select-content.directive";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { FueSelectService } from "./select.service";
 
@@ -16,6 +6,9 @@ import { FueSelectService } from "./select.service";
   selector: "fue-select",
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: {
+    class: "inline-block",
+  },
   template: `<ng-content />`,
   providers: [FueSelectService],
 })

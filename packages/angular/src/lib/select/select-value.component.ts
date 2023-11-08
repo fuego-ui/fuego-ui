@@ -3,24 +3,26 @@ import {
   Component,
   HostBinding,
   Input,
-  OnDestroy,
-  OnInit,
   inject,
-  signal,
 } from "@angular/core";
 import { cn } from "../utils";
 import { ClassValue } from "clsx";
 import { FueSelectService } from "./select.service";
-import { Subject, takeUntil, tap } from "rxjs";
+import { AsyncPipe, NgIf } from "@angular/common";
 
 @Component({
   selector: "fue-select-value",
-  template: `<span>{{ value() ? value() : placeholder }}</span>`,
+  imports: [NgIf, AsyncPipe],
+  template: `<span *ngIf="{ value: selectValue$ | async } as vm$">{{
+    vm$.value ? vm$.value : placeholder
+  }}</span>`,
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FueSelectValueComponent implements OnInit, OnDestroy {
+export class FueSelectValueComponent {
   private _selectService = inject(FueSelectService);
+
+  selectValue$ = this._selectService.valueChanges;
 
   base = "";
 
@@ -31,23 +33,5 @@ export class FueSelectValueComponent implements OnInit, OnDestroy {
   @HostBinding("class")
   get allClassNames() {
     return cn(this.base, this.classNames);
-  }
-
-  value = signal("");
-
-  unsubscribe = new Subject<boolean>();
-
-  ngOnInit(): void {
-    this._selectService.valueChanges
-      .pipe(
-        takeUntil(this.unsubscribe),
-        tap((val) => this.value.set(val))
-      )
-      .subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next(true);
-    this.unsubscribe.complete();
   }
 }

@@ -89,6 +89,10 @@ export class FueCheckboxComponent
   @Input() name: string | null = null;
   @Input() value!: string;
   @Input() id!: string;
+  @Input() required: boolean = false;
+  @Input("aria-label") ariaLabel = "";
+  @Input("aria-labelledBy") ariaLabelledby = "";
+  @Input("aria-describedBy") ariaDescribedby = "";
 
   private _uniqueId!: number;
 
