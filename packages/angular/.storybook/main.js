@@ -5,6 +5,10 @@ const config = {
     name: "@storybook/angular",
     options: {},
   },
+  // previewBody: (body) => {
+  //   console.log(body);
+  //   return `${body}`;
+  // },
 };
 
 export default config;

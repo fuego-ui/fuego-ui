@@ -1,4 +1,5 @@
 import {
+  AfterContentInit,
   ChangeDetectionStrategy,
   Component,
   ContentChild,
@@ -8,7 +9,7 @@ import {
   inject,
   signal,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { NgIf } from "@angular/common";
 import { ClassValue } from "clsx";
 import { cn } from "../utils";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
@@ -24,15 +25,16 @@ let nextId = 0;
 @Component({
   selector: "fue-checkbox",
   standalone: true,
-  imports: [CommonModule],
+  imports: [NgIf, FueLabelDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ` <div class="flex items-center space-x-2">
     <button
+      type="button"
+      role="checkbox"
       [attr.data-state]="checked() ? 'checked' : 'unchecked'"
       [class]="classes"
       [disabled]="disabled()"
-      type="button"
-      role="checkbox"
+      [attr.aria-checked]="checked()"
       (blur)="_onBlur()"
       (click)="_onToggle()"
     >
@@ -61,6 +63,7 @@ let nextId = 0;
       #input
       type="checkbox"
       class="absolute pointer-none opacity-0 m-0 left-7"
+      tabIndex=""
       [attr.aria-label]="ariaLabel || null"
       [attr.aria-labelledby]="ariaLabelledby"
       [attr.aria-describedby]="ariaDescribedby"
@@ -70,14 +73,15 @@ let nextId = 0;
       [disabled]="disabled()"
       [id]="inputId"
       [required]="required"
-      [tabIndex]="tabIndex"
     />
     <div (click)="_preventBubblingFromLabel($event)">
       <ng-content />
     </div>
   </div>`,
 })
-export class FueCheckboxComponent implements ControlValueAccessor {
+export class FueCheckboxComponent
+  implements ControlValueAccessor, AfterContentInit
+{
   base =
     "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground";
 
@@ -85,6 +89,10 @@ export class FueCheckboxComponent implements ControlValueAccessor {
   @Input() name: string | null = null;
   @Input() value!: string;
   @Input() id!: string;
+  @Input() required: boolean = false;
+  @Input("aria-label") ariaLabel = "";
+  @Input("aria-labelledBy") ariaLabelledby = "";
+  @Input("aria-describedBy") ariaDescribedby = "";
 
   private _uniqueId!: number;
 
@@ -154,6 +162,12 @@ export class FueCheckboxComponent implements ControlValueAccessor {
     return cn(this.base, this.classNames);
   }
 
+  ngAfterContentInit(): void {
+    if (this.labelEl) {
+      this.labelEl.forInput.set(this.inputId);
+    }
+  }
+
   private _emitChangeEvent() {
     // this._controlValueAccessorChangeFn(this.checked);
     // this.change.emit(this._createChangeEvent(this.checked));
@@ -166,7 +180,6 @@ export class FueCheckboxComponent implements ControlValueAccessor {
 
   // ControlValueAccessor methods
   writeValue(value: any): void {
-    console.log(value);
     // this.input.nativeElement.checked = value;
     this.checked.set(!!value);
   }

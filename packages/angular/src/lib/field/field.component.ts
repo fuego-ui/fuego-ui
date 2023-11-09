@@ -1,116 +1,55 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 import {
   Component,
   Input,
-  Optional,
-  Self,
   ChangeDetectionStrategy,
-  signal,
-} from '@angular/core';
-import { ControlValueAccessor, NgControl } from '@angular/forms';
+  HostBinding,
+  ContentChild,
+  AfterContentInit,
+} from "@angular/core";
+import { cn } from "../utils";
+import { ClassValue } from "clsx";
+import { FueInputDirective } from "./input.directive";
+import { FueLabelDirective } from "../label";
 
+let id = 0;
 @Component({
-  selector: 'fue-field',
+  selector: "fue-field",
   standalone: true,
   imports: [CommonModule],
   template: `
-    <div [class]="getWrapperClasses()">
-      <label class="label" [for]="inputId"
-        ><span class="label-text">{{ label }}</span></label
-      >
-      <ng-container [ngSwitch]="inputType">
-        <textarea
-          *ngSwitchCase="'textarea'"
-          class="input w-full {{ fieldBorder }} {{ textareaTw }} {{
-            className || ''
-          }}"
-          [id]="inputId"
-          [class.disabled]="isDisabled"
-          (focus)="onFocus()"
-          (blur)="onBlur()"
-          (input)="onChange($event.target.value)"
-          >{{ value }}</textarea
-        >
-        <input
-          *ngSwitchDefault
-          class="input w-full {{ fieldBorder }} {{ className || '' }}"
-          type="text"
-          [id]="inputId"
-          [class.disabled]="isDisabled"
-          (focus)="onFocus()"
-          (blur)="onBlur()"
-          (input)="onChange($event.target.value)"
-          [value]="value"
-        />
-      </ng-container>
-    </div>
+    <ng-content select="fue-label"></ng-content>
+    <ng-content></ng-content>
+    <ng-content select="fue-description"></ng-content>
   `,
-  // styleUrls: ['./field.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldComponent implements ControlValueAccessor {
-  @Input() className!: string;
-  @Input() inputType: string = 'text';
-  @Input() label!: string;
-  @Input() disabled: boolean = false;
+export class FueFieldComponent implements AfterContentInit {
+  baseClass = "flex flex-col gap-1.5";
+  baseId = id++;
+  inputId: string = `fue-field-input-${this.baseId}`;
+  fieldId = `fue-field-${this.baseId}`;
 
-  fieldBorder = `textarea input-bordered focus:outline-offset-0`;
-  textareaTw = `min-h-[80px]`;
+  @Input("class") classNames: ClassValue = "";
 
-  isFocused: boolean = false;
-  inputId: string = `field-input-${uniqueId()}`;
-  value: any = '';
-  onChange: any = () => {};
-  onTouched: any = () => {};
+  @HostBinding("class")
+  get allclassNames() {
+    return cn(this.baseClass, this.classNames);
+  }
 
-  isDisabledSignal = signal(this.disabled);
+  @ContentChild(FueLabelDirective)
+  label!: FueLabelDirective;
 
-  constructor(@Optional() @Self() public ngControl: NgControl) {
-    if (this.ngControl) {
-      this.ngControl.valueAccessor = this;
+  @ContentChild(FueInputDirective)
+  input!: FueInputDirective;
+
+  ngAfterContentInit(): void {
+    if (this.input) {
+      this.input.id = this.inputId;
+    }
+
+    if (this.label) {
+      this.label.forInput.set(this.inputId);
     }
   }
-
-  get isDisabled(): boolean {
-    return this.isDisabledSignal();
-  }
-
-  writeValue(value: any): void {
-    this.value = value;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.isDisabledSignal.set(isDisabled);
-  }
-
-  getWrapperClasses(): string {
-    const classes = [this.className];
-    if (this.isDisabled) {
-      classes.push('disabled');
-    }
-    return classes.join(' ');
-  }
-
-  onFocus(): void {
-    this.isFocused = true;
-  }
-
-  onBlur(): void {
-    this.isFocused = false;
-    this.onTouched();
-  }
-}
-
-let idCounter = 0;
-
-function uniqueId(): string {
-  return `uid-${idCounter++}`;
 }
