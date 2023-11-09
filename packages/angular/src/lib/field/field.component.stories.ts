@@ -1,6 +1,6 @@
 import { FueLabelDirective } from "../label/label.directive";
 import { FieldComponent } from "./field.component";
-import { InputDirective } from "./input.directive";
+import { FueInputDirective } from "./input.directive";
 import { CommonModule } from "@angular/common";
 import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
 
@@ -12,7 +12,7 @@ const meta: Meta<FieldComponent> = {
       imports: [
         CommonModule,
         FieldComponent,
-        InputDirective,
+        FueInputDirective,
         FueLabelDirective,
       ],
     }),
