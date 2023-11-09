@@ -1,3 +1,9 @@
 {
-  "singleQuote": false
+	"arrowParens": "always",
+	"bracketSameLine": false,
+	"bracketSpacing": true,
+	"htmlWhitespaceSensitivity": "css",
+	"singleQuote": false,
+	"tabWidth": 2,
+	"useTabs": true
 }
