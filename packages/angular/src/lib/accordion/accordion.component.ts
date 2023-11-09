@@ -32,7 +32,7 @@ let nextId = 0;
   `,
 })
 export class FueAccordionItemComponent
-  implements AfterViewInit, OnDestroy, FocusableOption
+  implements AfterViewInit, FocusableOption, OnDestroy
 {
   @Input() className!: string;
 

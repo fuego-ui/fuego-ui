@@ -1,9 +1,11 @@
+@import "@angular/cdk/overlay-prebuilt.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-  /* :root {
+  :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -23,10 +25,13 @@
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
-    --radius: rem;
-  } */
+    --radius: 0.5rem;
+    --font-sans: '"Open Sans"';
+    --accordion-content-height: 35px;
+    --collapsible-content-height: 35px;
+  }
 
-  :root {
+  .dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -61,7 +66,16 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+
+  .inset-0 {
+    inset: 0;
+  }
+
+  .caption-bottom {
+    caption-side: bottom;
+  }
 }
 
-@layer components {
-}
+/* @layer components {
+
+} */
