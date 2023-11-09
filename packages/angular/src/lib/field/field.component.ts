@@ -9,7 +9,7 @@ import {
 } from "@angular/core";
 import { cn } from "../utils";
 import { ClassValue } from "clsx";
-import { InputDirective } from "./input.directive";
+import { FueInputDirective } from "./input.directive";
 import { FueLabelDirective } from "../label";
 
 let id = 0;
@@ -24,7 +24,7 @@ let id = 0;
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FieldComponent implements AfterContentInit {
+export class FueFieldComponent implements AfterContentInit {
   baseClass = "flex flex-col gap-1.5";
   baseId = id++;
   inputId: string = `fue-field-input-${this.baseId}`;
@@ -40,8 +40,8 @@ export class FieldComponent implements AfterContentInit {
   @ContentChild(FueLabelDirective)
   label!: FueLabelDirective;
 
-  @ContentChild(InputDirective)
-  input!: InputDirective;
+  @ContentChild(FueInputDirective)
+  input!: FueInputDirective;
 
   ngAfterContentInit(): void {
     if (this.input) {

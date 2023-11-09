@@ -13,8 +13,8 @@ import { NumberInput, coerceNumberProperty } from "@angular/cdk/coercion";
   template: `<span
     [class]="classes"
     role="slider"
-    [attr.aria-valuemin]="_valueMin()"
-    [attr.aria-valuemax]="_valueMax()"
+    [attr.aria-valuemin]="valueMin"
+    [attr.aria-valuemax]="valueMax"
     aria-orientation="horizontal"
     data-orientation="horizontal"
     tabindex="0"
