@@ -66,11 +66,11 @@
 }
 
 .field.has-error label {
-  @apply text-error;
+  /* @apply text-error; */
 }
 
 .field.has-error input,
 .field.has-error textarea {
-  @apply outline-error caret-error border-error;
+  /* @apply outline-error caret-error border-error; */
   transition: outline 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
 }
