@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { FieldComponent } from './field.component';
+import { FueFieldComponent } from "./field.component";
 
-describe('FieldComponent', () => {
-  let component: FieldComponent;
-  let fixture: ComponentFixture<FieldComponent>;
+describe("FueFieldComponent", () => {
+  let component: FueFieldComponent;
+  let fixture: ComponentFixture<FueFieldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FieldComponent],
+      declarations: [FueFieldComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FieldComponent);
+    fixture = TestBed.createComponent(FueFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

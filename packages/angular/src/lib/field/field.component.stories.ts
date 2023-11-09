@@ -1,17 +1,17 @@
 import { FueLabelDirective } from "../label/label.directive";
-import { FieldComponent } from "./field.component";
+import { FueFieldComponent } from "./field.component";
 import { FueInputDirective } from "./input.directive";
 import { CommonModule } from "@angular/common";
 import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
 
-const meta: Meta<FieldComponent> = {
+const meta: Meta<FueFieldComponent> = {
   title: "Field",
-  component: FieldComponent,
+  component: FueFieldComponent,
   decorators: [
     moduleMetadata({
       imports: [
         CommonModule,
-        FieldComponent,
+        FueFieldComponent,
         FueInputDirective,
         FueLabelDirective,
       ],
@@ -20,7 +20,7 @@ const meta: Meta<FieldComponent> = {
 };
 
 export default meta;
-type Story = StoryObj<FieldComponent>;
+type Story = StoryObj<FueFieldComponent>;
 
 export const Textfield: Story = {
   render: () => ({
