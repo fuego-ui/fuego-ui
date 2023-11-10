@@ -1,25 +1,25 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "rootDir": ".",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
-    "lib": ["es2017", "dom"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "baseUrl": ".",
-    "paths": {
-      "@fuego-ui/angular": ["packages/angular/src/index.ts"],
-      "@fuego-ui/fuego-styles": ["packages/fuego-styles/src/index.js"],
-      "@fuego-ui/react": ["packages/react/src/index.ts"],
-      "@unbyte-io/fuego-ui": ["packages/fuego-ui/src/index.ts"]
-    }
-  },
-  "exclude": ["node_modules", "tmp"]
+	"compileOnSave": false,
+	"compilerOptions": {
+		"rootDir": ".",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"importHelpers": true,
+		"target": "es2015",
+		"module": "esnext",
+		"lib": ["es2017", "dom"],
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+		"baseUrl": ".",
+		"paths": {
+			"@fuego-ui/angular": ["packages/angular/src/index.ts"],
+			"@fuego-ui/fuego-styles": ["packages/fuego-styles/src/index.js"],
+			"@fuego-ui/react": ["packages/react/src/index.ts"],
+			"@unbyte-io/fuego-ui": ["packages/fuego-ui/src/index.ts"]
+		}
+	},
+	"exclude": ["node_modules", "tmp"]
 }
