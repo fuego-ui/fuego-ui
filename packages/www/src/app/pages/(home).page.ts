@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-
-import { AnalogWelcomeComponent } from "./analog-welcome.component";
+import { FueHeaderComponent } from "../ui/header";
+// import { AnalogWelcomeComponent } from "./analog-welcome.component";
 
 @Component({
 	selector: "www-home",
 	standalone: true,
-	imports: [AnalogWelcomeComponent],
-	template: ` <www-analog-welcome /> `,
+	imports: [FueHeaderComponent],
+	template: ``,
 })
 export default class HomeComponent {}

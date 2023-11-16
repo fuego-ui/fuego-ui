@@ -2,6 +2,54 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	html {
+		font-family: "Fira Sans", system-ui, sans-serif;
+	}
+}
+
+/* Fira Sans Font Weights */
+
+/* Light */
+@font-face {
+	font-family: "Fira Sans";
+	src: url("/fonts/FiraSans-Light.ttf") format("truetype");
+	font-weight: 300;
+	font-style: normal;
+}
+
+/* Regular */
+@font-face {
+	font-family: "Fira Sans";
+	src: url("/fonts/FiraSans-Regular.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+}
+
+/* Medium */
+@font-face {
+	font-family: "Fira Sans";
+	src: url("/fonts/FiraSans-Medium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+}
+
+/* Bold */
+@font-face {
+	font-family: "Fira Sans";
+	src: url("/fonts/FiraSans-Bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+}
+
+/* Extra Bold */
+@font-face {
+	font-family: "Fira Sans";
+	src: url("/fonts/FiraSans-ExtraBold.ttf") format("truetype");
+	font-weight: 800;
+	font-style: normal;
+}
+
 html,
 body {
 	display: block;
