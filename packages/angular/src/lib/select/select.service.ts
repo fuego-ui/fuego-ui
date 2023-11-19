@@ -1,14 +1,17 @@
-import { Injectable, OnInit, signal } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { ListboxValueChangeEvent } from "@angular/cdk/listbox";
+import { Injectable, signal } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class FueSelectService {
-  value = signal("");
+	value = signal("");
 
-  private _valueChange = new Subject<any>();
-  valueChanges = this._valueChange.asObservable();
+	multiple = signal(false);
 
-  valueChange(val: any): void {
-    this._valueChange.next(val);
-  }
+	private _valueChange = new Subject<any>();
+	valueChanges = this._valueChange.asObservable();
+
+	valueChange(val: ListboxValueChangeEvent<any>): void {
+		this._valueChange.next(val);
+	}
 }
