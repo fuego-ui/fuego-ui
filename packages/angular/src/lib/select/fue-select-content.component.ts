@@ -1,14 +1,19 @@
 import { Directive, HostBinding, Input, OnInit, inject } from "@angular/core";
-import { CdkListbox } from "@angular/cdk/listbox";
-import { ClassValue } from "clsx";
+import { CdkListbox, ListboxValueChangeEvent } from "@angular/cdk/listbox";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FueSelectService } from "./select.service";
-import { Subject, takeUntil, tap } from "rxjs";
+import { ClassValue } from "clsx";
 import { cn } from "../utils";
+import { tap } from "rxjs";
 
 @Directive({
 	selector: "fue-select-content",
 	standalone: true,
 	hostDirectives: [CdkListbox],
+	host: {
+		"[attr.aria-labelledBy]": "labelledBy()",
+		"[attr.aria-controlledBy]": "id() +'-trigger'",
+	},
 })
 export class FueSelectContentComponent implements OnInit {
 	base =
@@ -18,6 +23,10 @@ export class FueSelectContentComponent implements OnInit {
 
 	private _selectService = inject(FueSelectService);
 
+	labelledBy = this._selectService.labelId;
+
+	id = this._selectService.id;
+
 	@Input("class") classNames: ClassValue = "";
 
 	@HostBinding("class")
@@ -25,17 +34,19 @@ export class FueSelectContentComponent implements OnInit {
 		return cn(this.base, this.classNames);
 	}
 
-	destroyed = new Subject<boolean>();
-
-	ngOnInit(): void {
+	constructor() {
 		this._cdkListbox.valueChange
 			.asObservable()
 			.pipe(
-				takeUntil(this.destroyed),
-				tap((val) => this._selectService.valueChange(val))
+				takeUntilDestroyed(),
+				tap((val: ListboxValueChangeEvent<any>) =>
+					this._selectService.listBoxValueChangeEvent$.next(val)
+				)
 			)
 			.subscribe();
+	}
 
+	ngOnInit(): void {
 		if (this._selectService.multiple()) {
 			this._cdkListbox.multiple = true;
 		}
@@ -43,10 +54,5 @@ export class FueSelectContentComponent implements OnInit {
 
 	focusList(): void {
 		this._cdkListbox.focus();
-	}
-
-	ngOnDestroy(): void {
-		this.destroyed.next(true);
-		this.destroyed.complete();
 	}
 }

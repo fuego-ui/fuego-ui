@@ -1,4 +1,5 @@
 import {
+	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	ContentChild,
@@ -19,20 +20,25 @@ import {
 } from "@angular/cdk/overlay";
 import { FueOptionComponent } from "./fue-option.component";
 import { FueSelectContentComponent } from "./fue-select-content.component";
-import { CdkListbox, ListboxValueChangeEvent } from "@angular/cdk/listbox";
+import { CdkListbox } from "@angular/cdk/listbox";
 import { FueSelectTriggerComponent } from "./select-trigger.component";
-import { map } from "rxjs";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { tap } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { FueLabelDirective } from "../label";
+
+let nextId = 0;
 
 @Component({
 	selector: "fue-select",
 	standalone: true,
-	imports: [OverlayModule, NgIf, AsyncPipe],
+	imports: [OverlayModule],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		class: "inline-block",
 	},
-	template: ` <ng-container *ngIf="{ value: selectValue$ | async }" />
+	template: ` @if(!selectLabel && placeholder) {
+		<label class="hidden" [id]="backupLabelId()">{{ placeholder }}</label>
+		}
 		<div
 			cdk-overlay-origin
 			(click)="toggle()"
@@ -47,30 +53,33 @@ import { AsyncPipe, NgIf } from "@angular/common";
 			cdkConnectedOverlayHasBackdrop
 			cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
 			[cdkConnectedOverlayOrigin]="fallbackOverlayOrigin"
-			[cdkConnectedOverlayOpen]="panelOpen"
+			[cdkConnectedOverlayOpen]="isExpanded()"
 			[cdkConnectedOverlayPositions]="_positions"
 			[cdkConnectedOverlayWidth]="'auto'"
 			(backdropClick)="close()"
-			(attach)="_onAttached()"
 			(detach)="close()"
 		>
 			<ng-content></ng-content>
 		</ng-template>`,
 	providers: [FueSelectService, CdkListbox],
 })
-export class FueSelectComponent implements OnInit, ControlValueAccessor {
+export class FueSelectComponent
+	implements OnInit, ControlValueAccessor, AfterViewInit
+{
 	value!: string;
 
 	ngControl = inject(NgControl);
 
-	/** Whether or not the overlay panel is open. */
-	private _panelOpen = false;
-
 	@Input() multiple = false;
+
+	@Input() placeholder: string = "";
 
 	/** Whether the select is disabled. */
 	@Input({ transform: booleanAttribute })
 	disabled: boolean = false;
+
+	@ContentChild(FueLabelDirective)
+	protected selectLabel!: FueLabelDirective;
 
 	@ContentChild(FueSelectTriggerComponent)
 	protected selectTrigger!: FueSelectTriggerComponent;
@@ -87,6 +96,10 @@ export class FueSelectComponent implements OnInit, ControlValueAccessor {
 	protected _overlayDir!: CdkConnectedOverlay;
 
 	private _selectService = inject(FueSelectService);
+
+	isExpanded = this._selectService.isExpanded;
+
+	backupLabelId = this._selectService.labelId;
 
 	/*
 	 * This position config ensures that the top "start" corner of the overlay
@@ -123,87 +136,80 @@ export class FueSelectComponent implements OnInit, ControlValueAccessor {
 		},
 	];
 
-	get panelOpen(): boolean {
-		return this._panelOpen;
-	}
-
-	selectValue$ = this._selectService.valueChanges.pipe(
-		map((val: ListboxValueChangeEvent<any>) => {
-			if (!this.multiple) {
-				this.close();
-			}
-		})
-	);
-
 	constructor() {
-		// this._uniqueId = nextId++;
+		this._selectService.state.update((state) => ({
+			...state,
+			id: `fue-select-${nextId++}`,
+		}));
 		if (this.ngControl != null) {
-			// Setting the value accessor directly (instead of using
-			// the providers) to avoid running into a circular import.
 			this.ngControl.valueAccessor = this;
 		}
+
+		// Watch for Listbox Selection Changes to trigger Collapse
+		this._selectService.listBoxValueChangeEvent$
+			.pipe(
+				tap(() => !this.multiple && this.close()),
+				takeUntilDestroyed()
+			)
+			.subscribe();
 	}
 
 	ngOnInit(): void {
-		if (this.multiple) {
-			this._selectService.multiple.set(true);
+		this._selectService.state.update((state) => ({
+			...state,
+			multiple: this.multiple,
+			placeholder: this.placeholder,
+		}));
+	}
+
+	ngAfterViewInit(): void {
+		// Check if Label Directive Provided and pass to service
+		if (this.selectLabel) {
+			this._selectService.state.update((state) => ({
+				...state,
+				labelId: this.selectLabel.id,
+			}));
+		} else if (this.placeholder) {
+			this._selectService.state.update((state) => ({
+				...state,
+				labelId: `${state.id}--label`,
+			}));
 		}
 	}
 
 	/** Toggles the overlay panel open or closed. */
 	toggle(): void {
-		this.panelOpen ? this.close() : this.open();
+		this.isExpanded() ? this.close() : this.open();
 	}
 
 	/** Opens the overlay panel. */
 	open(): void {
 		if (this._canOpen()) {
-			console.log("boom");
-			this._selectService.openChange(true);
-			this._panelOpen = true;
-			this._highlightCorrectOption();
+			this._selectService.state.update((state) => ({
+				...state,
+				isExpanded: true,
+			}));
+			this._moveFocusToCDKList();
 		}
 	}
 
 	/** Closes the overlay panel and focuses the host element. */
 	close(): void {
-		if (this._panelOpen) {
-			this._panelOpen = false;
+		if (this.isExpanded()) {
 			this.selectTrigger.focus();
-			this._selectService.openChange(false);
+			this._selectService.state.update((state) => ({
+				...state,
+				isExpanded: false,
+			}));
 		}
 	}
 
 	/** Whether the panel is allowed to open. */
 	protected _canOpen(): boolean {
-		return !this._panelOpen && !this.disabled && this.options?.length > 0;
+		return !this.isExpanded() && !this.disabled && this.options?.length > 0;
 	}
 
-	/**
-	 * Callback that is invoked when the overlay panel has been attached.
-	 */
-	_onAttached(): void {
-		// Mat-Select Ensures to scroll to active element
-		// Should consider implementing
-		// this._overlayDir.positionChange.pipe(take(1)).subscribe(() => {
-		// 	this._positioningSettled();
-		// });
-	}
-
-	/**
-	 * Highlights the selected item. If no option is selected, it will highlight
-	 * the first *enabled* option.
-	 */
-	private _highlightCorrectOption(): void {
-		// let firstEnabledOptionIndex = -1;
-		// for (let index = 0; index < this.options.length; index++) {
-		// 	const option = this.options.get(index)!;
-		// 	if (!option.disabled) {
-		// 		firstEnabledOptionIndex = index;
-		// 		break;
-		// 	}
-		// }
-
+	private _moveFocusToCDKList(): void {
 		setTimeout(() => this.selectContent.focusList());
 	}
 

@@ -4,19 +4,15 @@ import {
 	Input,
 	inject,
 } from "@angular/core";
-import { cn } from "../utils";
-import { ClassValue } from "clsx";
 import { FueSelectService } from "./select.service";
-import { AsyncPipe, NgIf } from "@angular/common";
-import { map } from "rxjs";
-import { ListboxValueChangeEvent } from "@angular/cdk/listbox";
+import { ClassValue } from "clsx";
+import { cn } from "../utils";
 
 @Component({
 	selector: "fue-select-value",
-	imports: [NgIf, AsyncPipe],
-	template: `<span *ngIf="{ value: selectValue$ | async } as vm$">{{
-		vm$.value && vm$.value.length ? vm$.value : placeholder
-	}}</span>`,
+	template: `<span>
+		{{ value() && value()?.length ? value() : placeholder() }}
+	</span>`,
 	standalone: true,
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
@@ -26,13 +22,11 @@ import { ListboxValueChangeEvent } from "@angular/cdk/listbox";
 export class FueSelectValueComponent {
 	private _selectService = inject(FueSelectService);
 
-	selectValue$ = this._selectService.valueChanges.pipe(
-		map((val: ListboxValueChangeEvent<any>) => val.value)
-	);
+	readonly value = this._selectService.value;
+
+	readonly placeholder = this._selectService.placeholder;
 
 	base = "overflow-hidden pointer-events-none text-ellipsis";
-
-	@Input() placeholder: string = "";
 
 	@Input("class") classNames: ClassValue = "";
 
