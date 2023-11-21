@@ -8,10 +8,19 @@ export class FueSelectService {
 
 	multiple = signal(false);
 
+	isExpanded = signal(false);
+
 	private _valueChange = new Subject<any>();
 	valueChanges = this._valueChange.asObservable();
 
 	valueChange(val: ListboxValueChangeEvent<any>): void {
 		this._valueChange.next(val);
+	}
+
+	private _openChanges = new Subject<any>();
+	readonly openChanges = this._openChanges.asObservable();
+	openChange(val: boolean): void {
+		console.log("bang");
+		this._openChanges.next(val);
 	}
 }

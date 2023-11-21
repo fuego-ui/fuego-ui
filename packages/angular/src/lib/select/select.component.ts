@@ -158,6 +158,8 @@ export class FueSelectComponent implements OnInit, ControlValueAccessor {
 	/** Opens the overlay panel. */
 	open(): void {
 		if (this._canOpen()) {
+			console.log("boom");
+			this._selectService.openChange(true);
 			this._panelOpen = true;
 			this._highlightCorrectOption();
 		}
@@ -168,6 +170,7 @@ export class FueSelectComponent implements OnInit, ControlValueAccessor {
 		if (this._panelOpen) {
 			this._panelOpen = false;
 			this.selectTrigger.focus();
+			this._selectService.openChange(false);
 		}
 	}
 
