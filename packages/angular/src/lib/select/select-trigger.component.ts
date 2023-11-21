@@ -4,46 +4,49 @@ import {
 	Input,
 	OnDestroy,
 	ViewChild,
+	computed,
 	inject,
-	signal,
 } from "@angular/core";
-import { ClassValue } from "clsx";
-import { provideIcons } from "@ng-icons/core";
 import { radixChevronDown } from "@ng-icons/radix-icons";
-import { FueIconComponent } from "../icon";
-import { cn } from "../utils";
 import { FueSelectService } from "./select.service";
-import { Subject, takeUntil, tap } from "rxjs";
-import { AsyncPipe } from "@angular/common";
+import { provideIcons } from "@ng-icons/core";
+import { FueIconComponent } from "../icon";
+import { ClassValue } from "clsx";
+import { Subject } from "rxjs";
+import { cn } from "../utils";
 
 @Component({
 	selector: "fue-select-trigger",
 	standalone: true,
-	imports: [FueIconComponent, AsyncPipe],
+	imports: [FueIconComponent],
 	providers: [provideIcons({ radixChevronDown })],
-	template: ` @if({isExpanded: isExpanded$ |async}; as vm$){
-		<button
-			[class]="classes"
-			#button
-			role="combobox"
-			type="button"
-			[attr.aria-expanded]="vm$.isExpanded"
-			[attr.aria-controls]=""
-		>
-			<ng-content /><fue-icon size="100%" name="radixChevronDown" />
-		</button>
-		}`,
+	template: ` <button
+		[class]="classes"
+		#button
+		role="combobox"
+		type="button"
+		[id]="selectTriggerId()"
+		[attr.aria-expanded]="isExpanded()"
+		[attr.aria-controls]="selectContentId() + ''"
+	>
+		<ng-content /><fue-icon size="100%" name="radixChevronDown" />
+	</button>`,
 })
 export class FueSelectTriggerComponent implements OnDestroy {
-	// readonly isExpanded$$ = signal(false);
-
 	@ViewChild("button") buttonEl!: ElementRef;
 
 	unsubscribe = new Subject<boolean>();
 
-	private selectService = inject(FueSelectService);
+	private _selectService = inject(FueSelectService);
 
-	readonly isExpanded$ = this.selectService.openChanges;
+	readonly isExpanded = this._selectService.isExpanded;
+
+	readonly selectTriggerId = computed(
+		() => `${this._selectService.id()}--trigger`
+	);
+	readonly selectContentId = computed(
+		() => `${this._selectService.id()}--content`
+	);
 
 	base =
 		"flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px]";

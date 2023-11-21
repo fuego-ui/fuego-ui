@@ -48,9 +48,9 @@ export const Default: Story = {
 		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
     <form [formGroup]="fruitGroup">
-	<fue-select formControlName="fruit">
+	<fue-select formControlName="fruit" placeholder="Select a Fruit">
 		<fue-select-trigger> 
-			<fue-select-value placeholder="Select a Fruit"/>
+			<fue-select-value />
 		</fue-select-trigger>
     <fue-select-content class="w-56">
       <fue-option value="Refresh">Refresh</fue-option>
@@ -68,9 +68,9 @@ export const MultiSelect: Story = {
 		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
   <form [formGroup]="fruitGroup">
-    <fue-select formControlName="fruit" multiple="true">
+    <fue-select formControlName="fruit" multiple="true" placeholder="Select a Fruit">
       <fue-select-trigger> 
-        <fue-select-value placeholder="Select a Fruit"/>
+        <fue-select-value />
       </fue-select-trigger>
       <fue-select-content class="w-56">
         <fue-option value="Refresh">Refresh</fue-option>
@@ -88,9 +88,9 @@ export const LargeOptionsList: Story = {
 		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
     <form [formGroup]="fruitGroup">
-	<fue-select formControlName="fruit">
+	<fue-select formControlName="fruit" placeholder="Select a Fruit">
 		<fue-select-trigger> 
-			<fue-select-value placeholder="Select a Fruit"/>
+			<fue-select-value />
 		</fue-select-trigger>
     <fue-select-content class="w-56 max-h-44">
       <fue-option value="Refresh">Refresh</fue-option>

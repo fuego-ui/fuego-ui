@@ -44,6 +44,7 @@
 		"marked-gfm-heading-id": "^3.1.0",
 		"marked-highlight": "^2.0.1",
 		"mermaid": "^10.2.4",
+		"ngxtension": "^1.4.0",
 		"postcss-js": "^4.0.1",
 		"prejss-cli": "^0.3.3",
 		"prismjs": "^1.29.0",
