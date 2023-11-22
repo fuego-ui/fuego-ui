@@ -1,70 +1,69 @@
 {
-  "name": "react",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/react/src",
-  "projectType": "library",
-  "tags": [],
-  "targets": {
-    "build": {
-      "executor": "@nrwl/rollup:rollup",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/react",
-        "tsConfig": "packages/react/tsconfig.lib.json",
-        "project": "packages/react/package.json",
-        "entryFile": "packages/react/src/index.ts",
-        "external": ["react/jsx-runtime"],
-        "rollupConfig": "@nx/react/plugins/bundle-rollup",
-        "compiler": "babel",
-        "assets": [
-          {
-            "glob": "packages/react/README.md",
-            "input": ".",
-            "output": "."
-          }
-        ]
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/react/**/*.{ts,tsx,js,jsx}"]
-      }
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/packages/react"],
-      "options": {
-        "jestConfig": "packages/react/jest.config.ts",
-        "passWithNoTests": true
-      }
-    },
-    "storybook": {
-      "executor": "@nx/storybook:storybook",
-      "options": {
-        "port": 4400,
-        "postcssConfig": "../postcss.config.js",
-        "configDir": "packages/react/.storybook"
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    },
-    "build-storybook": {
-      "executor": "@nx/storybook:build",
-      "outputs": ["{options.outputDir}"],
-      "options": {
-        "configDir": "packages/react/.storybook",
-        "outputDir": "dist/storybook/react"
-      },
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      }
-    }
-  }
+	"name": "react",
+	"$schema": "../../node_modules/nx/schemas/project-schema.json",
+	"sourceRoot": "packages/react/src",
+	"projectType": "library",
+	"tags": [],
+	"targets": {
+		"build": {
+			"executor": "@nrwl/rollup:rollup",
+			"outputs": ["{options.outputPath}"],
+			"options": {
+				"outputPath": "dist/packages/react",
+				"tsConfig": "packages/react/tsconfig.lib.json",
+				"project": "packages/react/package.json",
+				"entryFile": "packages/react/src/index.ts",
+				"external": ["react/jsx-runtime"],
+				"rollupConfig": "@nx/react/plugins/bundle-rollup",
+				"compiler": "babel",
+				"assets": [
+					{
+						"glob": "packages/react/README.md",
+						"input": ".",
+						"output": "."
+					}
+				]
+			}
+		},
+		"lint": {
+			"executor": "@nx/eslint:lint",
+			"outputs": ["{options.outputFile}"],
+			"options": {
+				"lintFilePatterns": ["packages/react/**/*.{ts,tsx,js,jsx}"]
+			}
+		},
+		"test": {
+			"executor": "@nx/jest:jest",
+			"outputs": ["{workspaceRoot}/coverage/packages/react"],
+			"options": {
+				"jestConfig": "packages/react/jest.config.ts"
+			}
+		},
+		"storybook": {
+			"executor": "@nx/storybook:storybook",
+			"options": {
+				"port": 4400,
+				"postcssConfig": "../postcss.config.js",
+				"configDir": "packages/react/.storybook"
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
+		},
+		"build-storybook": {
+			"executor": "@nx/storybook:build",
+			"outputs": ["{options.outputDir}"],
+			"options": {
+				"configDir": "packages/react/.storybook",
+				"outputDir": "dist/storybook/react"
+			},
+			"configurations": {
+				"ci": {
+					"quiet": true
+				}
+			}
+		}
+	}
 }
