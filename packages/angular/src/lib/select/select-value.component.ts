@@ -1,37 +1,36 @@
 import {
-  ChangeDetectionStrategy,
-  Component,
-  HostBinding,
-  Input,
-  inject,
+	ChangeDetectionStrategy,
+	Component,
+	Input,
+	inject,
 } from "@angular/core";
-import { cn } from "../utils";
-import { ClassValue } from "clsx";
 import { FueSelectService } from "./select.service";
-import { AsyncPipe, NgIf } from "@angular/common";
+import { ClassValue } from "clsx";
+import { cn } from "../utils";
 
 @Component({
-  selector: "fue-select-value",
-  imports: [NgIf, AsyncPipe],
-  template: `<span *ngIf="{ value: selectValue$ | async } as vm$">{{
-    vm$.value ? vm$.value : placeholder
-  }}</span>`,
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+	selector: "fue-select-value",
+	template: `<span>
+		{{ value() && value()?.length ? value() : placeholder() }}
+	</span>`,
+	standalone: true,
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	host: {
+		"[class]": "classes",
+	},
 })
 export class FueSelectValueComponent {
-  private _selectService = inject(FueSelectService);
+	private _selectService = inject(FueSelectService);
 
-  selectValue$ = this._selectService.valueChanges;
+	readonly value = this._selectService.value;
 
-  base = "";
+	readonly placeholder = this._selectService.placeholder;
 
-  @Input() placeholder: string = "";
+	base = "overflow-hidden pointer-events-none text-ellipsis";
 
-  @Input("class") classNames: ClassValue = "";
+	@Input("class") classNames: ClassValue = "";
 
-  @HostBinding("class")
-  get allClassNames() {
-    return cn(this.base, this.classNames);
-  }
+	get classes() {
+		return cn(this.base, this.classNames);
+	}
 }
