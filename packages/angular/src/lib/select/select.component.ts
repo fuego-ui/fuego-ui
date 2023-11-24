@@ -1,5 +1,5 @@
 import {
-	AfterViewInit,
+	AfterContentInit,
 	ChangeDetectionStrategy,
 	Component,
 	ContentChild,
@@ -10,6 +10,7 @@ import {
 	ViewChild,
 	booleanAttribute,
 	inject,
+	signal,
 } from "@angular/core";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { FueSelectService } from "./select.service";
@@ -22,7 +23,7 @@ import { FueOptionComponent } from "./fue-option.component";
 import { FueSelectContentComponent } from "./fue-select-content.component";
 import { CdkListbox } from "@angular/cdk/listbox";
 import { FueSelectTriggerComponent } from "./select-trigger.component";
-import { tap } from "rxjs";
+import { map, tap } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FueLabelDirective } from "../label";
 
@@ -31,14 +32,16 @@ let nextId = 0;
 @Component({
 	selector: "fue-select",
 	standalone: true,
-	imports: [OverlayModule],
+	imports: [OverlayModule, FueLabelDirective],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	host: {
 		class: "inline-block",
 	},
-	template: ` @if(!selectLabel && placeholder) {
+	template: ` <!-- Select -->
+		@if(!labelProvided() && placeholder) {
 		<label class="hidden" [id]="backupLabelId()">{{ placeholder }}</label>
 		}
+		<ng-content select="fue-label"></ng-content>
 		<div
 			cdk-overlay-origin
 			(click)="toggle()"
@@ -64,9 +67,9 @@ let nextId = 0;
 	providers: [FueSelectService, CdkListbox],
 })
 export class FueSelectComponent
-	implements OnInit, ControlValueAccessor, AfterViewInit
+	implements OnInit, ControlValueAccessor, AfterContentInit
 {
-	value!: string;
+	value = signal("");
 
 	ngControl = inject(NgControl);
 
@@ -76,7 +79,11 @@ export class FueSelectComponent
 
 	/** Whether the select is disabled. */
 	@Input({ transform: booleanAttribute })
-	disabled: boolean = false;
+	set disabled(disabled: boolean) {
+		this._disabled = disabled;
+		this._selectService.state.update((state) => ({ ...state, disabled }));
+	}
+	_disabled: boolean = false;
 
 	@ContentChild(FueLabelDirective)
 	protected selectLabel!: FueLabelDirective;
@@ -100,6 +107,8 @@ export class FueSelectComponent
 	isExpanded = this._selectService.isExpanded;
 
 	backupLabelId = this._selectService.labelId;
+
+	labelProvided = signal(false);
 
 	/*
 	 * This position config ensures that the top "start" corner of the overlay
@@ -149,6 +158,10 @@ export class FueSelectComponent
 		this._selectService.listBoxValueChangeEvent$
 			.pipe(
 				tap(() => !this.multiple && this.close()),
+				map((listboxEvent) => {
+					this.writeValue(listboxEvent.value);
+					this.onChange(listboxEvent.value);
+				}),
 				takeUntilDestroyed()
 			)
 			.subscribe();
@@ -162,9 +175,10 @@ export class FueSelectComponent
 		}));
 	}
 
-	ngAfterViewInit(): void {
+	ngAfterContentInit(): void {
 		// Check if Label Directive Provided and pass to service
 		if (this.selectLabel) {
+			this.labelProvided.set(true);
 			this._selectService.state.update((state) => ({
 				...state,
 				labelId: this.selectLabel.id,
@@ -201,12 +215,13 @@ export class FueSelectComponent
 				...state,
 				isExpanded: false,
 			}));
+			this.onTouched();
 		}
 	}
 
 	/** Whether the panel is allowed to open. */
 	protected _canOpen(): boolean {
-		return !this.isExpanded() && !this.disabled && this.options?.length > 0;
+		return !this.isExpanded() && !this._disabled && this.options?.length > 0;
 	}
 
 	private _moveFocusToCDKList(): void {
@@ -218,7 +233,7 @@ export class FueSelectComponent
 	onTouched!: () => void;
 
 	writeValue(value: any): void {
-		this.value = value;
+		this.value.set(value);
 	}
 
 	registerOnChange(fn: any): void {
@@ -228,6 +243,4 @@ export class FueSelectComponent
 	registerOnTouched(fn: any): void {
 		this.onTouched = fn;
 	}
-
-	setDisabledState?(isDisabled: boolean): void {}
 }

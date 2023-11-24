@@ -1,5 +1,10 @@
 import { CommonModule } from "@angular/common";
-import { Meta, moduleMetadata, StoryObj } from "@storybook/angular";
+import {
+	argsToTemplate,
+	Meta,
+	moduleMetadata,
+	StoryObj,
+} from "@storybook/angular";
 import {
 	FormControl,
 	FormGroup,
@@ -20,6 +25,11 @@ import { FueSelectContentComponent } from "./fue-select-content.component";
 
 const meta: Meta<{}> = {
 	title: "Select",
+	args: {
+		disabled: false,
+		placeholder: "Select a Fruit",
+		multiple: false,
+	},
 	decorators: [
 		moduleMetadata({
 			imports: [
@@ -44,8 +54,8 @@ export default meta;
 type Story = StoryObj<{}>;
 
 export const Default: Story = {
-	render: () => ({
-		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
+	render: (args) => ({
+		props: { ...args, fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
     <form [formGroup]="fruitGroup">
 	<fue-select formControlName="fruit" placeholder="Select a Fruit">
@@ -63,12 +73,85 @@ export const Default: Story = {
 	}),
 };
 
+export const ReactiveFormControl: Story = {
+	render: (args) => ({
+		props: { ...args, fruitGroup: new FormGroup({ fruit: new FormControl() }) },
+		template: `
+		<div class="mb-3">
+		<pre>Form Control Value: {{ fruitGroup.controls.fruit.valueChanges | async | json }}</pre>
+		</div>
+    <form [formGroup]="fruitGroup">
+	<fue-select formControlName="fruit" placeholder="Select a Fruit">
+		<fue-select-trigger> 
+			<fue-select-value />
+		</fue-select-trigger>
+    <fue-select-content class="w-56">
+      <fue-option value="Refresh">Refresh</fue-option>
+      <fue-option value="Settings">Settings</fue-option>
+      <fue-option value="Help">Help</fue-option>
+      <fue-option value="Signout">Sign out</fue-option>
+    </fue-select-content>
+	</fue-select>
+  <form>`,
+	}),
+};
+
+export const NgModelFormControl: Story = {
+	render: (args) => ({
+		props: args,
+		template: `
+		<form #model="ngForm">
+		<div class="mb-3">
+		<pre>Form Control Value: {{ model.fruit }}</pre>
+		</div>
+	<fue-select ${argsToTemplate(
+		args
+	)} [(ngModel)]="model.fruit" name="fruit" placeholder="Select a Fruit">
+		<fue-select-trigger> 
+			<fue-select-value />
+		</fue-select-trigger>
+    <fue-select-content class="w-56">
+      <fue-option value="Refresh">Refresh</fue-option>
+      <fue-option value="Settings">Settings</fue-option>
+      <fue-option value="Help">Help</fue-option>
+      <fue-option value="Signout">Sign out</fue-option>
+    </fue-select-content>
+	</fue-select>
+	</form>`,
+	}),
+};
+
 export const MultiSelect: Story = {
-	render: () => ({
-		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
+	args: { multiple: true },
+	render: (args) => ({
+		props: { ...args, fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
   <form [formGroup]="fruitGroup">
-    <fue-select formControlName="fruit" multiple="true" placeholder="Select a Fruit">
+    <fue-select ${argsToTemplate(args)} formControlName="fruit">
+      <fue-select-trigger> 
+        <fue-select-value />
+      </fue-select-trigger>
+      <fue-select-content class="w-56">
+        <fue-option value="Refresh">Refresh</fue-option>
+        <fue-option value="Settings">Settings</fue-option>
+        <fue-option value="Help">Help</fue-option>
+        <fue-option value="Signout">Sign out</fue-option>
+      </fue-select-content>
+    </fue-select>
+  <form>`,
+	}),
+};
+
+export const SelectWithLabel: Story = {
+	args: {
+		label: "Fruit Selections",
+	},
+	render: (args) => ({
+		props: { ...args, fruitGroup: new FormGroup({ fruit: new FormControl() }) },
+		template: `
+  <form [formGroup]="fruitGroup">
+    <fue-select formControlName="fruit" ${argsToTemplate(args)}>
+	<fue-label>{{label}}</fue-label>
       <fue-select-trigger> 
         <fue-select-value />
       </fue-select-trigger>
@@ -84,11 +167,11 @@ export const MultiSelect: Story = {
 };
 
 export const LargeOptionsList: Story = {
-	render: () => ({
-		props: { fruitGroup: new FormGroup({ fruit: new FormControl() }) },
+	render: (args) => ({
+		props: { ...args, fruitGroup: new FormGroup({ fruit: new FormControl() }) },
 		template: `
     <form [formGroup]="fruitGroup">
-	<fue-select formControlName="fruit" placeholder="Select a Fruit">
+	<fue-select formControlName="fruit" ${argsToTemplate(args)}>
 		<fue-select-trigger> 
 			<fue-select-value />
 		</fue-select-trigger>

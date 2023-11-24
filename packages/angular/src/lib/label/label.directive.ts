@@ -1,10 +1,10 @@
 import {
-  Directive,
-  ElementRef,
-  HostBinding,
-  Input,
-  inject,
-  signal,
+	Directive,
+	ElementRef,
+	HostBinding,
+	Input,
+	inject,
+	signal,
 } from "@angular/core";
 import { ClassValue } from "clsx";
 import { cn } from "../utils";
@@ -12,33 +12,33 @@ import { cn } from "../utils";
 let nextId = 0;
 
 @Directive({
-  selector: "[fueLabel]",
-  standalone: true,
-  host: {
-    "[for]": "forInput()",
-  },
+	selector: "fue-label, [fueLabel]",
+	standalone: true,
+	host: {
+		"[for]": "forInput()",
+	},
 })
 export class FueLabelDirective {
-  base =
-    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70";
+	base =
+		"text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70";
 
-  forInput = signal("");
-  appearClickable = signal(false);
+	forInput = signal("");
+	appearClickable = signal(false);
 
-  public labelElement = inject(ElementRef);
+	public labelElement = inject(ElementRef);
 
-  id = `fue-label-${nextId++}`;
+	id = `fue-label-${nextId++}`;
 
-  @Input("class") classNames: ClassValue = "";
-  @Input("id") customId: string = "";
+	@Input("class") classNames: ClassValue = "";
+	@Input("id") customId: string = "";
 
-  @HostBinding("id")
-  get elementId() {
-    return this.customId || this.id;
-  }
+	@HostBinding("id")
+	get elementId() {
+		return this.customId || this.id;
+	}
 
-  @HostBinding("class")
-  get allClassNames() {
-    return cn(this.base, this.classNames);
-  }
+	@HostBinding("class")
+	get allClassNames() {
+		return cn(this.base, this.classNames);
+	}
 }

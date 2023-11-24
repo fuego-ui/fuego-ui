@@ -1,7 +1,7 @@
 import { ListboxValueChangeEvent } from "@angular/cdk/listbox";
 import { Injectable, signal, computed } from "@angular/core";
-import { Subject } from "rxjs";
 import { connect } from "ngxtension/connect";
+import { Subject } from "rxjs";
 
 @Injectable()
 export class FueSelectService {
@@ -12,6 +12,7 @@ export class FueSelectService {
 		placeholder: string;
 		isExpanded: boolean;
 		multiple: boolean;
+		disabled: boolean;
 		value: any;
 	}>({
 		id: "",
@@ -20,6 +21,7 @@ export class FueSelectService {
 		placeholder: "",
 		isExpanded: false,
 		multiple: false,
+		disabled: false,
 		value: "",
 	});
 
@@ -27,6 +29,7 @@ export class FueSelectService {
 	readonly labelId = computed(() => this.state().labelId);
 	readonly panelId = computed(() => this.state().panelId);
 	readonly placeholder = computed(() => this.state().placeholder);
+	readonly disabled = computed(() => this.state().disabled);
 	readonly isExpanded = computed(() => this.state().isExpanded);
 	readonly multiple = computed(() => this.state().multiple);
 	readonly value = computed(() => this.state().value);

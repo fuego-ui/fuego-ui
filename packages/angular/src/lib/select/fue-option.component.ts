@@ -2,6 +2,7 @@ import {
 	Component,
 	ElementRef,
 	HostBinding,
+	HostListener,
 	Input,
 	inject,
 } from "@angular/core";
@@ -48,6 +49,11 @@ export class FueOptionComponent implements FocusableOption {
 		"relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50";
 
 	@Input("class") classNames: ClassValue = "";
+
+	@HostListener("mouseenter", ["$event"])
+	hover($event: any): void {
+		this._cdkSelectOption.focus();
+	}
 
 	@HostBinding("class")
 	get allClassNames() {
